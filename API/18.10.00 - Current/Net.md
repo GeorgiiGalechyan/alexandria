@@ -1,4 +1,102 @@
+<details> <summary>Содержание</summary>
+
+    Net
+        IPC support
+            Identifying paths for IPC connections
+        Class: net.BlockList
+            blockList.addAddress(address[, type])
+            blockList.addRange(start, end[, type])
+            blockList.addSubnet(net, prefix[, type])
+            blockList.check(address[, type])
+            blockList.rules
+        Class: net.SocketAddress
+            new net.SocketAddress([options])
+            socketaddress.address
+            socketaddress.family
+            socketaddress.flowlabel
+            socketaddress.port
+        Class: net.Server
+            new net.Server([options][, connectionListener])
+            Event: 'close'
+            Event: 'connection'
+            Event: 'error'
+            Event: 'listening'
+            Event: 'drop'
+            server.address()
+            server.close([callback])
+            server.getConnections(callback)
+            server.listen()
+                server.listen(handle[, backlog][, callback])
+                server.listen(options[, callback])
+                server.listen(path[, backlog][, callback])
+                server.listen([port[, host[, backlog]]][, callback])
+            server.listening
+            server.maxConnections
+            server.ref()
+            server.unref()
+        Class: net.Socket
+            new net.Socket([options])
+            Event: 'close'
+            Event: 'connect'
+            Event: 'data'
+            Event: 'drain'
+            Event: 'end'
+            Event: 'error'
+            Event: 'lookup'
+            Event: 'ready'
+            Event: 'timeout'
+            socket.address()
+            socket.bufferSize
+            socket.bytesRead
+            socket.bytesWritten
+            socket.connect()
+                socket.connect(options[, connectListener])
+                socket.connect(path[, connectListener])
+                socket.connect(port[, host][, connectListener])
+            socket.connecting
+            socket.destroy([error])
+            socket.destroyed
+            socket.end([data[, encoding]][, callback])
+            socket.localAddress
+            socket.localPort
+            socket.localFamily
+            socket.pause()
+            socket.pending
+            socket.ref()
+            socket.remoteAddress
+            socket.remoteFamily
+            socket.remotePort
+            socket.resetAndDestroy()
+            socket.resume()
+            socket.setEncoding([encoding])
+            socket.setKeepAlive([enable][, initialDelay])
+            socket.setNoDelay([noDelay])
+            socket.setTimeout(timeout[, callback])
+            socket.timeout
+            socket.unref()
+            socket.write(data[, encoding][, callback])
+            socket.readyState
+        net.connect()
+            net.connect(options[, connectListener])
+            net.connect(path[, connectListener])
+            net.connect(port[, host][, connectListener])
+        net.createConnection()
+            net.createConnection(options[, connectListener])
+            net.createConnection(path[, connectListener])
+            net.createConnection(port[, host][, connectListener])
+        net.createServer([options][, connectionListener])
+        net.isIP(input)
+        net.isIPv4(input)
+        net.isIPv6(input)
+
+</details>
+
 # Net
+
+**Source Code:** [lib/net.js](https://github.com/nodejs/node/blob/v18.10.0/lib/net.js)
+
+Встроенный модуль Net предоставляет набор асинхронных сетевых API для создания потоковых серверов TCP или IPC и клиентов.
+Для создания сервера см. [net.createServer()](), а для создания см. [net.createConnection()]().
 
 ## Поддержка IPC (_от англ_. inter-process communication)
 
@@ -10,25 +108,14 @@ IPC - обмен данными **между потоками** одного и�
 
 ### Идентификация путей для IPC-соединений.
 
-[net.connect()](), [net.createConnection()](), [server.listen()](), and [socket.connect()]() могут принимать аргумент (параметр) **path** для идентиикации (определения) конечных точек IPC. 
+[net.connect()](), [net.createConnection()](), [server.listen()](), and [socket.connect()]() могут принимать аргумент (параметр) **path** для идентиикации (определения) конечных точек IPC.
 
 > **Примечание переводчика (требуется проверка):**
 > Кончные точки IPC (endpoint) должны быь локальными. IPC связывает два потока одного локального процесса или два потока относящихся к разным процессам. Я мало знаком с IPC, и не знаю, можно ли связать 2 процесса, работающих на разных физических устройствах...
 
+В Unix локальный домен также известен как домен Unix. Путь — это путь к файловой системе. Он усекается до длины sizeof(sockaddr_un.sun_path) — 1, зависящей от ОС. Типичные значения — 107 байт в Linux и 103 байта в macOS. Если абстракция API Node.js создает сокет домена Unix, она также отключит сокет домена Unix. Например, net.createServer() может создать сокет домена Unix, а server.close() разъединит его. Но если пользователь создает сокет домена Unix за пределами этих абстракций, ему нужно будет удалить его. То же самое происходит, когда API-интерфейс Node.js создает сокет домена Unix, но затем программа аварийно завершает работу. Короче говоря, сокет домена Unix будет виден в файловой системе и будет существовать до тех пор, пока не будет отключен.
 
-В Unix локальный домен также известен как домен Unix.  Путь — это путь к файловой системе.  Он усекается до длины sizeof(sockaddr_un.sun_path) — 1, зависящей от ОС. Типичные значения — 107 байт в Linux и 103 байта в macOS.  Если абстракция API Node.js создает сокет домена Unix, она также отключит сокет домена Unix.  Например, net.createServer() может создать сокет домена Unix, а server.close() разъединит его.  Но если пользователь создает сокет домена Unix за пределами этих абстракций, ему нужно будет удалить его.  То же самое происходит, когда API-интерфейс Node.js создает сокет домена Unix, но затем программа аварийно завершает работу.  Короче говоря, сокет домена Unix будет виден в файловой системе и будет существовать до тех пор, пока не будет отключен.
-
-
-
-
-
-
-
-
-
-
-
-##### socket.remoteAddress
+#### socket.remoteAddress
 
 Введён в версии: v0.5.10
 
