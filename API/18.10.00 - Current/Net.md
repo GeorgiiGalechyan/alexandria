@@ -108,7 +108,7 @@
 > **Примечание переводчика (требуется проверка):**  
 > Скорее всего имеется в виду, что Node.js подстраивается под операционные системы и может эмулировать функционал (создавать абстракции) именованных каналов как в Windows и доменных сокетов как в Unix.
 
-## Идентификация путей для IPC-соединений
+### Идентификация путей для IPC-соединений
 
 Функции [`net.connect()`](), [`net.createConnection()`](), [`server.listen()`](), and [`socket.connect()`]() могут принимать в качестве аргумента (параметр) **path** для идентиикации (определения) конечных точек IPC.
 
@@ -145,7 +145,7 @@
 
 Объект **`BlockList`** можно передавать в параметры некоторых сетевых API для указания правил отключения **входящего** (кто к нам подключается) или **исходящего** (к кому мы хотим подключиться) доступа к определенным IP-адресам, диапазонам IP-адресов или подсетям IP. Иными словами - API Node.js позволяет создать черный список IP адресов по тем или иным правилам. Правила будут рассмотрены ниже.
 
-## **`blockList.addAddress(address[, type])`**
+### **`blockList.addAddress(address[, type])`**
 
 ###### Введён в версии: v15.0.0, v14.18.0
 
@@ -165,7 +165,7 @@
   blockList.addAddress('28.0.111.111') // default type = 'ipv4'
 ```
 
-## **`blockList.addRange(start, end[, type])`**
+### **`blockList.addRange(start, end[, type])`**
 
 ###### Введён в версии: v15.0.0, v14.18.0
 
@@ -184,7 +184,7 @@
   blockList.addRange('20.0.0.1', '20.0.0.10') // default type = 'ipv4'
 ```
 
-## **`blockList.addSubnet(net, prefix[, type])`**
+### **`blockList.addSubnet(net, prefix[, type])`**
 
 ###### Введён в версии: v15.0.0, v14.18.0
 
@@ -210,7 +210,7 @@
   blockList.addSubnet('123.123.123.', 27') // default type = 'ipv4'
 ```
 
-## **`blockList.check(address[, type])`**
+### **`blockList.check(address[, type])`**
 
 ###### Введён в версии: v15.0.0, v14.18.0
 
@@ -237,7 +237,7 @@ console.log(blockList.check('222.111.111.222'));  // выведет: false
 console.log(blockList.check('::ffff:7b7b:7b7b', 'ipv6')); // выведет: true
 ```
 
-## **`blockList.rules`**
+### **`blockList.rules`**
 
 ###### Введён в версии: v15.0.0, v14.18.0
 
@@ -265,8 +265,8 @@ console.log(blockList.rules)
 
 ---
 
-# Class: **`net.SocketAddress`**
+## Class: **`net.SocketAddress`**
 
-## **`new net.SocketAddress([options])`**
+### **`new net.SocketAddress([options])`**
 
 ###### Введён в версии: v15.0.0, v14.18.0
