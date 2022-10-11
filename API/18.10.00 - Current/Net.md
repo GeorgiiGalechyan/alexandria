@@ -100,7 +100,7 @@
 Встроенный модуль Net предоставляет набор API для **асинхронной** работы с сетями, создания потоковых (stream-based) серверов TCP или IPC, а так же клиентов.
 Для создания серверов см. [`net.createServer()`](), а для создания клиента см. [`net.createConnection()`]().
 
-### **Поддержка IPC**
+## **Поддержка IPC**
 
 **IPC** (_inter-process communication_) обеспечивает обмен данными **между потоками** одного или разных **процессов**. IPC также называют **межпроцессным взаимодействием**.
 Встроенный модуль **Net** поддерживает IPC с _именованными каналами_ (named pipe) Windows и _доменными сокетами_ Unix в других операционных системах.
@@ -270,3 +270,51 @@ console.log(blockList.rules)
 ### **`new net.SocketAddress([options])`**
 
 ###### Введён в версии: v15.0.0, v14.18.0
+
+- **`options:`** [`<Object>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
+  - **`address:`** [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) - сетевой адрес IPv4 или IPv6 в строковом формате (string). По умолчанию: `'127.0.0.1'`, если `family:` `ipv4` и `::`, если `family:` `'ipv6'`.
+  - **`family:`** [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) - либо `'ipv4'` or `'ipv6'`. **Default:** `'ipv4'`.
+  - **`flowlabel:`** [`<number>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) - метка потока IPv6. Используется, только если `family:` `'ipv6'`.
+  - **`port:`** [`<number>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) - номер IP-порта.
+
+> Объект `options` выглядит так:
+>
+> ```
+> { address: '127.0.0.1', family: 'ipv4', port: 3000 }
+> ```
+>
+> Можно получить весь объект `options` или одно из его свойств.
+
+### **`socketaddress.address`**
+
+###### Введён в версии: v15.0.0, v14.18.0
+
+Тип [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type)
+
+Позволяет получить значение поля `address` объекта `options`.
+
+### **`socketaddress.family`**
+
+###### Введён в версии: v15.0.0, v14.18.0
+
+Тип [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type)
+
+Позволяет получить значение поля `family` объекта `options`.
+
+### **`socketaddress.flowlabel`**
+
+###### Введён в версии: v15.0.0, v14.18.0
+
+Тип [`<number>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type)
+
+Позволяет получить значение поля `flowlabel` объекта `options`.
+
+### **`socketaddress.port`**
+
+###### Введён в версии: v15.0.0, v14.18.0
+
+Тип [`<number>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type)
+
+Позволяет получить значение поля `port` объекта `options`.
+
+---
