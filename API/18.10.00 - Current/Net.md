@@ -384,7 +384,7 @@ server.on('connection', (socket) => {
 
 Событие `'connection'` гененируется при установлении нового соединения. `socket` является экземпляром `net.Socket`.
 
-**Пример для серверного сокета:**
+**Пример работы события `'connection'`:**
 
 ```
 const net = require('net')
@@ -425,6 +425,8 @@ server.on('connection', (socket) => {
 
 Событие `'listening'` гененируется когда сервер был связан (bound) после вызова **[`server.listen()`]()**, т.е. событиие `'listening'` срабатывает после того как сервер начал прослушивать порт, и как следствие, сервер (server) стал готов принимать входящие соединения от клиентов (client).
 
+**Пример работы события `'listening'`:**
+
 ```
 const net = require('net')
 
@@ -455,9 +457,85 @@ server.on('listening', () => {
   - **`localAddress`** [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) - локальный адрес.
   - **`localPort`** [`<number>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) - локальный порт.
   - **`localFamily`** [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) - локальная семья (версия IP-протокола - IPv4 или IPv6.).
-  - **`remoteAddress`** [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) - удалённый адретс.
-  - **`remotePort`** [`<number>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) - удаленный порт.
-  - **`remoteFamily`** [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) - IP-протокол. `IPv4` или `IPv6`.
+  - **`remoteAddress`** [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) - удалённый адрес (адрес клиентского сокета, который подключен к серверному сокету).
+  - **`remotePort`** [`<number>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) - удаленный порт (порт клиентского сокета, который подключен к серверному сокету)..
+  - **`remoteFamily`** [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) - удаленный IP-протокол (клиентского сокета). `IPv4` или `IPv6`.
+
+**Пример работы события `'drop'`:**
+
+Создадим файл **_server.js_**:
+
+```
+const net = require('net')
+
+const server = net
+  .createServer((socket) => {
+    server.maxConnections = 1 // указываем максимальное количество соединений для сервера
+
+    // при подклюении клиента к серверу выведем в консоль
+    const host = server.address().address
+    const port = server.address().port
+    console.log(`2. К сокету ${host}:${port} подключился клиент.`)
+  })
+  .listen(2000, () => {
+    const host = server.address().address
+    const port = server.address().port
+    console.log(`1. Сервер слушает сокет ${host}:${port}`)
+  })
+
+server.on('drop', (data) => {
+  console.log(
+    '3. ' + JSON.stringify(data)
+  ) /* при отбрасывании сервером входящего соединения получим объект data, содержащий сведения о отброшенном соединении и выведем в консоль объект data в формате json*/
+})
+```
+
+Создадим два файла **_client-1.js_** и **_client-2.js_** с одинаковым кодом:
+
+```
+const net = require('net')
+
+const options = { host: '127.0.0.1', port: 2000 } // задаем адрес серверного сокета к которому хотим присоединиться
+
+const client = new net.Socket() // создаём клиентский сокет
+
+client.connect(options, () => {}) // подключаем клиентский сокет к серверному
+
+```
+
+> **Примечание переводчика:**  
+> Указанные ниже данные (сообщения в консоли) получены переводчиком при запуске кода на своём ноутбуке.  
+> Обратите внимание в файле **_server.js_** на параметр `server.maxConnections = 1` - т.е. сервер может поддерживать **только одно соединение**, остальные попытки подключения к серверному сокету **будут отброшены**, что и вызовет генерацию события `'drop'`!
+> Обратите внимание, что **для удобства** при обработке события 'drop' мы выводим в консоль:
+>
+> ```
+> console.log('3. ' + JSON.stringify(data)) //
+> ```
+>
+> т.е. объект data представлен в формате json и мы привели его к строке (string) вызвав JSON.stringify(data). Однако мы можем вывести в консоль просто объект `data`, но в этом случае нужно убрать из команды `console.log()` строку `'3. '` и выводить в консоль только объект `data`:
+>
+> ```
+> console.log(data)
+> ```
+>
+> без приведения его в строке.
+
+1. Запускаем файл **_server.js_** и получаем в консоли:
+
+- 1. Сервер слушает сокет :::2000
+
+2. Запускае файл **_client-1.js_** и полуаем в консоли:
+
+- 2. К сокету :::2000 подключился клиент.
+
+3. Запускае файл **_client-1.js_** и полуаем в консоли:
+
+- 3. {"localAddress":"::ffff:127.0.0.1","localPort":2000,"localFamily":"IPv6","remoteAddress":"::ffff:127.0.0.1","remotePort":53670,"remoteFamily":"IPv6"}
+
+```
+1. Сервер слушает сокет 127.0.0.1:2000
+2. К сокету 127.0.0.1:2000 подключился клиент.
+3. {"localAddress":"::ffff:127.0.0.1","localPort":2000,"localFamily":"IPv6","remoteAddress":"::ffff:127.0.0.1","remotePort":53670,"remoteFamily":"IPv6"}
 
 ### **`server.address()`**
 
@@ -472,3 +550,18 @@ server.on('listening', () => {
 </details>
 
 - **Возвращает (return)** [`<Object>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) | [`<string>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) | [`<null>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#null_type)
+
+Возвращает объект, который содердит связанный (bound) адрес (хост), имя семейства адресов (IPv4 или IPv6) и порт сервера. Node.js обращается к операционнй системе и получает из неё информацю об IP-сокете, который прослушивает сервер. `server.address()` можно использовать, чтобы узнать, какой порт был назначен когда IP адресс назначается операционной системой.
+
+> **Примечание переводчика:**
+> Есть ситуации, когда мы не задам IP-адрес явно, а его назначает операционная система. `server.address()` будет особенно полезен, когда мы хотим получить IP-адрес такого сокета.
+> Применительно к IPC, мы можем получить имя именнованного канала Windows или доменного сокета Unix.
+
+```
+
+{ port: 3000, family : 'IPv4', address: '127.0.0.1' }
+
+```
+
+Для сервера, прослушивающего канал (pipe) или сокет домена Unix, имя возвращается в виде строки (string).
+```
