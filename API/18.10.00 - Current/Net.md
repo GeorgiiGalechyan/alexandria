@@ -277,13 +277,13 @@ console.log(blockList.rules)
   - **`flowlabel:`** [`<number>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) - метка потока IPv6. Используется, только если `family:` `'ipv6'`.
   - **`port:`** [`<number>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) - номер IP-порта.
 
-> Объект `options` выглядит так:
->
-> ```
-> { address: '127.0.0.1', family: 'ipv4', port: 3000 }
-> ```
->
-> Можно получить весь объект `options` или одно из его свойств.
+Объект `options` выглядит так:
+
+```
+{ address: '127.0.0.1', family: 'ipv4', port: 3000 }
+```
+
+Можно получить весь объект `options` или одно из его свойств.
 
 ### **`socketaddress.address`**
 
@@ -317,4 +317,55 @@ console.log(blockList.rules)
 
 Позволяет получить значение поля `port` объекта `options`.
 
+**Пример испольщования :** **`net.SocketAddress`**
+
+```
+const net = require('net')
+
+const server = net
+  .createServer((socket) => {
+    socket.write('Привет от Сервера!)')
+  })
+  .listen(2000, () => {
+    console.log(`Server listening...`)
+  })
+
+// Код ниже сработает при подключении клиента к серверу
+
+server.on('connection', (socket) => {
+
+  // получаем объект options и сохраняем его в переменную address
+  const address = socket.address()
+
+  // получим значение полей address и port объекта options
+  console.log(`К сокету ${address.address}:${address.port} подключился новый пользователь.`) // К сокету 127.0.0.1:2000 подключился новый пользователь.
+})
+```
+
 ---
+
+## Class: **`net.Server`**
+
+###### Введён в версии: v0.1.90
+
+Расширяет (extends) [<EventEmitter>](https://nodejs.org/api/events.html#class-eventemitter)
+
+Этот класс используется для создания сервера TCP или IPC.
+
+> **Рекоммендация переводчика:**  
+> Если вы ещё не знакомы с паттерном **EventEmitter**, то рекоммендую прочитать статью на Medium: ['Паттерны: Event Emitter. Реализация на JavaScript'](https://medium.com/@an_parubets/pattern-event-emitter-js-9378aa082e86).  
+> Документация Node.js модуля **[Events](https://nodejs.org/api/events.html)** хорошо раскрывает концецию EventEmitter и описывает встроенный класс EventEmitter, но для новичков документация может быть сложна для понимания. Не стесняйтесь параллельно с изучением документации Node.js пользоваться сторонними материалами.
+
+### **`new net.Server([options][, connectionListener])`**
+
+- **`options`** [`<Object>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) - смотри [`net.createServer([options][, connectionListener])`]().
+- **`connectionListener`** [`<Function>`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) - Автоматически устанавливается в качестве слушателя для события (event) [`'connection'`]().
+- Возвращает (returns): [<net.Server>]()
+
+**`net.Server`** - это EventEmitter со следующими событиями:
+
+### **Event:** **`'close'`**
+
+###### Введён в версии: v0.5.0
+
+Подаёт сигнал (emitted ) при закрытии сервера. Если соединения существуют, это событие не генерируется до тех пор, пока не будут завершены все соединения.
