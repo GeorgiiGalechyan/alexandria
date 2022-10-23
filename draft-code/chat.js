@@ -1,6 +1,6 @@
-let server = require('./server') // let server = new net.Server().listen(2000)
 let client = require('./client') // let client = new net.Socket()
 let client2 = require('./client2') // let client2 = new net.Socket()
+let server = require('./server') // let server = new net.Server().listen(2000)
 
 server.on('listening', () => console.log('Server listening'))
 
