@@ -4,6 +4,8 @@ let server = require('./server') // let server = new net.Server().listen(2000)
 
 server.on('listening', () => console.log('Server listening'))
 
+server.on('connection', (socket) => console.log(socket.remoteAddress))
+
 client.on('connect', () => console.log('Client connected'))
 client2.on('connect', () => console.log('Client2 connected'))
 
