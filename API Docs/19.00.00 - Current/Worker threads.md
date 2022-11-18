@@ -13,6 +13,14 @@
   - [worker.setEnvironmentData(key[, value])](#workersetenvironmentdatakey-value)
   - [worker.threadId](#workerthreadid)
   - [worker.workerData](#workerworkerdata)
+  - [Class: BroadcastChannel extends EventTarget](#class-broadcastchannel-extends-eventtarget)
+    - [new BroadcastChannel(name)](#new-broadcastchannelname)
+    - [broadcastChannel.close()](#broadcastchannelclose)
+    - [broadcastChannel.onmessage](#broadcastchannelonmessage)
+    - [broadcastChannel.onmessageerror](#broadcastchannelonmessageerror)
+    - [broadcastChannel.postMessage(message)](#broadcastchannelpostmessagemessage)
+    - [broadcastChannel.ref()](#broadcastchannelref)
+    - [broadcastChannel.unref()](#broadcastchannelunref)
   - [Class: MessageChannel](#class-messagechannel)
   - [Class: MessagePort](#class-messageport)
     - [Event: 'close'](#event-close)
@@ -116,20 +124,18 @@ if (isMainThread) {
 Внутри рабочего потока `worker.getEnvironmentData()` возвращает клон данных, переданных в `worker.setEnvironmentData()` порождающего потока. Каждый `new Worker` получает свою собственную копию данных об окружении автоматически.
 
 ```
-const {
-  Worker,
-  isMainThread,
-  setEnvironmentData,
-  getEnvironmentData,
-} = require('node:worker_threads');
+const { Worker, isMainThread, setEnvironmentData, getEnvironmentData } = require('node:worker_threads')
 
 if (isMainThread) {
-  setEnvironmentData('Hello', 'World!');
+  // Передаём key='anyKey' и value='anyValue' в текущий поток
+  // во всее новые экземпляры класса Worker
+  setEnvironmentData('anyKey', 'anyValue')
 
-  // Это повторно загружает текущий файл внутри рабочего экземпляра.
-  const worker = new Worker(__filename);
+  // Повторно запускаем текущий файл в новом потоке worker
+  const worker = new Worker(__filename)
 } else {
-  console.log(getEnvironmentData('Hello'));  // Выведет 'World!'.
+  // Получаем данные из потока worker
+  console.log(getEnvironmentData('anyKey')) // Выведет 'anyValue!'
 }
 ```
 
@@ -212,29 +218,178 @@ console.log(typedArray2) // typedArray2 также не затронут.
 
 **Добавлен в версии:** v10.5.0
 
+- [\<null>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#null) | [\<MessagePort>](#class-messageport)
+
+Если этот поток является экземпляром класса [Worker](#class-worker), то через экземпляр класса [`MessagePort`](#class-messageport) можно обеспечить связь с родительским потоком. Сообщения, отправленные с помощью `parentPort.postMessage()`, доступны в родительском потоке с помощью `worker.on('message')`, а сообщения, отправленные из родительского потока с помощью `worker.postMessage()`, доступны в этом потоке с помощью `parentPort.on('message')`.
+
+```
+const { Worker, isMainThread, parentPort } = require('node:worker_threads')
+
+if (isMainThread) {
+  // Повторно вызываеем файл, но уже внутри потока
+  const worker = new Worker(__filename)
+
+  // При получении message выведет его в консоль
+  worker.once('message', (message) => {
+    console.log(message) // Выведет Hello world!
+  })
+
+  // Отправляет сообщение 'Hello World!'
+  worker.postMessage('Hello World!')
+} else {
+  // После получения message из родительского потока,
+  // отправим message обратно в родительский поток.
+  parentPort.once('message', (message) => {
+    parentPort.postMessage(message)
+  })
+}
+```
+
 ## worker.receiveMessageOnPort(port)
 
-**Добавлен в версии:**
+<details> <summary> История версий</summary>
+
+| **Версия** | **Изменения**                                                    |
+| ---------- | ---------------------------------------------------------------- |
+| v15.12.0   | Аргумент порта теперь также может ссылаться на BroadcastChannel. |
+| v12.3.0    | Добавлен в Node.js                                               |
+
+</details>
+
+- **`port`** [\<MessagePort>](#class-messageport) | [\<BroadcastChannel>](#class-broadcastchannel-extends-eventtarget)
+- **Returns:** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) | [\<undefined>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#undefined)
+
+![Структура Message Channel](../../img//msg-channel-structure.png)
+
+Получение одного сообщения от данного `MessagePort`. Если сообщение отсутствует, возвращается undefined, в противном случае возвращается объект с единственным свойством message, которое содержит полезную нагрузку сообщения, соответствующую самому старому сообщению в очереди MessagePort.
+
+```
+const { MessageChannel, receiveMessageOnPort } = require('node:worker_threads')
+
+// Создаём 2 порта, между которыми открывается канал
+const { port1, port2 } = new MessageChannel()
+
+// Отправляем message с port1 на port2
+port1.postMessage({ hello: 'world' })
+
+// Выведет { message: { hello: 'world' } }
+console.log(receiveMessageOnPort(port2))
+
+// Выведет undefined
+console.log(receiveMessageOnPort(port2))
+```
+
+При использовании этой функции событие `'message'` не испускается и слушатель `onmessage` не вызывается.
 
 ## worker.resourceLimits
 
-**Добавлен в версии:**
+**Добавлен в версии:** v13.2.0, v12.16.0
+
+- [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object)
+  - **`maxYoungGenerationSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  - **`maxOldGenerationSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  - **`codeRangeSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  - **`stackSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+
+Предоставляет набор ограничений ресурсов JS-движка внутри данного рабочего потока. Если конструктору [Worker](#class-worker) был передан параметр `resourceLimits`, этот параметр соответствует его значениям.
+
+Если этот параметр используется в главном потоке, его значением будет пустой объект.
 
 ## worker.SHARE_ENV
 
-**Добавлен в версии:**
+**Добавлен в версии:** v11.14.0
 
-- [\<null>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures) | [\<MessagePort>](#class-messageport)
+- [\<symbol>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85_%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB_symbol)
+
+Специальное значение, которое может быть передано в качестве параметра `env` конструктора [Worker](#class-worker), чтобы указать, что текущий поток и рабочий поток должны иметь общий доступ на чтение и запись к одному и тому же набору переменных окружения.
+
+```
+const { Worker, SHARE_ENV } = require('node:worker_threads')
+
+new Worker('process.env.SET_IN_WORKER = "foo"', { eval: true, env: SHARE_ENV }).on('exit', () => {
+  console.log(process.env.SET_IN_WORKER) // Выведет 'foo'.
+})
+```
 
 ## worker.setEnvironmentData(key[, value])
 
-**Добавлен в версии:**
+<details><summary> История версий </summary>
+
+| Версии             | Изменения               |
+| ------------------ | ----------------------- |
+| v17.5.0, v16.15.0  | No longer experimental. |
+| v15.12.0, v14.18.0 | Добавлен в Node.js      |
+
+</details>
+
+- **`key`** [\<any>]() Любое произвольное, клонируемое значение JavaScript, которое может быть использовано в качестве ключа [\<Map>]().
+- **`value`** [\<any>]() Любое произвольное, клонируемое значение JavaScript, которое будет клонировано и автоматически передано всем новым экземплярам класса `Worker`. Если значение передано как `undefined`, все ранее установленные значения для `key` будут удалены.
+
+API `worker.setEnvironmentData()` устанавливает содержимое `worker.getEnvironmentData()` в текущем потоке и во всех новых экземплярах класса `Worker`, созданных из текущего контекста.
+
+```
+const { Worker, isMainThread, setEnvironmentData, getEnvironmentData } = require('node:worker_threads')
+
+if (isMainThread) {
+  // Передаём key='anyKey' и value='anyValue' в текущий поток
+  // во всее новые экземпляры класса Worker
+  setEnvironmentData('anyKey', 'anyValue')
+
+  // Повторно запускаем текущий файл в новом потоке worker
+  const worker = new Worker(__filename)
+} else {
+  // Получаем данные из потока worker
+  console.log(getEnvironmentData('anyKey')) // Выведет 'anyValue!'
+}
+```
 
 ## worker.threadId
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+- [\<integer>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+
+Целочисленный идентификатор для текущего потока. Для соответствующего рабочего объекта (если таковой имеется) он доступен как [`worker.ThreadId`](#workerthreadid-1). Это значение уникально для каждого экземпляра класса [`Worker`](#class-worker) внутри одного процесса.
 
 ## worker.workerData
+
+**Добавлен в версии:** v10.5.0
+
+Произвольное JavaScript-значение, содержащее клон данных, переданных в конструктор класса `Worker` этого потока.
+
+Данные клонируются как при использовании функции [`postMessage()`](#workerpostmessagevalue-transferlist), в соответствии с [алгоритмом структурированного клонирования HTML](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+
+```
+const { Worker, isMainThread, workerDat } = require('node:worker_threads')
+
+if (isMainThread) {
+  // Повторно запускаем файл в новом потоке worker
+  // и как параметр, передаем в него workerData
+  const worker = new Worker(__filename, { workerData: 'anyData' })
+} else {
+  // Получаем workerData
+  console.log(workerData) // Выведет 'anyData'.
+}
+
+```
+
+# Осталось
+
+## Class: BroadcastChannel extends EventTarget
+
+### new BroadcastChannel(name)
+
+### broadcastChannel.close()
+
+### broadcastChannel.onmessage
+
+### broadcastChannel.onmessageerror
+
+### broadcastChannel.postMessage(message)
+
+### broadcastChannel.ref()
+
+### broadcastChannel.unref()
 
 **Добавлен в версии:**
 
