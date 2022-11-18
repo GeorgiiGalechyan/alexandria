@@ -1,6 +1,7 @@
 <details> <summary> Содержание </summary>
 
 - [Worker threads](#worker-threads-рабочие-потоки)
+  - [Введение](#введение)
   - [worker.getEnvironmentData(key)](#workergetenvironmentdatakey)
   - [worker.isMainThread](#workerismainthread)
   - [worker.markAsUntransferable(object)](#workermarkasuntransferableobject)
@@ -52,6 +53,8 @@
 
 # Worker threads (Рабочие потоки)
 
+## Введение
+
 **Исходный код:** [lib/worker_threads.js](https://github.com/nodejs/node/blob/v14.21.1/lib/worker_threads.js)
 
 Модуль `worker_threads` позволяет использовать потоки, параллельно выполняющие JavaScript. Чтобы получить к нему доступ пропишите:
@@ -94,7 +97,7 @@ if (isMainThread) {
 
 При реализации пула рабочих потоков используйте [`AsyncResource`](https://nodejs.org/dist/latest-v19.x/docs/api/async_hooks.html#class-asyncresource) API, предоставляющий инструменты диагностики (например, для предоставления асинхронных трассировок стека) для отслеживания взаимосвязи между задачами (tasks ) и их результатами. Пример реализации см. в разделе ["Использование AsyncResource для пула рабочих потоков"](https://nodejs.org/dist/latest-v19.x/docs/api/async_context.html#using-asyncresource-for-a-worker-thread-pool) в документации `async_hooks`.
 
-По умолчанию, рабочие потоки наследуют параметры, не относящиеся к конкретному процессу. Обратитесь к [параметрам конструктора Worker (new Worker)](https://nodejs.org/dist/latest-v19.x/docs/api/worker_threads.html#new-workerfilename-options), чтобы узнать, как настроить параметры рабочего потока, в частности параметры argv и execArgv.
+По умолчанию, рабочие потоки наследуют параметры, не относящиеся к конкретному процессу. Обратитесь к [параметрам конструктора Worker (new Worker)](#new-workerfilename-options), чтобы узнать, как настроить параметры рабочего потока, в частности параметры argv и execArgv.
 
 ## worker.getEnvironmentData(key)
 
@@ -107,8 +110,8 @@ if (isMainThread) {
 
 </details>
 
-- **`key`** [\<any>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types)- Любое произвольное, клонируемое значение JavaScript, которое может быть использовано в качестве ключа [\<Map>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
-- Returns: [\<any>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Data_types)
+- **`key`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)- Любое произвольное, клонируемое значение JavaScript, которое может быть использовано в качестве ключа [\<Map>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
+- Returns: [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)
 
 Внутри рабочего потока `worker.getEnvironmentData()` возвращает клон данных, переданных в `worker.setEnvironmentData()` порождающего потока. Каждый `new Worker` получает свою собственную копию данных об окружении автоматически.
 
@@ -134,9 +137,9 @@ if (isMainThread) {
 
 **Добавлен в версии:** v10.5.0
 
-- [\<boolean>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type)
+- [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D0%B1%D1%83%D0%BB%D0%B5%D0%B2%D1%8B%D0%B9_%D1%82%D0%B8%D0%BF_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)
 
-Возвразает `true`, если этот код не выполняется внутри потока [Worker](#class-worker).
+Возвращает `true`, если этот код не выполняется внутри потока [Worker](#class-worker).
 
 ```
 const { Worker, isMainThread } = require('node:worker_threads')
@@ -191,82 +194,178 @@ console.log(typedArray2) // typedArray2 также не затронут.
 
 ## worker.moveMessagePortToContext(port, contextifiedSandbox)
 
+**Добавлен в версии:** v14.5.0, v12.19.0
+
+- **`port`** [\<MessagePort>](#class-messageport) Порт для передачи сообщений.
+
+- **`contextifiedSandbox`** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) [Контекстифицированный](https://nodejs.org/dist/latest-v19.x/docs/api/vm.html#what-does-it-mean-to-contextify-an-object) объект, возвращаемый методом `vm.createContext()`.
+
+- **Returns:** [\<MessagePort>](#class-messageport)
+
+Переносит `MessagePort` в другой контекст [виртуальной машины](https://nodejs.org/dist/latest-v19.x/docs/api/vm.html). Исходный объект `порта` становится непригодным для использования, и его место занимает возвращенный экземпляр `MessagePort`.
+
+Возвращенный `MessagePort` является объектом в целевом (target) контексте и наследуется от его глобального класса `Object`. Объекты, передаваемые прослушивателю [`port.onmessage()`](#portpostmessagevalue-transferlist), также создаются в целевом (target) контексте и наследуются от его глобального класса `Object`.
+
+Однако созданный `MessagePort` больше не наследуется от [EventTarget](https://developer.mozilla.org/ru/docs/Web/API/EventTarget), и для получения событий с его помощью можно использовать только [`port.onmessage()`](#portpostmessagevalue-transferlist)
+
 ## worker.parentPort
+
+**Добавлен в версии:** v10.5.0
 
 ## worker.receiveMessageOnPort(port)
 
+**Добавлен в версии:**
+
 ## worker.resourceLimits
+
+**Добавлен в версии:**
 
 ## worker.SHARE_ENV
 
+**Добавлен в версии:**
+
+- [\<null>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures) | [\<MessagePort>](#class-messageport)
+
 ## worker.setEnvironmentData(key[, value])
+
+**Добавлен в версии:**
 
 ## worker.threadId
 
+**Добавлен в версии:**
+
 ## worker.workerData
+
+**Добавлен в версии:**
 
 ## Class: MessageChannel
 
+**Добавлен в версии:**
+
 ## Class: MessagePort
+
+**Добавлен в версии:**
 
 ### Event: 'close'
 
+**Добавлен в версии:**
+
 ### Event: 'message'
 
+**Добавлен в версии:**
+
 ### Event: 'messageerror'
+
+**Добавлен в версии:**
 
 ### port.close()
 
+**Добавлен в версии:**
+
 ### port.postMessage(value[, transferList])
+
+**Добавлен в версии:**
 
 #### Рекоммендации при передаче TypedArrays и Buffers
 
+**Добавлен в версии:**
+
 ### port.ref()
+
+**Добавлен в версии:**
 
 ### port.start()
 
+**Добавлен в версии:**
+
 ### port.unref()
+
+**Добавлен в версии:**
 
 ## Class: Worker
 
+**Добавлен в версии:**
+
 ### new Worker(filename[, options])
+
+**Добавлен в версии:**
 
 ### Event: 'error'
 
+**Добавлен в версии:**
+
 ### Event: 'exit'
+
+**Добавлен в версии:**
 
 ### Event: 'message'
 
+**Добавлен в версии:**
+
 ### Event: 'messageerror'
+
+**Добавлен в версии:**
 
 ### Event: 'online'
 
+**Добавлен в версии:**
+
 ### worker.getHeapSnapshot()
+
+**Добавлен в версии:**
 
 ### worker.performance
 
+**Добавлен в версии:**
+
 #### performance.eventLoopUtilization([utilization1[, utilization2]])
+
+**Добавлен в версии:**
 
 ### worker.postMessage(value[, transferList])
 
+**Добавлен в версии:**
+
 ### worker.ref()
+
+**Добавлен в версии:**
 
 ### worker.resourceLimits
 
+**Добавлен в версии:**
+
 ### worker.stderr
+
+**Добавлен в версии:**
 
 ### worker.stdin
 
+**Добавлен в версии:**
+
 ### worker.stdout
+
+**Добавлен в версии:**
 
 ### worker.terminate()
 
+**Добавлен в версии:**
+
 ### worker.threadId
+
+**Добавлен в версии:**
 
 ### worker.unref()
 
+**Добавлен в версии:**
+
 ## Примечания
+
+**Добавлен в версии:**
 
 ### Синхронная блокировка stdio
 
+**Добавлен в версии:**
+
 ### Запуск рабочих потоков из скриптов предварительной загрузки
+
+**Добавлен в версии:**
