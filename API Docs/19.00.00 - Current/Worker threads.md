@@ -118,7 +118,7 @@ if (isMainThread) {
 
 </details>
 
-- **`key`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)- Любое произвольное, клонируемое значение JavaScript, которое может быть использовано в качестве ключа [\<Map>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
+- **`key`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Любое произвольное, клонируемое значение JavaScript, которое может быть использовано в качестве ключа [\<Map>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
 - Returns: [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)
 
 Внутри рабочего потока `worker.getEnvironmentData()` возвращает клон данных, переданных в `worker.setEnvironmentData()` порождающего потока. Каждый `new Worker` получает свою собственную копию данных об окружении автоматически.
@@ -373,25 +373,137 @@ if (isMainThread) {
 
 ```
 
-# Осталось
-
 ## Class: BroadcastChannel extends EventTarget
+
+<details> <summary>История версий</summary>
+
+| Версия  | Изменения                    |
+| ------- | ---------------------------- |
+| v18.0.0 | Больше не экспериментальный. |
+| v15.4.0 | Добавлен в Node.js           |
+
+</details>
+
+Экземпляры класса `BroadcastChannel` позволяют устанавливать асинхронную связь "один ко многим" со всеми другими экземплярами класса `BroadcastChannel`, привязанными к тому же имени канала.
+
+> **Примечание переводчика:**  
+> Параметр `name` даёт имя экземпляру класса `BroadcastChannel`, для того чтобы другие экземпляры `BroadcastChannel`
+> могли подключиться к нашему каналу, идентифицировав его по имени.
+
+```
+'use strict';
+
+const { isMainThread, BroadcastChannel, Worker } = require('node:worker_threads')
+
+// Создаем новый канал
+const bc = new BroadcastChannel('Hello')
+
+if (isMainThread) {
+  let c = 0
+  bc.onmessage = (event) => {
+    console.log(event.data) // выведет 'Сообщение для каждого Worker'
+    // закрываем канал когда сообщение будет получено 10 раз
+    if (++c === 10) bc.close()
+  }
+  // создаём 10 рабочих потоков, и в каждом запускаем этот файл
+  for (let n = 0; n < 10; n++) new Worker(__filename)
+} else {
+  //  BroadcastChannel отправляет сообщение, коорое
+  // получат все экземпляры Worker
+  bc.postMessage('Сообщение для каждого Worker')
+  bc.close
+}
+```
 
 ### new BroadcastChannel(name)
 
+**Добавлен в версии:** v15.4.0
+
+- **`name`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Имя (наименование) канала, к которому нужно подключиться. Разрешено любое JavaScript-значение, которое может быть преобразовано в строку с помощью `${name}`.
+
+```
+const { BroadcastChannel } = require('node:worker_threads')
+
+const bc1 = new BroadcastChannel('test-channel')
+const bc2 = new BroadcastChannel('test-channel')
+const bc3 = new BroadcastChannel('another channel')
+
+bc1.onmessage = (event) => {
+  console.log(event.target)
+  console.log(event.data)
+}
+
+bc2.onmessage = (event) => {
+  console.log(event.target)
+  console.log(event.data)
+}
+
+bc3.onmessage = (event) => {
+  console.log(event.target)
+  console.log(event.data)
+}
+
+bc1.postMessage('Сообщение от bc1 для "test-channel"')
+bc2.postMessage('Сообщение от bc2 для "test-channel"')
+bc3.postMessage('Сообщение от bc3 для "another-channel"')
+
+// В консоли выведет:
+//
+// BroadcastChannel { name: 'test-channel', active: true }
+// Сообщение от bc1 для "test-channel"
+//
+// BroadcastChannel { name: 'test-channel', active: true }
+// Сообщение от bc2 для "test-channel"
+```
+
 ### broadcastChannel.close()
+
+**Добавлен в версии:** 15.4.0
+
+Завершает `BroadcastChannel` соединение.
 
 ### broadcastChannel.onmessage
 
+**Добавлен в версии:** 15.4.0
+
+- Type: [\<Function>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function) Вызывается с одним аргументом `MessageEvent` при получении сообщения.
+
+```
+const { BroadcastChannel } = require('node:worker_threads')
+
+const bc = new BroadcastChannel('test-channel')
+
+bc.onmessage = (event) => {
+  console.log(event.target)
+  console.log(event.data)
+}
+```
+
 ### broadcastChannel.onmessageerror
+
+**Добавлен в версии:** 15.4.0
+
+- Type: [\<Function>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function) Событие вызывается когда получено сообщение, которое не может быть десериализовано., т.е. при поступлении некорректного сообщения.
 
 ### broadcastChannel.postMessage(message)
 
+**Добавлен в версии:** 15.4.0
+
+- **`message `** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Любое клонируемое JavaScript-значение.
+
 ### broadcastChannel.ref()
+
+**Добавлен в версии:** 15.4.0
+
+Противоположность `unref()`. Если ранее `BroadcastChannel` был `unref()`, то вызов `ref()` запретит программе завершить работу, если это единственный оставшийся активный обработчик (поведение по умолчанию). Если же порт уже имеет значение `ref()`, то повторный вызов `ref()` не будет имеет никакого эффекта.
 
 ### broadcastChannel.unref()
 
-**Добавлен в версии:**
+**Добавлен в версии:** 15.4.0
+
+Вызов `unref()` на `BroadcastChannel` позволяет потоку завершить работу, даже если это единственный активный обработчик в системе событий. Если канал `BroadcastChannel` уже был `unref()`, повторный вызов `unref()` не будет иметь никакого эффекта.
+
+# Осталось
 
 ## Class: MessageChannel
 
