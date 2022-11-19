@@ -1,20 +1,9 @@
-const { isMainThread, BroadcastChannel, Worker } = require('node:worker_threads')
+const { MessageChannel } = require('node:worker_threads')
+const { port1, port2 } = new MessageChannel();
 
-// Создаем новый канал
-const bc = new BroadcastChannel('Hello')
+port1.onmessage = ({ data }) => console.log(data);
 
-if (isMainThread) {
-  let c = 0
-  bc.onmessage = (event) => {
-    console.log(event.data) // выведет 'Сообщение для каждого Worker'
-    // закрываем канал когда сообщение будет получено 10 раз
-    if (++c === 10) bc.close()
-  }
-  // создаём 10 рабочих потоков, и в каждом запускаем этот файл
-  for (let n = 0; n < 10; n++) new Worker(__filename)
-} else {
-  //  BroadcastChannel отправляет сообщение, коорое
-  // получат все экземпляры Worker
-  bc.postMessage('Сообщение для каждого Worker')
-  bc.close
-}
+// Встроенный объект URL не клонируется и не передастся
+port2.postMessage(new URL('https://example.org'));
+
+// Выведет пустой объект: { }.

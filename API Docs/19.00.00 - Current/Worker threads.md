@@ -29,6 +29,8 @@
     - [port.close()](#portclose)
     - [port.postMessage(value[, transferList])](#portpostmessagevalue-transferlist)
       - [Рекоммендации при передаче "TypedArrays" и "Buffers"](#рекоммендации-при-передаче-typedarrays-и-buffers)
+      - [Рекоммендации при клонировании объектов с помощью прототипов, классов и методов доступа](#рекоммендации-при-клонировании-объектов-с-помощью-прототипов-классов-и-методов-доступа)
+    - [port.hasRef()](#porthasref)
     - [port.ref()](#portref)
     - [port.start()](#portstart)
     - [port.unref()](#portunref)
@@ -503,51 +505,293 @@ bc.onmessage = (event) => {
 
 Вызов `unref()` на `BroadcastChannel` позволяет потоку завершить работу, даже если это единственный активный обработчик в системе событий. Если канал `BroadcastChannel` уже был `unref()`, повторный вызов `unref()` не будет иметь никакого эффекта.
 
-# Осталось
-
 ## Class: MessageChannel
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+Экземпляры класса `worker.MessageChannel` представляют асинхронный двусторонний канал связи. `MessageChannel` не имеет собственных методов. `new MessageChannel()` дает объект со свойствами `port1` и `port2`, которые ссылаются на связанные экземпляры класса [MessagePort](#class-messageport).
+
+```
+const { MessageChannel } = require('node:worker_threads')
+
+// Создаём 2-сторонний канал с портами port1 и port2
+const { port1, port2 } = new MessageChannel()
+
+// Создадим слушатель на событие 'message'
+// вызовется при получении port1 сообщения
+port1.on('message', (message) => console.log('Получено', message))
+
+// Отправим сообщение с port1 на port2
+port2.postMessage({ foo: 'bar' })
+
+// В консоль выведется: Получено { foo: 'bar' }
+```
 
 ## Class: MessagePort
 
-**Добавлен в версии:**
+<details><summary> История версий </summary>
+
+| Версия  | Изменения                                                               |
+| ------- | ----------------------------------------------------------------------- |
+| v14.7.0 | Теперь этот класс наследуется от `EventTarget`, а не от `EventEmitter`. |
+| v10.5.0 | Добавлен в Node.js                                                      |
+
+</details>
+
+- Наследуется от (extends): [\<EventTarget>](https://nodejs.org/dist/latest-v19.x/docs/api/events.html#class-eventtarget)
+
+Экземпляры класса `worker.MessagePort` представляют собой один конец (порт) асинхронного двустороннего канала связи. Его можно использовать для передачи структурированных данных, областей памяти и других экземпляров `MessagePort` между разными рабочими потоками ([Workers](#class-worker)).
+
+Эта реализация (implementation) соответствует реализации[`MessagePorts` в браузере](https://developer.mozilla.org/en-US/docs/Web/API/MessagePort).
 
 ### Event: 'close'
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+Событие `'close'` генерируется после отключения (disconnected) любой стороны канала.
+
+```
+const { MessageChannel } = require('node:worker_threads')
+
+const { port1, port2 } = new MessageChannel()
+
+port2.on('message', (msg) => console.log(msg))
+port2.on('close', () => console.log('Закрыт!'))
+
+port1.postMessage('Любое сообщение...')
+port1.close()
+
+// Выведет в консоль:
+// Любое сообщение...
+// Закрыт!
+```
 
 ### Event: 'message'
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+- value [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures) Передаваемое значение
+
+Событие `'message'` генерируется для любого входящего сообщения, содержащего клонированный вход [`port.postMessage()`](#portpostmessagevalue-transferlist).
+
+Слушатели этого события получают клон параметра `value`, переданного в `postMessage()` и без дополнительных аргументов.
 
 ### Event: 'messageerror'
 
-**Добавлен в версии:**
+**Добавлен в версии:** v14.5.0, v12.19.0
+
+- error [\<Error>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Error) Объект Error
+
+Событие 'messageerror' возникает при неудачной десериализации сообщения.
+
+В настоящее время, событие `'messageerror'` генерируется при возникновении ошибки при создании экземпляра опубликованного/отправленного (posted) JS-объекта на принимающей стороне. Такие ситуации редки, но могут произойти, например, когда определенные объекты API Node.js получены в `vm.Context` (где API Node.js в настоящее время недоступны).
 
 ### port.close()
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+Отключает дальнейшую отправку сообщений по обе стороны соединения. Этот метод может быть вызван, когда коммуникация через этот `MessagePort` больше не требуется.
+
+Событие [`'close'`](#event-close) генерируется в обоих экземплярах `MessagePort`, которые являются частью канала.
 
 ### port.postMessage(value[, transferList])
 
-**Добавлен в версии:**
+<details><summary> История версий </summary>
+
+| Версия             | Изменения                                              |
+| ------------------ | ------------------------------------------------------ |
+| v15.6.0            | Добавлен `X509Certificate` в список клонируемых типов. |
+| v15.0.0            | Добавлен `CryptoKey` в список клонируемых типов.       |
+| v15.14.0, v14.18.0 | Добавлен `BlockList` в список клонируемых типов.       |
+| v15.9.0, v14.18.0  | Добавлен тип `Histogram` в список клонируемых типов.   |
+| v14.5.0, v12.19.0  | Добавлен `KeyObject` в список клонируемых типов.       |
+| v14.5.0, v12.19.0  | Добавлен `FileHandle` в список передаваемых типов.     |
+| v10.5.0            | Добавлен в Node.js                                     |
+
+</details>
+
+- value [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures)
+- transferList [\<Object[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+Отправляет JavaScript-значение (value) на принимающую сторону этого канала. `'value'` передается способом, совместимым с [алгоритмом структурированного клонирования HTML](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+
+> Примечание переводчика:  
+> Чтобы понять о чем вообще пойдёт речь ниже, хотя бы бегло ознакомьтесь с [алгоритмом структурированного клонирования HTML](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+
+В частности, существенными отличиями от `JSON` являются:
+
+- `value` может содержать круговые ссылки.
+- `value` может содержать экземпляры строенных в JS-типов, таких как `RegExp`, `BigInt`, `Map`, `Set`, и др.
+- `value` может содержать типизированные массивы, как с использованием `ArrayBuffers`, так и `SharedArrayBuffer`.
+- `value` может содержать экземпляры [`WebAssembly.Module`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Module).
+- `value` не может содержать собственных (поддерживаемых C++) объектов, кроме:
+  - [\<CryptoKey>](https://nodejs.org/dist/latest-v19.x/docs/api/webcrypto.html#class-cryptokey),
+  - [\<FileHandle>](https://nodejs.org/dist/latest-v19.x/docs/api/fs.html#class-filehandle),
+  - [\<Histogram>](https://nodejs.org/dist/latest-v19.x/docs/api/perf_hooks.html#class-histogram),
+  - [\<KeyObject>](https://nodejs.org/dist/latest-v19.x/docs/api/crypto.html#class-keyobject),
+  - [\<MessagePort>](#class-messageport),
+  - [\<net.BlockList>](https://nodejs.org/dist/latest-v19.x/docs/api/net.html#class-netblocklist),
+  - [\<net.SocketAddress>](https://nodejs.org/dist/latest-v19.x/docs/api/net.html#class-netsocketaddress),
+  - [\<X509Certificate>](https://nodejs.org/dist/latest-v19.x/docs/api/crypto.html#class-x509certificate).
+
+```
+const { MessageChannel } = require('node:worker_threads')
+const { port1, port2 } = new MessageChannel()
+
+port1.on('message', (msg) => console.log(msg))
+
+const circularData = {}
+circularData.foo = circularData
+// Выведет: { foo: [Circular] }
+port2.postMessage(circularData)
+```
+
+`transferList` может быть списком объектов [`ArrayBuffer`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer), [`MessagePort`](#class-messageport) и [`FileHandle`](https://nodejs.org/dist/latest-v19.x/docs/api/fs.html#class-filehandle). После передачи они больше не могут использоваться на передающей стороне канала (даже если они не содержатся в `value`). В отличие от [`child processes`](https://nodejs.org/dist/latest-v19.x/docs/api/child_process.html), передача обработчиков (handles), таких как сетевые сокеты, в настоящее время не поддерживается.
+
+Если `value` содержит экземпляры [`SharedArrayBuffer`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer), они доступны из любого потока. Они не могут быть перечислены в `transferList`.
+
+`value` всё ещё может содержать экземпляры [`ArrayBuffer`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer), не входящие в `transferList`; в этом случае базовая память копируется, а не перемещается.
+
+```
+const { MessageChannel } = require('node:worker_threads')
+const { port1, port2 } = new MessageChannel()
+
+port1.on('message', (msg) => console.log(msg))
+
+const unit8Array = new unit8Array([1, 2, 3, 4])
+
+// Это отправляет копию `uint8Array`
+port2.postMessage(unit8Array)
+// Это не копирует данные, но делает `uint8Array` непригодным для использования:
+port2.postMessage(unit8Array, [unit8Array.buffer])
+
+// Память для `sharedUint8Array` доступна как из оригинала,
+// так и из копии, полученной из `.on( message)`.
+const sharedUnit8Array = new unit8Array(new SharedArrayBuffer(4))
+port2.postMessage(sharedUnit8Array)
+
+// Это передает только что созданный message port получателю.
+// Это можно использовать, например, для создания каналов связи между
+// несколькими рабочими потоками (Workers), которые являются дочерними
+// элементами одного и того же родительского потока.
+const otherChannel = new MessageChannel()
+port2.postMessage({ port: otherChannel.port1 }, [otherChannel.port1])
+```
+
+Объект сообщения немедленно клонируется и может быть изменен после отправки (posts) без побочных эффектов.
+
+Дополнительные сведения о механизмах сериализации и десериализации, лежащих в основе этого API, см. в [API сериализации модуля `node:v8`](https://nodejs.org/dist/latest-v19.x/docs/api/v8.html#serialization-api).
 
 #### Рекоммендации при передаче TypedArrays и Buffers
 
-**Добавлен в версии:**
+Все экземпляры `TypedArray` и `Buffer` являются абстракцией над базовым `ArrayBuffer`. Фактически, именно `ArrayBuffer` хранит исходные данные, а объекты `TypedArray` и `Buffer` предоставляют интерфейс (способ) просмотра и манипулирования данными. Для одного и того же экземпляра `ArrayBuffer` можно создать несколько представлений.  
+Необходимо соблюдать большую осторожность при использовании списка передачи для передачи `ArrayBuffer`, поскольку это приводит к тому, что все экземпляры `TypedArray` и `Buffer`, которые совместно используют один и тот же `ArrayBuffer`, становятся непригодными для использования.
+
+```
+const { MessageChannel } = require('node:worker_threads')
+
+const { port1, port2 } = new MessageChannel()
+
+const ab = new ArrayBuffer(10)
+
+const u1 = new Uint8Array(ab)
+const u2 = new Uint16Array(ab)
+
+console.log(u2.length) // Выведет 5
+
+// Переносим ab черех порт в другой рабочий поток, и теперь
+// ab, u1, u2 - становится недоступным в этом потоке
+port1.postMessage(u1, [u1.buffer])
+
+console.log(u2.length) // Выведет 0
+```
+
+Для экземпляров `Buffer`, в частности, возможность передачи или клонирования базового `ArrayBuffer` полностью зависит от способа создания экземпляров, который часто невозможно достоверно определить.  
+`ArrayBuffer` может быть помечен с помощью [`markAsUntransferable()`](#workermarkasuntransferableobject), чтобы указать, что его всегда следует клонировать и никогда не передавать.  
+В зависимости от того, как был создан экземпляр `Buffer`, он может владеть или не владеть своим базовым буфером `ArrayBuffer`. Буфер `ArrayBuffer` не должен передаваться, если не известно, что экземпляр `Buffer` владеет им. В частности, для буферов, созданных из внутреннего пула буферов (например, с помощью `Buffer.from()` или `Buffer.allocUnsafe()`), их передача невозможна, и они всегда клонируются, что приводит к передаче копии всего `Buffer` пула. Такое поведение может привести к непреднамеренному увеличению использования памяти и возможным проблемам безопасности.
+
+Смотрите [`Buffer.allocUnsafe()`](https://nodejs.org/dist/latest-v19.x/docs/api/buffer.html#static-method-bufferallocunsafesize) для более подробной информации о пулинге `Buffer`.
+
+Буферы `ArrayBuffers` для экземпляров `Buffer`, созданных с помощью `Buffer.alloc()` или `Buffer.allocUnsafeSlow()`, всегда можно передать, но это делает непригодными все другие существующие представления этих буферов `ArrayBuffers`.
+
+#### Рекоммендации при клонировании объектов с помощью прототипов, классов и методов доступа
+
+Поскольку при клонировании объектов используется [алгоритм структурированного клонирования HTML](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), неперечислимые свойства, методы доступа к свойствам и прототипы объектов не сохраняются. В частности, объекты [`Buffer`](https://nodejs.org/dist/latest-v19.x/docs/api/buffer.html) будут считываться принимающей стороной как простые массивы [`Uint8Array`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array), а экземпляры JavaScript-классов будут клонироваться как простые JavaScript-объекты.
+
+```
+const { MessageChannel } = require('node:worker_threads')
+
+const b = Symbol('b')
+
+class anyClass {
+  #a = 1 // приватное поле
+  constructor() {
+    this[b] = 2
+    this.c = 3
+  }
+
+  get d() {
+    return 4
+  }
+}
+
+const { port1, port2 } = new MessageChannel()
+
+port1.onmessage = ({ data }) => console.log(data)
+
+port2.postMessage(new anyClass())
+
+// Выведет: { c: 3 }
+```
+
+Это ограничение распространяется на многие встроенные объекты, такие как глобальный объект `URL`:
+
+```
+const { MessageChannel } = require('node:worker_threads')
+const { port1, port2 } = new MessageChannel();
+
+port1.onmessage = ({ data }) => console.log(data);
+
+// Встроенный объект URL не клонируется и не передастся
+port2.postMessage(new URL('https://example.org'));
+
+// Выведет пустой объект: { }
+```
+
+### port.hasRef()
+
+**Добавлен в версии:** v18.1.0, v16.17.0
+
+> **Индекс стабильности: 1 - [Экспериментальный](https://nodejs.org/dist/latest-v19.x/docs/api/documentation.html#stability-index)**  
+> Не рекомендуется использовать функцию в production средах.
+
+- **Returns:** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D0%B1%D1%83%D0%BB%D0%B5%D0%B2%D1%8B%D0%B9_%D1%82%D0%B8%D0%BF_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)
+
+Если `true`, то объект `MessagePort` будет поддерживать цикл событий (event loop) Node.js активным.
 
 ### port.ref()
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+Противоположность `unref()`. Если ранее уже был вызван `port.unref()`, то вызов `port.ref()` перепишет это и не позволяет программе выйти, если это единственный оставшийся активный обработчик (handle) (поведение по умолчанию). Если ранее уже был вызван `port.ref()`, то повторный вызов `port.ref()` не будет иметь никакого эффекта.
+
+Если слушатели (listeners ) подключаются или удаляются с помощью `.on('message')`, порт автоматически `ref()`ed и `unref()`ed в зависимости от того, существуют ли слушатели для данного события.
 
 ### port.start()
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+Запускает получение сообщений на этот `MessagePort`. При использовании этого порта в качестве эмиттера событий он вызывается автоматически после подключения прослушивателей на событие `'message'`.
+
+Метод `port.start()` существует для паритета с API **Web** `MessagePort`. В Node.js это полезно только для игнорирования сообщений, когда нет прослушивателя событий.  
+Node.js также отличается в обработке `.onmessage`. Установка `.onmessage` автоматически вызывает `.start()`, но отсутствие `.onmessage` позволяет ставить сообщения в очередь до тех пор, пока не будет установлен новый обработчик или порт не будет удален.
 
 ### port.unref()
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+Вызов `unref()` на порту позволяет потоку завершить работу, если это единственный активный обрабочик (handle) в системе событий. Если ранее `port.unref()` уже вызывался, то повторный вызов `unref()` не будет иметь никакого эффекта.
+
+Если слушатели (listeners) подключаются или удаляются с помощью `.on('message')`, то порт автоматически `ref()` и `unref()` в зависимости от того, существуют ли слушатели для данного события.
 
 ## Class: Worker
 
