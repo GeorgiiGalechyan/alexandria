@@ -61,55 +61,52 @@
 
 ---
 
-# Worker threads (Рабочие потоки)
+# **Worker threads (Рабочие потоки)**
 
-## Введение
+## **Введение**
 
 **Исходный код:** [lib/worker_threads.js](https://github.com/nodejs/node/blob/v14.21.1/lib/worker_threads.js)
 
-Модуль `worker_threads` позволяет использовать потоки, параллельно выполняющие JavaScript. Чтобы получить к нему доступ пропишите:
+Модуль `worker_threads` позволяет использовать потоки, для параллельного выполнения JavaScript-кода. Для подключения модуля пропишите:
 
+```javascript
+const worker = require('worker_threads')
 ```
-const worker = require('worker_threads');
-```
 
-Рабочие потоки (**_worker threads_** / **_workers_**) полезны для выполнения операций JavaScript, требующих больших затрат процессора. Они не очень помогают при выполнении интенсивных операций ввода-вывода. Встроенные в Node.js асинхронные операции ввода-вывода более эффективны, чем Workers.
+Рабочие потоки (**_worker threads_** / **_workers_**) полезны для выполнения JavaScript-операций, требующих больших затрат ресурсов процессора. Рабочие потоки слабо помогают при выполнении интенсивных операций ввода-вывода (I/O). Встроенные в Node.js асинхронные операции ввода-вывода более эффективны, чем рабочие потоки.
 
-В отличие от `child_process` или `cluster`, `worker_threads` могут совместно использовать память. Они делают это путем передачи экземпляров `ArrayBuffer` или совместного использования экземпляров `SharedArrayBuffer`.
+В отличие от `child_process` или `cluster`, `worker_threads` могут **совместно** использовать память. Они делают это путем передачи экземпляров `ArrayBuffer` или совместного использования экземпляров `SharedArrayBuffer`.
 
-```
-const {
-  Worker, isMainThread, parentPort, workerData
-} = require('worker_threads');
+```javascript
+const { Worker, isMainThread, parentPort, workerData } = require('worker_threads')
 
 if (isMainThread) {
   module.exports = function parseJSAsync(script) {
     return new Promise((resolve, reject) => {
       const worker = new Worker(__filename, {
-        workerData: script
-      });
-      worker.on('message', resolve);
-      worker.on('error', reject);
+        workerData: script,
+      })
+      worker.on('message', resolve)
+      worker.on('error', reject)
       worker.on('exit', (code) => {
-        if (code !== 0)
-          reject(new Error(`Worker stopped with exit code ${code}`));
-      });
-    });
-  };
+        if (code !== 0) reject(new Error(`Worker остановлен с кодом выхода ${code}`))
+      })
+    })
+  }
 } else {
-  const { parse } = require('some-js-parsing-library');
-  const script = workerData;
-  parentPort.postMessage(parse(script));
+  const { parse } = require('some-js-parsing-library')
+  const script = workerData
+  parentPort.postMessage(parse(script))
 }
 ```
 
-В приведенном выше примере каждый вызова `parse()` порождает рабоий поток (worker / worker thread). В реальной практике для таких задач следует использовать пул (pool) рабочих потоков (workers / worker threads). В противном случае накладные расходы на создание рабочих потоков, скорее всего, превысят их пользу.
+В приведенном выше примере каждый вызов `parse()` будет порождать новый рабоий поток. В реальной практике для таких задач следует использовать пул рабочих потоков (Workers pool). Иначе "накладные расходы" на создание рабочих потоков, скорее всего, превысят их пользу.
 
-При реализации пула рабочих потоков используйте [`AsyncResource`](https://nodejs.org/dist/latest-v19.x/docs/api/async_hooks.html#class-asyncresource) API, предоставляющий инструменты диагностики (например, для предоставления асинхронных трассировок стека) для отслеживания взаимосвязи между задачами (tasks ) и их результатами. Пример реализации см. в разделе ["Использование AsyncResource для пула рабочих потоков"](https://nodejs.org/dist/latest-v19.x/docs/api/async_context.html#using-asyncresource-for-a-worker-thread-pool) в документации `async_hooks`.
+При реализации пула рабочих потоков используйте [`AsyncResource `](https://nodejs.org/dist/latest-v19.x/docs/api/async_hooks.html#class-asyncresource) API, предоставляющий инструменты диагностики (например, для предоставления асинхронных трассировок стека) для отслеживания взаимосвязи между задачами (tasks ) и их результатами. Пример реализации см. в разделе ["Использование AsyncResource для пула рабочих потоков"](https://nodejs.org/dist/latest-v19.x/docs/api/async_context.html#using-asyncresource-for-a-worker-thread-pool) в документации `async_hooks`.
 
 По умолчанию, рабочие потоки наследуют параметры, не относящиеся к конкретному процессу. Обратитесь к [параметрам конструктора Worker (new Worker)](#new-workerfilename-options), чтобы узнать, как настроить параметры рабочего потока, в частности параметры argv и execArgv.
 
-## worker.getEnvironmentData(key)
+## **worker.getEnvironmentData(key)**
 
 <details> <summary> История версий</summary>
 
@@ -123,9 +120,12 @@ if (isMainThread) {
 - **`key`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Любое произвольное, клонируемое значение JavaScript, которое может быть использовано в качестве ключа [\<Map>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
 - Returns: [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)
 
-Внутри рабочего потока `worker.getEnvironmentData()` возвращает клон данных, переданных в `worker.setEnvironmentData()` порождающего потока. Каждый `new Worker` получает свою собственную копию данных об окружении автоматически.
+> **Рекоммендация переводчика:**  
+> `worker.getEnvironmentData()` работает в связке с `worker.setEnvironmentData()`. Логически правильым будет сначала изучить [`worker.setEnvironmentData()`](#workersetenvironmentdatakey-value), и только потом `worker.setEnvironmentData()`.
 
-```
+Внутри рабочего потока `worker.getEnvironmentData()` возвращает клон данных, переданных в пораждающие потоки через `worker.setEnvironmentData()`. Каждый новый экземпляр класса `Worker` автоматически получает свою собственную копию данных об окружении.
+
+```javascript
 const { Worker, isMainThread, setEnvironmentData, getEnvironmentData } = require('node:worker_threads')
 
 if (isMainThread) {
@@ -141,15 +141,15 @@ if (isMainThread) {
 }
 ```
 
-## worker.isMainThread
+## **worker.isMainThread**
 
 **Добавлен в версии:** v10.5.0
 
 - [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D0%B1%D1%83%D0%BB%D0%B5%D0%B2%D1%8B%D0%B9_%D1%82%D0%B8%D0%BF_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)
 
-Возвращает `true`, если этот код не выполняется внутри потока [Worker](#class-worker).
+Возвращает `true`, если этот код **_не выполняется_** внутри рабочего потока [Worker](#class-worker).
 
-```
+```javascript
 const { Worker, isMainThread } = require('node:worker_threads')
 
 if (isMainThread) {
@@ -164,17 +164,19 @@ if (isMainThread) {
 }
 ```
 
-## worker.markAsUntransferable(object)
+## **worker.markAsUntransferable(object)**
 
 **Добавлен в версии:** v14.5.0, v12.19.0
 
-Маркирует объект как не подлежащий передаче. Если объект встречается в списке передачи в вызове [port.postMessage()](#portpostmessagevalue-transferlist), он игнорируется.
+При вызове [`port.postMessage(value, transferList)`](#portpostmessagevalue-transferlist), в зависимости от вида объекта, объект могут либо передаваться (transfer) в рабочий поток, либо клонироваться (clone) в него. При этом, когда объект передаётся (transfered) в рабочий поток, этот объект может стать недоступным для использования в первоначальном потоке. Это зависит от типа объекта.
+
+`worker.markAsUntransferable(object)` маркирует объект как **_не подлежащий передаче_**. Если промаркированный объект встречается в списке передачи (transfer list), который передаётся в качестве аргумента при вызове [`port.postMessage(value, transferList)`](#portpostmessagevalue-transferlist), то этот маркированный объект игнорируется (не передаётся).
 
 В частности, это имеет смысл для объектов, которые можно клонировать, а не передавать, и которые используются другими объектами на передающей стороне. Например, таким образом Node.js помечает `ArrayBuffers`, которые он использует для своего [`Buffer` pool](https://nodejs.org/dist/latest-v19.x/docs/api/buffer.html#static-method-bufferallocunsafesize).
 
 Эта операция не может быть отменена:
 
-```
+```javascript
 const { MessageChannel, markAsUntransferable } = require('node:worker_threads')
 
 const pooledBuffer = new ArrayBuffer(8)
@@ -200,31 +202,31 @@ console.log(typedArray2) // typedArray2 также не затронут.
 
 В браузерах нет эквивалента этому API.
 
-## worker.moveMessagePortToContext(port, contextifiedSandbox)
+## **worker.moveMessagePortToContext(port, contextifiedSandbox)**
 
 **Добавлен в версии:** v14.5.0, v12.19.0
 
 - **`port`** [\<MessagePort>](#class-messageport) Порт для передачи сообщений.
 
-- **`contextifiedSandbox`** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) [Контекстифицированный](https://nodejs.org/dist/latest-v19.x/docs/api/vm.html#what-does-it-mean-to-contextify-an-object) объект, возвращаемый методом `vm.createContext()`.
+- **`contextifiedSandbox`** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object)
+  [Контекстифицированный](https://nodejs.org/dist/latest-v19.x/docs/api/vm.html#what-does-it-mean-to-contextify-an-object) объект, возвращаемый методом `vm.createContext()`.
+- Returns: [\<MessagePort>](#class-messageport)
 
-- **Returns:** [\<MessagePort>](#class-messageport)
+Переносит `MessagePort` в другой контекст [виртуальной машины](https://nodejs.org/dist/latest-v19.x/docs/api/vm.html). Исходный объект `port` становится непригодным для использования, и его место занимает возвращенный экземпляр `MessagePort`.
 
-Переносит `MessagePort` в другой контекст [виртуальной машины](https://nodejs.org/dist/latest-v19.x/docs/api/vm.html). Исходный объект `порта` становится непригодным для использования, и его место занимает возвращенный экземпляр `MessagePort`.
+Возвращённый `MessagePort` является объектом в целевом (target) контексте и наследуется от его глобального класса `Object`. Объекты, передаваемые слушивателю [`port.onmessage()`](#portpostmessagevalue-transferlist), также создаются в целевом (target) контексте и наследуются от его глобального класса `Object`.
 
-Возвращенный `MessagePort` является объектом в целевом (target) контексте и наследуется от его глобального класса `Object`. Объекты, передаваемые прослушивателю [`port.onmessage()`](#portpostmessagevalue-transferlist), также создаются в целевом (target) контексте и наследуются от его глобального класса `Object`.
+Вместе с тем, созданный `MessagePort` больше не наследуется от [EventTarget](https://developer.mozilla.org/ru/docs/Web/API/EventTarget). Таким образом, для обработки события 'message' (получение сообщения) можно использовать только [`port.onmessage()`](#portpostmessagevalue-transferlist)
 
-Однако созданный `MessagePort` больше не наследуется от [EventTarget](https://developer.mozilla.org/ru/docs/Web/API/EventTarget), и для получения событий с его помощью можно использовать только [`port.onmessage()`](#portpostmessagevalue-transferlist)
-
-## worker.parentPort
+## **worker.parentPort**
 
 **Добавлен в версии:** v10.5.0
 
 - [\<null>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#null) | [\<MessagePort>](#class-messageport)
 
-Если этот поток является экземпляром класса [Worker](#class-worker), то через экземпляр класса [`MessagePort`](#class-messageport) можно обеспечить связь с родительским потоком. Сообщения, отправленные с помощью `parentPort.postMessage()`, доступны в родительском потоке с помощью `worker.on('message')`, а сообщения, отправленные из родительского потока с помощью `worker.postMessage()`, доступны в этом потоке с помощью `parentPort.on('message')`.
+Если текущий поток является экземпляром класса [Worker](#class-worker), то через экземпляр класса [`MessagePort`](#class-messageport) можно обеспечить связь с родительским потоком. Сообщения, отправленные с помощью `parentPort.postMessage()`, доступны в родительском потоке с помощью `worker.on('message')`, а сообщения, отправленные из родительского потока с помощью `worker.postMessage()`, доступны в этом потоке с помощью `parentPort.on('message')`.
 
-```
+```javascript
 const { Worker, isMainThread, parentPort } = require('node:worker_threads')
 
 if (isMainThread) {
@@ -236,36 +238,36 @@ if (isMainThread) {
     console.log(message) // Выведет Hello world!
   })
 
-  // Отправляет сообщение 'Hello World!'
+  // Отправляем сообщение 'Hello World!'
   worker.postMessage('Hello World!')
 } else {
   // После получения message из родительского потока,
-  // отправим message обратно в родительский поток.
+  // отправим этот же message обратно в родительский поток.
   parentPort.once('message', (message) => {
     parentPort.postMessage(message)
   })
 }
 ```
 
-## worker.receiveMessageOnPort(port)
+## **worker.receiveMessageOnPort(port)**
 
 <details> <summary> История версий</summary>
 
-| **Версия** | **Изменения**                                                    |
-| ---------- | ---------------------------------------------------------------- |
-| v15.12.0   | Аргумент порта теперь также может ссылаться на BroadcastChannel. |
-| v12.3.0    | Добавлен в Node.js                                               |
+| **Версия** | **Изменения**                                                       |
+| ---------- | ------------------------------------------------------------------- |
+| v15.12.0   | Аргумент `port` теперь также может ссылаться на `BroadcastChannel`. |
+| v12.3.0    | Добавлен в Node.js                                                  |
 
 </details>
 
 - **`port`** [\<MessagePort>](#class-messageport) | [\<BroadcastChannel>](#class-broadcastchannel-extends-eventtarget)
-- **Returns:** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) | [\<undefined>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#undefined)
+- Returns: [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) | [\<undefined>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#undefined)
 
 ![Структура Message Channel](../../img//msg-channel-structure.png)
 
-Получение одного сообщения от данного `MessagePort`. Если сообщение отсутствует, возвращается undefined, в противном случае возвращается объект с единственным свойством message, которое содержит полезную нагрузку сообщения, соответствующую самому старому сообщению в очереди MessagePort.
+С помощью `worker.receiveMessageOnPort(port)` можно получить одно сообщение от экземпляра `MessagePort`. Если сообщение отсутствует, возвращается undefined, в противном случае возвращается объект `{ message: payload }` c единcтвенным свойством message, которое содержит полезную нагрузку (payload) сообщения, соответствующую самому старому сообщению в очереди `MessagePort`.
 
-```
+```javascript
 const { MessageChannel, receiveMessageOnPort } = require('node:worker_threads')
 
 // Создаём 2 порта, между которыми открывается канал
@@ -281,9 +283,9 @@ console.log(receiveMessageOnPort(port2))
 console.log(receiveMessageOnPort(port2))
 ```
 
-При использовании этой функции событие `'message'` не испускается и слушатель `onmessage` не вызывается.
+При использовании этой функции событие `'message'` не генерируется и слушатель `onmessage` не вызывается.
 
-## worker.resourceLimits
+## **worker.resourceLimits**
 
 **Добавлен в версии:** v13.2.0, v12.16.0
 
@@ -293,19 +295,19 @@ console.log(receiveMessageOnPort(port2))
   - **`codeRangeSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
   - **`stackSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
 
-Предоставляет набор ограничений ресурсов JS-движка внутри данного рабочего потока. Если конструктору [Worker](#class-worker) был передан параметр `resourceLimits`, этот параметр соответствует его значениям.
+Предоставляет набор параметров для ограничения ресурсов JS-движка внутри данного рабочего потока. Если конструктору [`new Worker`](#class-worker) был передан параметр `resourceLimits`, то этот параметр будет соответствовать значениям созданного экземпляра класса `Worker`.
 
-Если этот параметр используется в главном потоке, его значением будет пустой объект.
+Если этот параметр используется в основном потоке, его значением будет пустой объект.
 
-## worker.SHARE_ENV
+## **worker.SHARE_ENV**
 
 **Добавлен в версии:** v11.14.0
 
 - [\<symbol>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85_%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB_symbol)
 
-Специальное значение, которое может быть передано в качестве параметра `env` конструктора [Worker](#class-worker), чтобы указать, что текущий поток и рабочий поток должны иметь общий доступ на чтение и запись к одному и тому же набору переменных окружения.
+Специальное значение, которое может быть передано в качестве параметра `env` конструктора [`new Worker`](#class-worker), чтобы указать, что текущий поток и созданный рабочий поток должны иметь **_общий доступ_** на чтение и запись к одному и тому же набору переменных окружения.
 
-```
+```javascript
 const { Worker, SHARE_ENV } = require('node:worker_threads')
 
 new Worker('process.env.SET_IN_WORKER = "foo"', { eval: true, env: SHARE_ENV }).on('exit', () => {
@@ -313,23 +315,23 @@ new Worker('process.env.SET_IN_WORKER = "foo"', { eval: true, env: SHARE_ENV }).
 })
 ```
 
-## worker.setEnvironmentData(key[, value])
+## **worker.setEnvironmentData(key[, value])**
 
 <details><summary> История версий </summary>
 
-| Версии             | Изменения               |
-| ------------------ | ----------------------- |
-| v17.5.0, v16.15.0  | No longer experimental. |
-| v15.12.0, v14.18.0 | Добавлен в Node.js      |
+| Версия             | Изменения                   |
+| ------------------ | --------------------------- |
+| v17.5.0, v16.15.0  | Больше не эксперементальный |
+| v15.12.0, v14.18.0 | Добавлен в Node.js          |
 
 </details>
 
-- **`key`** [\<any>]() Любое произвольное, клонируемое значение JavaScript, которое может быть использовано в качестве ключа [\<Map>]().
-- **`value`** [\<any>]() Любое произвольное, клонируемое значение JavaScript, которое будет клонировано и автоматически передано всем новым экземплярам класса `Worker`. Если значение передано как `undefined`, все ранее установленные значения для `key` будут удалены.
+- **`key`** [\<any>]() Любое произвольное, клонируемое JavaScript-значение, которое может быть использовано в качестве ключа [\<Map>]().
+- **`value`** [\<any>]() Любое произвольное, клонируемое JavaScript-значение, которое будет клонировано и автоматически передано всем новым экземплярам класса `Worker`. Если значение передано как `undefined`, все ранее установленные значения (`value`) для `key` будут удалены.
 
 API `worker.setEnvironmentData()` устанавливает содержимое `worker.getEnvironmentData()` в текущем потоке и во всех новых экземплярах класса `Worker`, созданных из текущего контекста.
 
-```
+```javascript
 const { Worker, isMainThread, setEnvironmentData, getEnvironmentData } = require('node:worker_threads')
 
 if (isMainThread) {
@@ -345,7 +347,7 @@ if (isMainThread) {
 }
 ```
 
-## worker.threadId
+## **worker.threadId**
 
 **Добавлен в версии:** v10.5.0
 
@@ -353,15 +355,15 @@ if (isMainThread) {
 
 Целочисленный идентификатор для текущего потока. Для соответствующего рабочего объекта (если таковой имеется) он доступен как [`worker.ThreadId`](#workerthreadid-1). Это значение уникально для каждого экземпляра класса [`Worker`](#class-worker) внутри одного процесса.
 
-## worker.workerData
+## **worker.workerData**
 
 **Добавлен в версии:** v10.5.0
 
 Произвольное JavaScript-значение, содержащее клон данных, переданных в конструктор класса `Worker` этого потока.
 
-Данные клонируются как при использовании функции [`postMessage()`](#workerpostmessagevalue-transferlist), в соответствии с [алгоритмом структурированного клонирования HTML](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+Данные клонируются также, как и при использовании функции [`postMessage()`](#workerpostmessagevalue-transferlist), в соответствии с [алгоритмом структурированного клонирования HTML](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
 
-```
+```javascript
 const { Worker, isMainThread, workerDat } = require('node:worker_threads')
 
 if (isMainThread) {
@@ -372,10 +374,9 @@ if (isMainThread) {
   // Получаем workerData
   console.log(workerData) // Выведет 'anyData'.
 }
-
 ```
 
-## Class: BroadcastChannel extends EventTarget
+## **Class: BroadcastChannel extends EventTarget**
 
 <details> <summary>История версий</summary>
 
@@ -386,14 +387,14 @@ if (isMainThread) {
 
 </details>
 
-Экземпляры класса `BroadcastChannel` позволяют устанавливать асинхронную связь "один ко многим" со всеми другими экземплярами класса `BroadcastChannel`, привязанными к тому же имени канала.
+Экземпляры класса `BroadcastChannel` позволяют устанавливать асинхронную связь "один ко многим" со всеми другими экземплярами класса `BroadcastChannel` с тем же именем (`name`) канала.
 
 > **Примечание переводчика:**  
-> Параметр `name` даёт имя экземпляру класса `BroadcastChannel`, для того чтобы другие экземпляры `BroadcastChannel`
+> Параметр `name` задаёт имя экземпляру класса `BroadcastChannel`, для того чтобы другие экземпляры `BroadcastChannel`
 > могли подключиться к нашему каналу, идентифицировав его по имени.
 
-```
-'use strict';
+```javascript
+'use strict'
 
 const { isMainThread, BroadcastChannel, Worker } = require('node:worker_threads')
 
@@ -417,13 +418,13 @@ if (isMainThread) {
 }
 ```
 
-### new BroadcastChannel(name)
+### **new BroadcastChannel(name)**
 
 **Добавлен в версии:** v15.4.0
 
 - **`name`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Имя (наименование) канала, к которому нужно подключиться. Разрешено любое JavaScript-значение, которое может быть преобразовано в строку с помощью `${name}`.
 
-```
+```javascript
 const { BroadcastChannel } = require('node:worker_threads')
 
 const bc1 = new BroadcastChannel('test-channel')
@@ -458,19 +459,19 @@ bc3.postMessage('Сообщение от bc3 для "another-channel"')
 // Сообщение от bc2 для "test-channel"
 ```
 
-### broadcastChannel.close()
+### **broadcastChannel.close()**
 
 **Добавлен в версии:** 15.4.0
 
 Завершает `BroadcastChannel` соединение.
 
-### broadcastChannel.onmessage
+### **broadcastChannel.onmessage**
 
 **Добавлен в версии:** 15.4.0
 
 - Type: [\<Function>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function) Вызывается с одним аргументом `MessageEvent` при получении сообщения.
 
-```
+```javascript
 const { BroadcastChannel } = require('node:worker_threads')
 
 const bc = new BroadcastChannel('test-channel')
@@ -481,37 +482,39 @@ bc.onmessage = (event) => {
 }
 ```
 
-### broadcastChannel.onmessageerror
+### **broadcastChannel.onmessageerror**
 
 **Добавлен в версии:** 15.4.0
 
 - Type: [\<Function>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function) Событие вызывается когда получено сообщение, которое не может быть десериализовано., т.е. при поступлении некорректного сообщения.
 
-### broadcastChannel.postMessage(message)
+### **broadcastChannel.postMessage(message)**
 
 **Добавлен в версии:** 15.4.0
 
 - **`message `** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Любое клонируемое JavaScript-значение.
 
-### broadcastChannel.ref()
+Отправляет сообщение всем экземплярам класса `BroadcastChannel` с тем же именем канала.
+
+### **broadcastChannel.ref()**
 
 **Добавлен в версии:** 15.4.0
 
 Противоположность `unref()`. Если ранее `BroadcastChannel` был `unref()`, то вызов `ref()` запретит программе завершить работу, если это единственный оставшийся активный обработчик (поведение по умолчанию). Если же порт уже имеет значение `ref()`, то повторный вызов `ref()` не будет имеет никакого эффекта.
 
-### broadcastChannel.unref()
+### **broadcastChannel.unref()**
 
 **Добавлен в версии:** 15.4.0
 
 Вызов `unref()` на `BroadcastChannel` позволяет потоку завершить работу, даже если это единственный активный обработчик в системе событий. Если канал `BroadcastChannel` уже был `unref()`, повторный вызов `unref()` не будет иметь никакого эффекта.
 
-## Class: MessageChannel
+## **Class: MessageChannel**
 
 **Добавлен в версии:** v10.5.0
 
-Экземпляры класса `worker.MessageChannel` представляют асинхронный двусторонний канал связи. `MessageChannel` не имеет собственных методов. `new MessageChannel()` дает объект со свойствами `port1` и `port2`, которые ссылаются на связанные экземпляры класса [MessagePort](#class-messageport).
+Экземпляры класса `worker.MessageChannel` предоставляют асинхронный двусторонний канал связи. `MessageChannel` не имеет собственных методов. `new MessageChannel()` возвращает объект со свойствами `port1` и `port2`, которые ссылаются на связанные экземпляры класса [MessagePort](#class-messageport).
 
-```
+```javascript
 const { MessageChannel } = require('node:worker_threads')
 
 // Создаём 2-сторонний канал с портами port1 и port2
@@ -527,7 +530,7 @@ port2.postMessage({ foo: 'bar' })
 // В консоль выведется: Получено { foo: 'bar' }
 ```
 
-## Class: MessagePort
+## **Class: MessagePort**
 
 <details><summary> История версий </summary>
 
@@ -540,16 +543,17 @@ port2.postMessage({ foo: 'bar' })
 
 - Наследуется от (extends): [\<EventTarget>](https://nodejs.org/dist/latest-v19.x/docs/api/events.html#class-eventtarget)
 
-Экземпляры класса `worker.MessagePort` представляют собой один конец (порт) асинхронного двустороннего канала связи. Его можно использовать для передачи структурированных данных, областей памяти и других экземпляров `MessagePort` между разными рабочими потоками ([Workers](#class-worker)).
+Экземпляры класса `worker.MessagePort` представляют собой один конец (порт) асинхронного двустороннего канала связи. `MessagePort` можно использовать для передачи структурированных данных, областей памяти и других экземпляров `MessagePort` между разными рабочими потоками ([Workers](#class-worker)).
 
-Эта реализация (implementation) соответствует реализации[`MessagePorts` в браузере](https://developer.mozilla.org/en-US/docs/Web/API/MessagePort).
+Эта реализация (implementation) соответствует реализации [`MessagePorts` в браузере](https://developer.mozilla.org/en-US/docs/Web/API/MessagePort).
 
-### Event: 'close'
+### **Event: 'close'**
 
 **Добавлен в версии:** v10.5.0
+
 Событие `'close'` генерируется после отключения (disconnected) любой стороны канала.
 
-```
+```javascript
 const { MessageChannel } = require('node:worker_threads')
 
 const { port1, port2 } = new MessageChannel()
@@ -565,27 +569,27 @@ port1.close()
 // Закрыт!
 ```
 
-### Event: 'message'
+### **Event: 'message'**
 
 **Добавлен в версии:** v10.5.0
 
-- value [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures) Передаваемое значение
+- **`value`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures) Передаваемое значение
 
-Событие `'message'` генерируется для любого входящего сообщения, содержащего клонированный вход [`port.postMessage()`](#portpostmessagevalue-transferlist).
+Событие `'message'` генерируется для любого входящего сообщения, содержащего клонированный ввод [`port.postMessage()`](#portpostmessagevalue-transferlist).
 
-Слушатели этого события получают клон параметра `value`, переданного в `postMessage()` и без дополнительных аргументов.
+Слушатели этого события получают клонированный параметр `value`, переданного в `postMessage()`. Параметр `value` передаётся без дополнительных аргументов.
 
-### Event: 'messageerror'
+### **Event: 'messageerror'**
 
 **Добавлен в версии:** v14.5.0, v12.19.0
 
 - error [\<Error>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Error) Объект Error
 
-Событие 'messageerror' возникает при неудачной десериализации сообщения.
+Событие `'messageerror'` возникает при неудачной десериализации сообщения.
 
-В настоящее время, событие `'messageerror'` генерируется при возникновении ошибки при создании экземпляра опубликованного/отправленного (posted) JS-объекта на принимающей стороне. Такие ситуации редки, но могут произойти, например, когда определенные объекты API Node.js получены в `vm.Context` (где API Node.js в настоящее время недоступны).
+В настоящее время, событие `'messageerror'` генерируется при возникновении ошибки при создании экземпляра отправленного (posted) JS-объекта на принимающей стороне. Такие ситуации редки, но могут произойти, например, когда определенные объекты API Node.js получены в `vm.Context` (где API Node.js в настоящее время недоступны).
 
-### port.close()
+### **port.close()**
 
 **Добавлен в версии:** v10.5.0
 
@@ -593,7 +597,7 @@ port1.close()
 
 Событие [`'close'`](#event-close) генерируется в обоих экземплярах `MessagePort`, которые являются частью канала.
 
-### port.postMessage(value[, transferList])
+### **port.postMessage(value[, transferList])**
 
 <details><summary> История версий </summary>
 
@@ -609,15 +613,15 @@ port1.close()
 
 </details>
 
-- value [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures)
-- transferList [\<Object[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object
+- **`value`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures)
+- **`transferList`** [\<Object[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object
 
 Отправляет JavaScript-значение (value) на принимающую сторону этого канала. `'value'` передается способом, совместимым с [алгоритмом структурированного клонирования HTML](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
 
-> Примечание переводчика:  
+> **Рекомендация переводчика:**  
 > Чтобы понять о чем вообще пойдёт речь ниже, хотя бы бегло ознакомьтесь с [алгоритмом структурированного клонирования HTML](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
 
-В частности, существенными отличиями от `JSON` являются:
+Существенными отличиями **`value`** от **`JSON`**:
 
 - `value` может содержать круговые ссылки.
 - `value` может содержать экземпляры строенных в JS-типов, таких как `RegExp`, `BigInt`, `Map`, `Set`, и др.
@@ -633,7 +637,7 @@ port1.close()
   - [\<net.SocketAddress>](https://nodejs.org/dist/latest-v19.x/docs/api/net.html#class-netsocketaddress),
   - [\<X509Certificate>](https://nodejs.org/dist/latest-v19.x/docs/api/crypto.html#class-x509certificate).
 
-```
+```javascript
 const { MessageChannel } = require('node:worker_threads')
 const { port1, port2 } = new MessageChannel()
 
@@ -645,13 +649,13 @@ circularData.foo = circularData
 port2.postMessage(circularData)
 ```
 
-`transferList` может быть списком объектов [`ArrayBuffer`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer), [`MessagePort`](#class-messageport) и [`FileHandle`](https://nodejs.org/dist/latest-v19.x/docs/api/fs.html#class-filehandle). После передачи они больше не могут использоваться на передающей стороне канала (даже если они не содержатся в `value`). В отличие от [`child processes`](https://nodejs.org/dist/latest-v19.x/docs/api/child_process.html), передача обработчиков (handles), таких как сетевые сокеты, в настоящее время не поддерживается.
+`transferList` может быть списком объектов [`ArrayBuffer`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer), [`MessagePort`](#class-messageport) и [`FileHandle`](https://nodejs.org/dist/latest-v19.x/docs/api/fs.html#class-filehandle). После передачи они больше не смогут использоваться на передающей стороне канала (даже если они не содержатся в `value`). В отличие от [`child processes`](https://nodejs.org/dist/latest-v19.x/docs/api/child_process.html), передача обработчиков (handles), таких как сетевые сокеты, в настоящее время не поддерживается.
 
 Если `value` содержит экземпляры [`SharedArrayBuffer`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer), они доступны из любого потока. Они не могут быть перечислены в `transferList`.
 
-`value` всё ещё может содержать экземпляры [`ArrayBuffer`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer), не входящие в `transferList`; в этом случае базовая память копируется, а не перемещается.
+`value` всё ещё может содержать экземпляры [`ArrayBuffer`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer), не входящие в `transferList`. В этом случае базовая память копируется, а не перемещается.
 
-```
+```javascript
 const { MessageChannel } = require('node:worker_threads')
 const { port1, port2 } = new MessageChannel()
 
@@ -681,12 +685,12 @@ port2.postMessage({ port: otherChannel.port1 }, [otherChannel.port1])
 
 Дополнительные сведения о механизмах сериализации и десериализации, лежащих в основе этого API, см. в [API сериализации модуля `node:v8`](https://nodejs.org/dist/latest-v19.x/docs/api/v8.html#serialization-api).
 
-#### Рекоммендации при передаче TypedArrays и Buffers
+#### **Рекоммендации при передаче TypedArrays и Buffers**
 
-Все экземпляры `TypedArray` и `Buffer` являются абстракцией над базовым `ArrayBuffer`. Фактически, именно `ArrayBuffer` хранит исходные данные, а объекты `TypedArray` и `Buffer` предоставляют интерфейс (способ) просмотра и манипулирования данными. Для одного и того же экземпляра `ArrayBuffer` можно создать несколько представлений.  
-Необходимо соблюдать большую осторожность при использовании списка передачи для передачи `ArrayBuffer`, поскольку это приводит к тому, что все экземпляры `TypedArray` и `Buffer`, которые совместно используют один и тот же `ArrayBuffer`, становятся непригодными для использования.
+Все экземпляры `TypedArray` и `Buffer` являются абстракцией над базовым `ArrayBuffer`. Фактически, именно `ArrayBuffer` хранит исходные данные, а объекты `TypedArray` и `Buffer` предоставляют интерфейс (способ) для просмотра и манипулирования данными. Для одного и того же экземпляра `ArrayBuffer` можно создать несколько представлений.  
+Необходимо соблюдать большую осторожность при использовании списка передачи (**_transfer list_**) для передачи `ArrayBuffer`, поскольку это приводит к тому, что все экземпляры `TypedArray` и `Buffer`, которые совместно используют один и тот же `ArrayBuffer`, становятся непригодными для использования.
 
-```
+```javascript
 const { MessageChannel } = require('node:worker_threads')
 
 const { port1, port2 } = new MessageChannel()
@@ -713,11 +717,11 @@ console.log(u2.length) // Выведет 0
 
 Буферы `ArrayBuffers` для экземпляров `Buffer`, созданных с помощью `Buffer.alloc()` или `Buffer.allocUnsafeSlow()`, всегда можно передать, но это делает непригодными все другие существующие представления этих буферов `ArrayBuffers`.
 
-#### Рекоммендации при клонировании объектов с помощью прототипов, классов и методов доступа
+#### **Рекоммендации при клонировании объектов с помощью прототипов, классов и методов доступа**
 
 Поскольку при клонировании объектов используется [алгоритм структурированного клонирования HTML](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), неперечислимые свойства, методы доступа к свойствам и прототипы объектов не сохраняются. В частности, объекты [`Buffer`](https://nodejs.org/dist/latest-v19.x/docs/api/buffer.html) будут считываться принимающей стороной как простые массивы [`Uint8Array`](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array), а экземпляры JavaScript-классов будут клонироваться как простые JavaScript-объекты.
 
-```
+```javascript
 const { MessageChannel } = require('node:worker_threads')
 
 const b = Symbol('b')
@@ -745,30 +749,30 @@ port2.postMessage(new anyClass())
 
 Это ограничение распространяется на многие встроенные объекты, такие как глобальный объект `URL`:
 
-```
+```javascript
 const { MessageChannel } = require('node:worker_threads')
-const { port1, port2 } = new MessageChannel();
+const { port1, port2 } = new MessageChannel()
 
-port1.onmessage = ({ data }) => console.log(data);
+port1.onmessage = ({ data }) => console.log(data)
 
 // Встроенный объект URL не клонируется и не передастся
-port2.postMessage(new URL('https://example.org'));
+port2.postMessage(new URL('https://example.org'))
 
 // Выведет пустой объект: { }
 ```
 
-### port.hasRef()
+### **port.hasRef()**
 
 **Добавлен в версии:** v18.1.0, v16.17.0
 
 > **Индекс стабильности: 1 - [Экспериментальный](https://nodejs.org/dist/latest-v19.x/docs/api/documentation.html#stability-index)**  
 > Не рекомендуется использовать функцию в production средах.
 
-- **Returns:** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D0%B1%D1%83%D0%BB%D0%B5%D0%B2%D1%8B%D0%B9_%D1%82%D0%B8%D0%BF_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)
+- Returns: [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D0%B1%D1%83%D0%BB%D0%B5%D0%B2%D1%8B%D0%B9_%D1%82%D0%B8%D0%BF_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)
 
 Если `true`, то объект `MessagePort` будет поддерживать цикл событий (event loop) Node.js активным.
 
-### port.ref()
+### **port.ref()**
 
 **Добавлен в версии:** v10.5.0
 
@@ -776,16 +780,17 @@ port2.postMessage(new URL('https://example.org'));
 
 Если слушатели (listeners ) подключаются или удаляются с помощью `.on('message')`, порт автоматически `ref()`ed и `unref()`ed в зависимости от того, существуют ли слушатели для данного события.
 
-### port.start()
+### **port.start()**
 
 **Добавлен в версии:** v10.5.0
 
 Запускает получение сообщений на этот `MessagePort`. При использовании этого порта в качестве эмиттера событий он вызывается автоматически после подключения прослушивателей на событие `'message'`.
 
-Метод `port.start()` существует для паритета с API **Web** `MessagePort`. В Node.js это полезно только для игнорирования сообщений, когда нет прослушивателя событий.  
-Node.js также отличается в обработке `.onmessage`. Установка `.onmessage` автоматически вызывает `.start()`, но отсутствие `.onmessage` позволяет ставить сообщения в очередь до тех пор, пока не будет установлен новый обработчик или порт не будет удален.
+Метод `port.start()` существует для паритета с Web API `MessagePort`. В Node.js это полезно только для игнорирования сообщений, когда нет прослушивателя событий.
 
-### port.unref()
+API Node.js также отличается от Web API в обработке `.onmessage`. Установка `.onmessage` автоматически вызывает `.start()`, но отсутствие `.onmessage` позволяет ставить сообщения в очередь до тех пор, пока не будет установлен новый обработчик или порт не будет удален.
+
+### **port.unref()**
 
 **Добавлен в версии:** v10.5.0
 
