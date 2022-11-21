@@ -930,23 +930,47 @@ let options = {
 
 ### Event: 'error'
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+- **`err`** [\<Error>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Error)
+
+Событие `'error'` генерируется, если рабочий поток выдает неперехваченное исключение. В этом случае рабочий поток разрушается (terminated).
 
 ### Event: 'exit'
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+- **`exitCode`** [\<integer>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+
+Событие `'exit'` генерируется, когда рабочий поток был остановлен.  
+Если рабочий поток был остановлен путем вызова `process.exit()`, то параметром `exitCode` будет переданный код завершения. Если рабочий поток был разрушен (terminated) из-за ошибки., то параметр `exitCode` равен `1`.
+
+Событие `exitCode` - это последнее событие, испускаемое любым экземпляром Worker.
 
 ### Event: 'message'
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+- **`value`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Переданное значение (transmitted value)
+
+Событие `'message'` генерируется, когда рабочий поток вызывает [`require('node:worker_threads').parentPort.postMessage()`](#portpostmessagevalue-transferlist).  
+Более подробную информацию смотрите в событии [`port.on('message')`](#event-message).
+
+Все сообщения, отправленные из рабочего потока, генерируют события до того, как для объекта `Worker` будет выдано [событие `'exit'`](#event-exit).
 
 ### Event: 'messageerror'
 
-**Добавлен в версии:**
+**Добавлен в версии:** v14.5.0, v12.19.0
+
+- **`error`** [\<Error>]() Объект ошибки (`Error`)
+
+Событие `'messageerror'` генерируется при неудачной десериализации сообщения.
 
 ### Event: 'online'
 
-**Добавлен в версии:**
+**Добавлен в версии:** v10.5.0
+
+Событие `'online'` генерируется, когда рабочий поток начинает выполнение JavaScript-кода.
 
 ### worker.getHeapSnapshot()
 
