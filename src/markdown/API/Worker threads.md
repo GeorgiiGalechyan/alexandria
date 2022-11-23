@@ -974,60 +974,182 @@ let options = {
 
 ### worker.getHeapSnapshot()
 
-**Добавлен в версии:**
+<details> <summary>История изменений</summary>
+
+| Версии            | Изменения                                                |
+| ----------------- | -------------------------------------------------------- |
+| v19.1.0           | Поддержка опций для настройки моментального снимка кучи. |
+| v13.9.0, v12.17.0 | Добавлен в Node.js                                       |
+
+</details>
+
+- **`options`** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object)
+  - **`exposeInternals`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `exposeInternals: true`, то в снимке кучи раскрываются внутренние компоненты. **По умолчанию:** `exposeInternals: false`.
+  - **`exposeNumericValues`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `exposeNumericValues: true`, то выставятся числовые значения в искусственных полях. **По умолчанию:** `exposeNumericValues: false`.
+- Returns: [\<Promise>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise) [Promise](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise) для [Readable Stream](https://nodejs.org/api/stream.html#readable-streams), содержащего моментальный снимок кучи V8
+
+Возвращает [readable stream](https://nodejs.org/api/stream.html#readable-streams), содержащий снимок текущего состояния рабочего потока (Worker) для V8. Для более подробной информации см. [v8.getHeapSnapshot()](https://nodejs.org/api/v8.html#v8getheapsnapshotoptions).
+
+Если рабочий поток (Worker) перестанет выполняться, что может произойти до того, как будет сгенерировано событие `'exit'`, то возвращенный Promise будет немедленно отклонён с ошибкой [ERR_WORKER_NOT_RUNNING](https://nodejs.org/api/errors.html#err_worker_not_running).
 
 ### worker.performance
 
-**Добавлен в версии:**
+**Добавлен в версии:** v15.1.0, v14.17.0, v12.22.0
+
+Объект, который может быть использован для запроса информации о производительности экземпляра рабочего процесса (Worker instance). Аналогично perf_hooks.performance. Аналогично [perf_hooks.performance](https://nodejs.org/api/perf_hooks.html#perf_hooksperformance).
 
 #### performance.eventLoopUtilization([utilization1[, utilization2]])
 
-**Добавлен в версии:**
+**Добавлен в версии:** v15.1.0, v14.17.0, v12.22.0
 
-### worker.postMessage(value[, transferList])
+- **`utilization1`** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) Результат предыдущего вызова [`eventLoopUtilization()`](https://nodejs.org/api/perf_hooks.html#performanceeventlooputilizationutilization1-utilization2).
+- **`utilization2`** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) Результат предыдущего вызова [`eventLoopUtilization()`](https://nodejs.org/api/perf_hooks.html#performanceeventlooputilizationutilization1-utilization2) перед `utilization1`.
+- Returns: [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object)
 
-**Добавлен в версии:**
+  - **`idle`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  - **`active`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  - **`utilization`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
 
-### worker.ref()
+Аналогично вызуву метода [`perf_hooks eventLoopUtilization()`](https://nodejs.org/api/perf_hooks.html#performanceeventlooputilizationutilization1-utilization2), за исключением того, что возвращаемый объект является экземпляром класса Worker.  
+Метод [`perf_hooks eventLoopUtilization()`](https://nodejs.org/api/perf_hooks.html#performanceeventlooputilizationutilization1-utilization2) возвращает объект, содержащий суммарную продолжительность времени, в течение которого цикл событий был как неактивным, так и активным, в виде миллисекундного таймера высокого разрешения. Значение `utilization` - это рассчитанная Event Loop Utilization (ELU).
 
-**Добавлен в версии:**
+> **Примечание переводчика:**  
+> Простейшее определение **_Event Loop Utilization_** (**_ELU_**) — это отношение времени, в течение которого Event Loop не простаивает в "поставщике событий", к общему времени работы Event Loop.
+> Если вам непонятно что написано выше, то лучше поискать информацию в других источниках, например: можно почитать статью ['Introduction to Event Loop Utilization in Node.js'](https://nodesource.com/blog/event-loop-utilization-nodejs).
 
-### worker.resourceLimits
+В отличие от основного потока (main thread), загрузка внутри рабочего потока (worker thread) выполняется в Event Loop, т.е. использование Event Loop становится доступным сразу после начала выполнения кода (скрипта) внутри рабочего потока.
 
-**Добавлен в версии:**
+> **Примечание переводчика:**  
+> При запуске Node.js-приложения код программы запускается в основном потоке (main thread). В основном потоке приложение сначала проходит фазу инициализации, подгружаются модули (require, import), затем регистрируются слушатели для обработки событий (см. [EventEmitter](https://habr.com/ru/post/694346/)). И только после этого, Node.js-приложение входит в цикл событий (Event Loop), отвечая на входящие запросы клиентов (clients) путем выполнения соответствующего обработчика события.  
+> В отличие от основного потока (main thread), процесс инициализации рабочего потока (worker thread) происходит сразу внутри цикла событий (Event Loop), поэтому мы можем использовать API связанное с Event Loop сразу, как только внутри рабочего потока начнет выполняться какой-либо код (скрипт).
 
-### worker.stderr
+В случаях, когда `idle` time (время простоя) не увеличивается, то это не обязательно означает, что рабочий поток (worker thread)) застрял в стадии начальной загрузки (bootstrap). В следующем примере показано, как за все время жизни рабочего потока никогда не накапливается время простоя, хотя рабочий поток всё ещё может обрабатывать сообщения.
 
-**Добавлен в версии:**
+```javascript
+const { Worker, isMainThread, parentPort } = require('node:worker_threads')
 
-### worker.stdin
+if (isMainThread) {
+  const worker = new Worker(__filename)
+  setInterval(() => {
+    worker.postMessage('hi')
+    console.log(worker.performance.eventLoopUtilization())
+  }, 100).unref()
+  return
+}
 
-**Добавлен в версии:**
+parentPort.on('message', () => console.log('msg')).unref()
+;(function r(n) {
+  if (--n < 0) return
+  const t = Date.now()
+  while (Date.now() - t < 300);
+  setImmediate(r, n)
+})(10)
+```
 
-### worker.stdout
+Event Loop Utilization рабоего потока доступно только после события [`'online'`](#event-online), если оно вызвано до этого или после события [`'exit'`](#event-exit), то все свойства имеют значение `0`.
 
-**Добавлен в версии:**
+### **worker.postMessage(value[, transferList])**
 
-### worker.terminate()
+**Добавлен в версии:** v10.5.0
 
-**Добавлен в версии:**
+- **`value`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures)
+- **`transferList`** [\<Object[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object)
 
-### worker.threadId
+Отправляет сообщение в рабочий поток. Событие отправки обрабатывается (отлавливается) в через API [`require('node:worker_threads').parentPort.on('message')`](#event-message). Для получения более подробной информации см. [port.postMessage()](#portpostmessagevalue-transferlist).
 
-**Добавлен в версии:**
+### **worker.ref()**
 
-### worker.unref()
+**Добавлен в версии:** v10.5.0
 
-**Добавлен в версии:**
+Противоположность `unref()`. Если ранее `worker` был `unref()`, то вызов `ref()` запретит программе завершить работу, если это единственный оставшийся активный обработчик (поведение по умолчанию). Если же `worker` уже имеет значение `ref()`, то повторный вызов `ref()` не будет имеет никакого эффекта.
 
-## Примечания
+### **worker.resourceLimits**
 
-**Добавлен в версии:**
+**Добавлен в версии:** v13.2.0, v12.16.0
 
-### Синхронная блокировка stdio
+- [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object)
+  - **`maxYoungGenerationSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  - **`maxOldGenerationSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  - **`codeRangeSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  - **`stackSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
 
-**Добавлен в версии:**
+Предоставляет набор ограничений ресурсов JS-движка для создаваемого рабоего потока. Если конструктору [`Worker`](#class-worker) был передан параметр `resourceLimits`, он соответствует его значениям.
 
-### Запуск рабочих потоков из скриптов предварительной загрузки
+Если вызвать `resourceLimits` после остановки рабочего потока, то `resourceLimits` вернет пустой объект.
 
-**Добавлен в версии:**
+### **worker.stderr**
+
+**Добавлен в версии:** v10.5.0
+
+- [\<stream.Readable>](https://nodejs.org/dist/latest-v19.x/docs/api/stream.html#class-streamreadable)
+
+Это поток для чтения (readable stream), который содержит данные (data), записанные в [`process.stderr`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html#processstderr) внутри рабочего потока. Если `stderr: true` **_не был_** передан в конструктор [Worker](#class-worker), то данные передаются в поток [`process.stderr`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html#processstderr) родительского потока.
+
+### **worker.stdin**
+
+**Добавлен в версии:** v10.5.0
+
+- [\<null>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) | [\<stream.Writable>](https://nodejs.org/dist/latest-v19.x/docs/api/stream.html#class-streamwritable)
+
+Если в конструктор класса [`Worker`](#class-worker) был передан параметр `stdin: true`, то создается поток с возможностью записи. Данные, записанные в этот поток, будут доступны в рабочем потоке также как и [`process.stdin`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html#processstdin).
+
+### **worker.stdout**
+
+**Добавлен в версии:** v10.5.0
+
+- [\<stream.Readable>](https://nodejs.org/dist/latest-v19.x/docs/api/stream.html#class-streamreadable)
+
+Это поток для чтения (readable stream), который содержит данные (data), записанные в [`process.stdout`]() внутри рабочего потока. Если в конструктор класса [`Worker`](#class-worker) **_не был_** передан параметр `stdout: true`, то данные передаются в поток [process.stdout]() родительского потока.
+
+### **worker.terminate()**
+
+<details> <summary>История изменений</summary>
+
+| Версия  | Изменения                                                                                                                                                                                                                   |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v12.5.0 | Эта функция теперь возвращает Promise. Передача обратного вызова устарела и была бесполезна до этой версии, поскольку `Worker` фактически завершался синхронно. Завершение теперь является полностью асинхронной операцией. |
+| v10.5.0 | Добавлен в Node.js                                                                                                                                                                                                          |
+
+</details>
+
+- Returns: [\<Promise>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
+Как можно скорее останавливает выполнение JavaScript в рабочем потоке. Возвращает Promise с кодом выхода, который выполняется при возникновении события `'exit'`.
+
+### **worker.threadId**
+
+**Добавлен в версии:** v10.5.0
+
+- [\<integer>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+
+Числовой идентификатор потока. Внутри рабочего потока он доступен как [`require('node:worker_threads').threadId`](#workerthreadid). Это значение уникально для каждого экземпляра класса [`Worker`](#class-worker) внутри одного процесса.
+
+### **worker.unref()**
+
+**Добавлен в версии:** v10.5.0
+
+Вызов `unref()` на `worker` позволяет потоку выйти, если это единственный активный обработчик в системе событий. Если `worker` уже был unref(), повторный вызов unref() не ,будет иметь никакого эффекта.
+
+## **Примечания**
+
+### **Синхронная блокировка stdio**
+
+`Workers` используют передачу сообщений через [\<MessagePort>](#class-messageport) для реализации взаимодействия с `stdio`. Это означает, что вывод `stdio`, исходящий от `Workers`, может быть заблокирован синхронным кодом на принимающей стороне, который блокирует цикл событий Node.js.
+
+```javascript
+import { Worker, isMainThread } from 'worker_threads'
+
+if (isMainThread) {
+  new Worker(new URL(import.meta.url))
+  for (let n = 0; n < 1e10; n++) {
+    // Имитации работы цикла.
+  }
+} else {
+  // Этот вывод будет заблокирован циклом for в главном потоке.
+  console.log('foo')
+}
+```
+
+### **Запуск рабочих потоков из скриптов предварительной загрузки**
+
+Будьте осторожны при запуске рабочих потоков из скриптов предварительной загрузки (preload scripts) (скрипты, загруженные и запущенные с помощью флага командной строки `-r`). Если опция `execArgv` не установлена явно, новые рабочие потоки автоматически наследуют флаги командной строки от запущенного процесса и будут загружать те же preload scripts, что и основной поток. Если preload scripts безоговорочно запускает рабочий поток, каждый порожденный поток будет порождать другой, пока приложение не завершится.
