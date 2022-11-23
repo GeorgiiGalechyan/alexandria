@@ -798,7 +798,7 @@ API Node.js также отличается от Web API в обработке `
 
 Если слушатели (listeners) подключаются или удаляются с помощью `.on('message')`, то порт автоматически `ref()` и `unref()` в зависимости от того, существуют ли слушатели для данного события.
 
-## Class: Worker
+## **Class: Worker**
 
 **Добавлен в версии:** v10.5.0
 
@@ -823,9 +823,9 @@ API Node.js также отличается от Web API в обработке `
 
 Можно создавать рабочие потоки (Workers) внутри других рабочих потоков (Workers).
 
-Также как [Web Workers](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API) и [модулю `node:cluster`](https://nodejs.org/api/cluster.html), двусторонняя связь достигается за счет передачи сообщений между потоками. При создании экземпляра класса `Worker` также создаётся пара портов - экземляров класса [`MessagePorts`](#class-messageport), которые уже связаны друг с другом. Один порт привязывается к родительскому потоку, а второй - к созданному рабочему потоку. Хотя объект `MessagePort` на родительской стороне не отображается напрямую, его функциональные возможности доступны через вызов методов [`worker.postMessage()`](#portpostmessagevalue-transferlist) и событие [`worker.on('message')`](#event-message-1) в объекте `Worker` для родительского потока.
+Также как и в [Web Workers](https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API) и [модуле `node:cluster`](https://nodejs.org/api/cluster.html), двусторонняя связь достигается за счет передачи сообщений между потоками. При создании экземпляра класса `Worker` также создаётся пара портов - экземляров класса [`MessagePorts`](#class-messageport), которые уже связаны друг с другом. Один порт привязывается к родительскому потоку, а второй - к созданному рабочему потоку. Хотя объект `MessagePort` на родительской стороне не отображается напрямую, его функциональные возможности доступны через вызов методов [`worker.postMessage()`](#portpostmessagevalue-transferlist) и событие [`worker.on('message')`](#event-message-1) в объекте `Worker` для родительского потока.
 
-Рекоммендуется вместо дефолтных глобальных каналов для обмена сообщениями создавать свои пользовательские (custom) каналы. Пользователи могут создать объект `MessageChannel` в любом потоке и передать один из `MessagePorts` этого `MessageChannel` другому потоку через уже существующий канал, например, глобальный.
+Рекоммендуется вместо дефолтных глобальных каналов для обмена сообщениями создавать свои пользовательские (custom) каналы. Пользователи могут создать канал `MessageChannel` в любом потоке и передать один из портов `MessagePorts` этого канала `MessageChannel` другому потоку через уже существующий канал, например, глобальный.
 
 Смотрите [`port.postMessage(value, transferList)`](#portpostmessagevalue-transferlist) для получения дополнительной информации о том, как передаются сообщения, и какие **`value`** могут быть переданы между потоками.
 
@@ -870,9 +870,7 @@ if (isMainThread) {
 }
 ```
 
-### new Worker(filename[, options])
-
-**Добавлен в версии:**
+### **new Worker(filename[, options])**
 
 <details><summary> История версий </summary>
 
@@ -889,19 +887,19 @@ if (isMainThread) {
 
 </details>
 
-- **`filename`** [\<string>](options <Object>) | [\<URL>](https://nodejs.org/api/url.html#the-whatwg-url-api) Путь к основному скрипту или модулю Worker. Должен быть указан либо абсолютный путь, либо относительный путь (т.е. относительный к текущему рабочему каталогу), начинающийся с ./ или ../, или объект `URL` отвечающий требованиям [WHATWG](https://developer.mozilla.org/ru/docs/Glossary/WHATWG), использующий протоколы `file:` или `data:`. При использовании [`data:` URL](https://developer.mozilla.org/ru/docs/Web/HTTP/Basics_of_HTTP/Data_URLs) данные интерпретируются на основе MIME-типов с использованием [загрузчика модулей ECMAScript](https://nodejs.org/api/esm.html#data-imports). Если **`options.eval`** имеет значение **`true`**, то эта строка содержит JavaScript-код, а не путь.
+- **`filename`** [\<string>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2%D1%8B%D0%B5_%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8) | [\<URL>](https://nodejs.org/api/url.html#the-whatwg-url-api) Путь к основному скрипту или модулю Worker. Должен быть указан либо абсолютный путь, либо относительный путь (т.е. относительный к текущему рабочему каталогу), начинающийся с ./ или ../, или объект `URL` отвечающий требованиям [WHATWG](https://developer.mozilla.org/ru/docs/Glossary/WHATWG), использующий протоколы `file:` или `data:`. При использовании [`data:` URL](https://developer.mozilla.org/ru/docs/Web/HTTP/Basics_of_HTTP/Data_URLs) данные интерпретируются на основе MIME-типов с использованием [загрузчика модулей ECMAScript](https://nodejs.org/api/esm.html#data-imports). Если **`options.eval`** имеет значение **`true`**, то строка `filename` будет интерпретирована не как путь, а как JavaScript-код, который нужно исполнить
 - **`options`** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object)
-  - **`argv`** [\<any[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Список аргументов (CLI опций), которые будут преобразованы в строку (stringified ) и добавлены к [`process.argv`](https://nodejs.org/docs/latest/api/process.html#processargv) внутри рабочего потока. Это в основном похоже на `workerData`, но значения доступны в глобальном `process.argv`, как если бы они были переданы в качестве параметров CLI скрипта.
-  - **`env`** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) Если установлено, то указывает начальное значение `process.env` внутри рабочего потока. В качестве специального значения можно использовать [`worker.SHARE_ENV`](#workershare_env), чтобы указать, что родительский и дочерний потоки должны совместно использовать свои переменные среды. в этом случае изменения в объекте process.env одного потока влияют и на другой поток. **По умолчанию:** `env: процесс.env`.
-  - **`eval`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `eval: true` и первый аргумент является строкой, то первый аргумент конструктора будет интерпретирован как скрипт, который будет выполнен, когда рабочий поток будет в сети (is online).
-  - **`execArgv`** [\<string[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2%D1%8B%D0%B5_%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8) Список node.js CLI-опций , передаваемых рабочему потоку. Опции V8 (например, `--max-old-space-size`) и опции, влияющие на процесс (например, `--title`), не поддерживаются. Если опция установлена, она передается внутрь рабочего потока как [`process.execArgv`](https://nodejs.org/api/process.html#processexecargv). **По умолчанию** опции наследуются от родительского потока.
-  - **`stdin`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `stdin: true`, то `worker.stdin` предоставляет доступный для записи поток, содержимое которого отображается как `process.stdin` внутри рабочего потока. **По умолчанию:** `stdin: false`.
-  - **`stdout`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если установлено значение `stdout: true`, то `worker.stdout` не будет автоматически передаваться в `process.stdout` родительского потока.
-  - **`stderr`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если это значение равно `stderr: true`, то `worker.stderr` не будет автоматически передаваться в `process.stderr` родительского потока.
+  - **`argv`** [\<any[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Список аргументов (CLI опций), которые будут преобразованы в строку (stringified) и добавлены к [`process.argv`](https://nodejs.org/docs/latest/api/process.html#processargv) внутри рабочего потока. Это в основном похоже на `workerData`, но значения доступны в глобальном `process.argv`, как если бы они были переданы в качестве параметров CLI скрипта.
+  - **`env`** [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) Если установлено, то указывает начальное значение `process.env` внутри рабочего потока. В качестве специального значения можно использовать [`worker.SHARE_ENV`](#workershare_env), чтобы указать, что родительский и дочерний потоки должны совместно использовать свои переменные среды. в этом случае изменения в объекте `process.env` одного потока влияют и на другой поток. **По умолчанию:** `env: процесс.env`.
+  - **`eval`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `eval: true` и первый аргумент является строкой, то первый аргумент конструктора будет интерпретирован как скрипт, который будет выполнен, когда рабочий поток будет в сети (is online). Подробнее, см. событие [`'online'`](#event-online).
+  - **`execArgv`** [\<string[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2%D1%8B%D0%B5_%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8) Массив CLI-опций для Node.js, передаваемых рабочему потоку. Опции V8 (например, `--max-old-space-size`) и опции, влияющие на процесс (например, `--title`), не поддерживаются. Если опция установлена, она передается внутрь рабочего потока как [`process.execArgv`](https://nodejs.org/api/process.html#processexecargv). **По умолчанию** опции наследуются от родительского потока.
+  - **`stdin`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `stdin: true`, то `worker.stdin` предоставляет доступный для записи поток ([writable stream](https://nodejs.org/api/stream.html#class-streamwritable)), содержимое которого отображается как `process.stdin` внутри рабочего потока. **По умолчанию:** `stdin: false`. Подробнее см. [` worker.stdin`](#workerstdin).
+  - **`stdout`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `stdout: true`, то `worker.stdout` не будет автоматически передаваться в `process.stdout` родительского потока. Подробнее см. [` worker.stdout`](#workerstdout).
+  - **`stderr`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `stderr: true`, то `worker.stderr` не будет автоматически передаваться в `process.stderr` родительского потока. Подробнее см. [` worker.stderr`](#workerstderr).
   - **`workerData`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Любое JavaScript-значение, которое клонируется и становится доступным как [`require('node:worker_threads').workerData`](https://nodejs.org/api/worker_threads.html#workerworkerdata). Клонирование происходит так, как описано в [алгоритме структурированного клонирования HTML](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), и выдаётся ошибка если `workerData` не может быть клонирован (например, потому что он содержит функции).
-  - **`trackUnmanagedFds`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `trackUnmanagedFds: true`, то рабочий поток (`Worker`) отслеживает необработанные файловые дескрипторы, управляемые через [`fs.open()`](https://nodejs.org/api/fs.html#fsopenpath-flags-mode-callback) и [`fs.close()`](https://nodejs.org/api/fs.html#fsclosefd-callback), и закрывает их при выходе из рабоего потока (Worker), аналогично другим ресурсам, таким как сетевые сокеты или дескрипторы файлов, управляемые через [`FileHandle`](https://nodejs.org/api/fs.html#class-filehandle) API. Этот параметр автоматически наследуется всеми вложенными рабочими потоками. **По умолчанию:** `trackUnmanagedFds: true`.
-  - **`transferList`** [\<Object[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) Если в `workerData` передается один или несколько объектов типа `MessagePort`, то для этих элементов требуется `transferList`, иначе будет выброшен [`ERR_MISSING_MESSAGE_PORT_IN_TRANSFER_LIST`](https://nodejs.org/api/errors.html#err_missing_message_port_in_transfer_list). Для получения дополнительной информации смотрите [`port.postMessage()`](#portpostmessagevalue-transferlist).
-  - `resourceLimits` [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) Необязательный набор ограничений ресурсов для нового экземпляра JS-движка. Превышение любого из этих ограничений (limits) приводит к завершению работы экземпляра `Worker`. Эти ограничения влияют только на JS-движок, но не на внешние данные, включая буферы `ArrayBuffers`. Даже если эти ограничения установлены, процесс все равно может прерваться, если столкнется с глобальной ситуацией нехватки памяти.
+  - **`trackUnmanagedFds`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `trackUnmanagedFds: true`, то рабочий поток отслеживает необработанные файловые дескрипторы, управляемые через [`fs.open()`](https://nodejs.org/api/fs.html#fsopenpath-flags-mode-callback) и [`fs.close()`](https://nodejs.org/api/fs.html#fsclosefd-callback), и закрывает их при выходе из рабоего потока, аналогично другим ресурсам, таким как сетевые сокеты или дескрипторы файлов, управляемые через [`FileHandle`](https://nodejs.org/api/fs.html#class-filehandle) API. Этот параметр автоматически наследуется всеми вложенными рабочими потоками. **По умолчанию:** `trackUnmanagedFds: true`.
+  - **`transferList`** [\<Object[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) Если в `workerData` передается один или несколько объектов типа `MessagePort`, то для этих элементов требуется `transferList`, иначе будет выброшено исключение [`ERR_MISSING_MESSAGE_PORT_IN_TRANSFER_LIST`](https://nodejs.org/api/errors.html#err_missing_message_port_in_transfer_list). Подробнее см. [`port.postMessage()`](#portpostmessagevalue-transferlist).
+  - `resourceLimits` [\<Object>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object) Необязательный набор параметров, ограничивающих ений ресурсы JS-движка для нового экземпляра класса `Worker` (для нового рабочего потока). Превышение любого из этих ограничений (limits) приводит к завершению работы экземпляра `Worker`. Эти ограничения влияют только на JS-движок, но не на внешние данные, включая буферы `ArrayBuffers`. Даже если эти ограничения установлены, процесс все равно может прерваться, если столкнется с глобальной ситуацией нехватки памяти.
     - **`maxOldGenerationSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0) Максимальный размер основной [кучи](https://thecode.media/heap/) в мегабайтах. Если задан аргумент командной строки `--max-old-space-size`, он переопределяет этот параметр.
     - **`maxYoungGenerationSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0) Максимальный размер пространства [кучи](https://thecode.media/heap/) для недавно созданных объектов. Если задан аргумент командной строки `--max-semi-space-size`, он переопределяет эту настройку.
     - **`codeRangeSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0) Размер предварительно выделенного диапазона памяти, используемого для сгенерированного кода.
@@ -928,51 +926,55 @@ let options = {
 }
 ```
 
-### Event: 'error'
+### **Event: 'error'**
 
 **Добавлен в версии:** v10.5.0
+<>
 
 - **`err`** [\<Error>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Error)
 
 Событие `'error'` генерируется, если рабочий поток выдает неперехваченное исключение. В этом случае рабочий поток разрушается (terminated).
 
-### Event: 'exit'
+### **Event: 'exit'**
 
 **Добавлен в версии:** v10.5.0
 
 - **`exitCode`** [\<integer>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  <>
 
 Событие `'exit'` генерируется, когда рабочий поток был остановлен.  
 Если рабочий поток был остановлен путем вызова `process.exit()`, то параметром `exitCode` будет переданный код завершения. Если рабочий поток был разрушен (terminated) из-за ошибки., то параметр `exitCode` равен `1`.
 
 Событие `exitCode` - это последнее событие, испускаемое любым экземпляром Worker.
 
-### Event: 'message'
+### **Event: 'message'**
 
 **Добавлен в версии:** v10.5.0
 
 - **`value`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Переданное значение (transmitted value)
+  <>
 
 Событие `'message'` генерируется, когда рабочий поток вызывает [`require('node:worker_threads').parentPort.postMessage()`](#portpostmessagevalue-transferlist).  
 Более подробную информацию смотрите в событии [`port.on('message')`](#event-message).
 
 Все сообщения, отправленные из рабочего потока, генерируют события до того, как для объекта `Worker` будет выдано [событие `'exit'`](#event-exit).
 
-### Event: 'messageerror'
+### **Event: 'messageerror'**
 
 **Добавлен в версии:** v14.5.0, v12.19.0
 
 - **`error`** [\<Error>]() Объект ошибки (`Error`)
+  <>
 
 Событие `'messageerror'` генерируется при неудачной десериализации сообщения.
 
-### Event: 'online'
+### **Event: 'online'**
 
 **Добавлен в версии:** v10.5.0
 
 Событие `'online'` генерируется, когда рабочий поток начинает выполнение JavaScript-кода.
 
-### worker.getHeapSnapshot()
+### **worker.getHeapSnapshot()**
 
 <details> <summary>История изменений</summary>
 
@@ -987,18 +989,19 @@ let options = {
   - **`exposeInternals`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `exposeInternals: true`, то в снимке кучи раскрываются внутренние компоненты. **По умолчанию:** `exposeInternals: false`.
   - **`exposeNumericValues`** [\<boolean>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) Если `exposeNumericValues: true`, то выставятся числовые значения в искусственных полях. **По умолчанию:** `exposeNumericValues: false`.
 - Returns: [\<Promise>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise) [Promise](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise) для [Readable Stream](https://nodejs.org/api/stream.html#readable-streams), содержащего моментальный снимок кучи V8
+  <>
 
 Возвращает [readable stream](https://nodejs.org/api/stream.html#readable-streams), содержащий снимок текущего состояния рабочего потока (Worker) для V8. Для более подробной информации см. [v8.getHeapSnapshot()](https://nodejs.org/api/v8.html#v8getheapsnapshotoptions).
 
 Если рабочий поток (Worker) перестанет выполняться, что может произойти до того, как будет сгенерировано событие `'exit'`, то возвращенный Promise будет немедленно отклонён с ошибкой [ERR_WORKER_NOT_RUNNING](https://nodejs.org/api/errors.html#err_worker_not_running).
 
-### worker.performance
+### **worker.performance**
 
 **Добавлен в версии:** v15.1.0, v14.17.0, v12.22.0
 
 Объект, который может быть использован для запроса информации о производительности экземпляра рабочего процесса (Worker instance). Аналогично perf_hooks.performance. Аналогично [perf_hooks.performance](https://nodejs.org/api/perf_hooks.html#perf_hooksperformance).
 
-#### performance.eventLoopUtilization([utilization1[, utilization2]])
+#### **performance.eventLoopUtilization([utilization1[, utilization2]])**
 
 **Добавлен в версии:** v15.1.0, v14.17.0, v12.22.0
 
@@ -1009,6 +1012,7 @@ let options = {
   - **`idle`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
   - **`active`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
   - **`utilization`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+    <>
 
 Аналогично вызуву метода [`perf_hooks eventLoopUtilization()`](https://nodejs.org/api/perf_hooks.html#performanceeventlooputilizationutilization1-utilization2), за исключением того, что возвращаемый объект является экземпляром класса Worker.  
 Метод [`perf_hooks eventLoopUtilization()`](https://nodejs.org/api/perf_hooks.html#performanceeventlooputilizationutilization1-utilization2) возвращает объект, содержащий суммарную продолжительность времени, в течение которого цикл событий был как неактивным, так и активным, в виде миллисекундного таймера высокого разрешения. Значение `utilization` - это рассчитанная Event Loop Utilization (ELU).
@@ -1054,6 +1058,7 @@ Event Loop Utilization рабоего потока доступно только
 
 - **`value`** [\<any>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures)
 - **`transferList`** [\<Object[]>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object)
+  <>
 
 Отправляет сообщение в рабочий поток. Событие отправки обрабатывается (отлавливается) в через API [`require('node:worker_threads').parentPort.on('message')`](#event-message). Для получения более подробной информации см. [port.postMessage()](#portpostmessagevalue-transferlist).
 
@@ -1072,6 +1077,7 @@ Event Loop Utilization рабоего потока доступно только
   - **`maxOldGenerationSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
   - **`codeRangeSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
   - **`stackSizeMb`** [\<number>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+    <>
 
 Предоставляет набор ограничений ресурсов JS-движка для создаваемого рабоего потока. Если конструктору [`Worker`](#class-worker) был передан параметр `resourceLimits`, он соответствует его значениям.
 
@@ -1082,6 +1088,7 @@ Event Loop Utilization рабоего потока доступно только
 **Добавлен в версии:** v10.5.0
 
 - [\<stream.Readable>](https://nodejs.org/dist/latest-v19.x/docs/api/stream.html#class-streamreadable)
+  <>
 
 Это поток для чтения (readable stream), который содержит данные (data), записанные в [`process.stderr`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html#processstderr) внутри рабочего потока. Если `stderr: true` **_не был_** передан в конструктор [Worker](#class-worker), то данные передаются в поток [`process.stderr`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html#processstderr) родительского потока.
 
@@ -1090,6 +1097,7 @@ Event Loop Utilization рабоего потока доступно только
 **Добавлен в версии:** v10.5.0
 
 - [\<null>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%82%D0%B8%D0%BF%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85) | [\<stream.Writable>](https://nodejs.org/dist/latest-v19.x/docs/api/stream.html#class-streamwritable)
+  <>
 
 Если в конструктор класса [`Worker`](#class-worker) был передан параметр `stdin: true`, то создается поток с возможностью записи. Данные, записанные в этот поток, будут доступны в рабочем потоке также как и [`process.stdin`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html#processstdin).
 
@@ -1098,6 +1106,7 @@ Event Loop Utilization рабоего потока доступно только
 **Добавлен в версии:** v10.5.0
 
 - [\<stream.Readable>](https://nodejs.org/dist/latest-v19.x/docs/api/stream.html#class-streamreadable)
+  <>
 
 Это поток для чтения (readable stream), который содержит данные (data), записанные в [`process.stdout`]() внутри рабочего потока. Если в конструктор класса [`Worker`](#class-worker) **_не был_** передан параметр `stdout: true`, то данные передаются в поток [process.stdout]() родительского потока.
 
@@ -1113,6 +1122,7 @@ Event Loop Utilization рабоего потока доступно только
 </details>
 
 - Returns: [\<Promise>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+  <>
 
 Как можно скорее останавливает выполнение JavaScript в рабочем потоке. Возвращает Promise с кодом выхода, который выполняется при возникновении события `'exit'`.
 
@@ -1121,6 +1131,7 @@ Event Loop Utilization рабоего потока доступно только
 **Добавлен в версии:** v10.5.0
 
 - [\<integer>](https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures#%D1%87%D0%B8%D1%81%D0%BB%D0%B0)
+  <>
 
 Числовой идентификатор потока. Внутри рабочего потока он доступен как [`require('node:worker_threads').threadId`](#workerthreadid). Это значение уникально для каждого экземпляра класса [`Worker`](#class-worker) внутри одного процесса.
 
