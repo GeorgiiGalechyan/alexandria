@@ -1,11 +1,15 @@
 {
-  "name": "js-ru-docs",
+  "name": "alexandria",
   "version": "1.0.0",
   "private": true,
-  "description": "js-ru-docs",
-  "author": "GeorgiiGalechyan",
+  "description": "Translate docs, tutorials, articles about javascript!",
+  "author": "Georgii Galechyan",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "react",
+    "alexandria",
+    "translate",
+    "RUS"
   ],
   "scripts": {
     "develop": "gatsby develop",
