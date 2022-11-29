@@ -1,4 +1,41 @@
 <p align="center">
+  <a href="">
+    <img alt="Alexandria" src="./src/svg/Ā.svg" width="60" />
+  </a>
+</p>
+
+<h1 id="alexandria" align="center">
+    A L E X A N D R I A
+</h1>
+
+Название вдохновлено сериалом [Stalk](https://www.france.tv/slash/stalk/), названо в честь [Александрийской библиотеки](https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%B8%D0%B9%D1%81%D0%BA%D0%B0%D1%8F_%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA%D0%B0)
+
+## **Перевод документации Node.js с комментариями и дополнениями.**
+
+Файлы с перводом лежат в папках:
+
+**Node.js**
+
+- src/markdown/nodejs/API - перевод раздела API документации Node.js;
+- src/markdown/nodejs/other - перевод иных разделов сайта.
+
+**Fastify:**
+
+- src/markdown/fastify/guides - перевод радела [Guides](https://www.fastify.io/docs/latest/Guides/) документации Fastify
+- src/markdown/fastify/reference - перевод радела [Reference](https://www.fastify.io/docs/latest/Reference/) документации Fastify
+
+**P.S.** Если кто-то желает помочь с переводом или редактурой - [пишите](#контактные-данные)!
+
+### Контактные данные:
+
+**E-mail:** galechyn1991@gmail.com  
+**Telegram:** https://t.me/georgy23
+
+---
+
+---
+
+<p align="center">
   <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
