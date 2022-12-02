@@ -1,0 +1,25 @@
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-icon {
+  max-width: 60px;
+}
+
+.card-tite {
+  color: black;
+  font-family: sans-serif;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0.05rem;
+}
+
+.card-description {
+  color: black;
+  font-family: sans-serif;
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+}
+

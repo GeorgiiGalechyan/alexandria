@@ -1,0 +1,35 @@
+.container {
+  margin: auto;
+  max-width: 800px;
+  font-family: sans-serif;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  background-color: #bb2649;
+}
+
+.heading {
+  color: rebeccapurple;
+}
+
+.nav-link {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+.nav-link-item {
+  padding-right: 2rem;
+}
+
+.nav-link-text {
+  color: black;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  background-color: #c51959;
+}
