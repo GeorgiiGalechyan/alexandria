@@ -1,16 +1,21 @@
 import * as React from 'react'
 import Layout from '../components/layouts/page/layout'
+import TechCard from '../components/cards/technologies/card'
 
-const pageStyles = {
-  color: '#232129',
-  padding: 96,
-  fontFamily: '-apple-system, Roboto, sans-serif, serif',
+const rowSection = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  padding: '60px 0',
 }
 
 const IndexPage = () => {
   return (
     <Layout pageTitle="Главная">
-      <p>Какой-то текст</p>
+      <div style={rowSection}>
+        <TechCard />
+      </div>
     </Layout>
   )
 }
