@@ -2,12 +2,10 @@
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  border: 0;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
   box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
 }
 
 /* Cтили */
@@ -15,9 +13,6 @@ html,
 body {
   height: 100%;
   line-height: 1;
-  -ms-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
 }
 
 #root {
@@ -41,6 +36,7 @@ a:focus,
 a:active {
   outline: none;
 }
+
 /* Убираем декоративные эфекты ссылок */
 a,
 a:visited,
@@ -67,19 +63,10 @@ textarea {
   font-family: inherit;
 }
 
-input::-ms-clear {
-  display: none;
-}
-
 /* курсор при наведении кнопок*/
-button {
+button,
+a {
   cursor: pointer;
-}
-
-/* */
-button::-moz-focus-inner {
-  padding: 0;
-  border: 0;
 }
 
 /*Выравнивание верхнюю границу изображений.*/

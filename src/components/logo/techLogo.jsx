@@ -1,5 +1,5 @@
 import React from 'react'
-import { container, logo } from './siteLogo.module.css'
+import { container, logo } from './techLogo.module.css'
 
 const TechLogo = ({ title, d, ...props }) => {
   return (

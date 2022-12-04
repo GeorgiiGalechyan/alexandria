@@ -12,7 +12,7 @@ const Navigation = () => {
     <nav className={navMenu}>
       <ul className={linkList}>
         {links.map((item) => (
-          <li className={linkItem}>
+          <li key={item.url} className={linkItem}>
             <Link className={link} to={item.url}>
               {item.text}
             </Link>

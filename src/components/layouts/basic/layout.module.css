@@ -6,6 +6,8 @@ html {
   /*Light mode*/
   --lm-color-text-default: #000
   --lm-color-link-default: #000
+  --dm-color-link-hover: #000;
+  --dm-color-link-active: #000;
   --lm-bg-primary: #fff;
   --lm-bg-secondary: #fff;
   --lm-bg-tertiary: #fff;
@@ -16,6 +18,9 @@ html {
   /*Dark mode*/
   --dm-color-text-default: #fff;
   --dm-color-link-default: #fff;
+  --dm-color-link-hover: #fff;
+  --dm-color-link-active: #fff;
+
   --dm-bg-primary: #1b1b1b;
   --dm-bg-secondary: #343434;
   --dm-bg-tertiary: #4e4e4e;
@@ -29,6 +34,29 @@ html {
 
 }
 /*При использовании CSS-переменных не забывай использовать резервные значения!*/
+
+body.light {
+  --color-text-default: var(--lm-color-text-default, #000)
+
+
+
+
+  --lm-color-text-default: #000
+  --lm-color-link-default: #000
+  --dm-color-link-hover: #000;
+  --dm-color-link-active: #000;
+  --lm-bg-primary: #fff;
+  --lm-bg-secondary: #fff;
+  --lm-bg-tertiary: #fff;
+  --lm-border-primary: #000;
+  --lm-border-secondary: #000;
+  --lm-heading-color: rebeccapurple;
+
+}
+
+body.darlk {
+
+}
 
 body {
   background-color: var(--dm-bg-primary);
@@ -45,7 +73,7 @@ a {
 }
 
 .main {
-  padding: 60px 0px;
+  padding: 60px 20px;
   display: flex;
   flex-direction: column;
   flex: 0 1 auto;

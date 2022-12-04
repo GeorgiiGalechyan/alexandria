@@ -1,27 +1,44 @@
 .card {
   width: 350px;
-  padding: 20px 20px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: var(--dm-heading-color);
   border: 1.5px solid var(--dm-border-primary);
 }
 
+.logo-name-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .tech-name {
-  padding: 10px 0px;
-  color: var(--dm-heading-color);
+  padding-top: 10px;
+  align-self: center;
   font-family: sans-serif;
   font-size: 22px;
   line-height: 28px;
 }
 
 .tech-home-page {
+  align-self: flex-start;
+  padding-top: 10px;
+  font-weight: 600;
   color: var(--dm-color-text-default);
 }
 
+.tech-home-page a {
+  font-weight: 400;
+  color: var(--d);
+}
+
 .tech-description {
-  padding: 10px 0px;
+  padding-top: 10px;
+  text-align: left;
   font-family: sans-serif;
   font-size: 16px;
   line-height: 22px;
@@ -29,6 +46,8 @@
 }
 
 .tech-intLink {
+  padding-top: 20px;
+  align-self: center;
   background-color: var(--dm-bg-tertiary);
   padding: 5px 10px;
 }

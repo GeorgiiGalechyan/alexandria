@@ -1,0 +1,14 @@
+.header {
+  padding: 15px 0px;
+  color: var(--dm-color-text-default);
+  display: flex;
+  border-bottom: 1px solid var(--dm-border-primary);
+}
+
+.container {
+  width: 1080px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}

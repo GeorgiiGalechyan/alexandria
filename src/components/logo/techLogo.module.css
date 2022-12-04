@@ -1,0 +1,21 @@
+.container {
+  --container-logo-size: 60px;
+  width: var(--container-logo-size);
+  height: var(--container-logo-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  fill: white;
+  background-color: transparent;
+  padding: 10px;
+  transition: ease-in-out;
+}
+
+.logo:hover {
+  background-color: white;
+  border-radius: 100%;
+  fill: inherit;
+}
