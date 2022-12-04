@@ -1,0 +1,11 @@
+.button {
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  border: 1px solid var(--dm-border-primary);
+  padding: 5px;
+}
+
+.svg {
+  text-align: center;
+}

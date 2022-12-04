@@ -1,0 +1,20 @@
+.nav-menu {
+  display: flex;
+}
+
+.link-list {
+  display: flex;
+  padding-left: 0;
+}
+
+.link-item {
+  padding-right: 2rem;
+}
+
+.link {
+  color: var(--dm-color-text-default);
+}
+
+.link a {
+  color: var(--dm-color-link-default);
+}

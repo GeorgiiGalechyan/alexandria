@@ -1,0 +1,88 @@
+/* Отступы, рамки, box-sizing */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+/* Cтили */
+html,
+body {
+  height: 100%;
+  line-height: 1;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+/*Отключаем маркировку в списках.*/
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+/*Свойство outline задает стиль контура элемента./*
+/*Контур - это линия, которая рисуется вокруг элемента, за пределами border.*/
+:focus,
+:active {
+  outline: none;
+}
+a:focus,
+a:active {
+  outline: none;
+}
+/* Убираем декоративные эфекты ссылок */
+a,
+a:visited,
+a:hover {
+  text-decoration: none;
+}
+
+/* Приводим все стили заголовков к обычному тексту */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* задаем наследование семейства шрифтов*/
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+/* курсор при наведении кнопок*/
+button {
+  cursor: pointer;
+}
+
+/* */
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+/*Выравнивание верхнюю границу изображений.*/
+img {
+  vertical-align: top;
+}

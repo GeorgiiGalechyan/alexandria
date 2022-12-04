@@ -1,0 +1,32 @@
+.search-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.search-input {
+  height: 32px;
+  padding: 4px 10px;
+  background-color: var(--dm-bg-primary);
+  border: 1.5px solid white;
+  border-radius: 15px;
+  font-size: 16px;
+}
+
+.search-input::placeholder {
+  color: black;
+  padding: 5px;
+  border: 1.5px solid white;
+  border-radius: 15px;
+  font-size: 16px;
+}
+
+.search-button {
+  font-size: 16px;
+}
+
+.buttonSVG {
+  fill: white;
+}

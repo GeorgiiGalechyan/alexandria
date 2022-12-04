@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Layout from '../components/layouts/page/layout'
-import TechCard from '../components/cards/technologies/card'
+// import TechCard from '../components/cards/techs/card'
 
 const rowSection = {
   display: 'flex',
@@ -13,9 +13,7 @@ const rowSection = {
 const IndexPage = () => {
   return (
     <Layout pageTitle="Главная">
-      <div style={rowSection}>
-        <TechCard />
-      </div>
+      <div style={rowSection}>{/*<TechCard />*/}</div>
     </Layout>
   )
 }

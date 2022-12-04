@@ -1,0 +1,10 @@
+.container {
+  background-color: greenyellow;
+  --size: 30px;
+  height: var(--size);
+  width: var(--size);
+}
+
+.logo {
+  fill: white;
+}

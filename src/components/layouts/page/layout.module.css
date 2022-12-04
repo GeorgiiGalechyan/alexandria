@@ -1,54 +1,57 @@
-.header {
-  display: flex;
-  flex-direction: row;
-  background-color: #bb2649;
+/*Обнуление (reset)*/
+@import './reset.css';
+
+/* Переменные */
+html {
+  /*Light mode*/
+  --lm-color-text-default: #000
+  --lm-color-link-default: #000
+  --lm-bg-primary: #fff;
+  --lm-bg-secondary: #fff;
+  --lm-bg-tertiary: #fff;
+  --lm-border-primary: #000;
+  --lm-border-secondary: #000;
+  --lm-heading-color: rebeccapurple;
+
+  /*Dark mode*/
+  --dm-color-text-default: #fff;
+  --dm-color-link-default: #fff;
+  --dm-bg-primary: #1b1b1b;
+  --dm-bg-secondary: #343434;
+  --dm-bg-tertiary: #4e4e4e;
+  --dm-border-primary: #858585; 
+  --dm-border-secondary: #696969;
+  --dm-heading-color: #fff;
+
+  /*SVG*/
+  --dm-color-svg-default: #f6f6f6;
+
+
+}
+/*При использовании CSS-переменных не забывай использовать резервные значения!*/
+
+body {
+  background-color: var(--dm-bg-primary);
+  color: var(--dm-color)
+}
+
+a {
+  color: var(--dm-color)
 }
 
 .container {
-  margin: auto;
   height: 100vh;
-  max-width: 800px;
   font-family: sans-serif;
 }
 
-.heading {
-  color: rebeccapurple;
-}
-
-.nav-link {
-  display: flex;
-  list-style: none;
-  padding-left: 0;
-}
-
-.nav-link-item {
-  padding-right: 2rem;
-}
-
-.nav-link-text {
-  color: black;
-}
-
 .main {
+  padding: 60px 0px;
   display: flex;
   flex-direction: column;
   flex: 0 1 auto;
 }
 
-.footer {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 10px 40px;
-  background-color: #c51959;
+.heading {
+  color: var(--dm-heading-color);
 }
-
-.footer p {
-  color: white;
-  font-family: sans-serif;
-  font-size: 22px;
-  line-height: 28px;
-}
+   
