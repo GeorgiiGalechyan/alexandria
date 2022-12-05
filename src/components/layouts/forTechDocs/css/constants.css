@@ -1,0 +1,94 @@
+/*CSS Переменные*/
+html {
+  /*Цвета*/
+  --lm-viva-magenta: #bb2649;
+  --dm-mountain-meadow: #26bb98;
+
+  /*Семейства Шрифтов*/
+  --font-family-jura: 'Jura', sans-serif;
+  --font-family-roboto: 'Roboto', sans-serif;
+  --font-family-finlandica: 'Finlandica', sans-serif;
+
+  /*Цвета Шрифтов*/
+  --lm-text-color-primary: #1b1b1b;
+  --lm-text-color-secondary: #4e4e4e;
+  --dm-text-color-primary: #fff;
+  --dm-text-color-secondary: #fff;
+
+  --lm-heading-color: #000;
+  --dm-heading-color: #fff;
+
+  /*Иные настройки Шрифтов*/
+  --text-font-size: 18px;
+  --text-line-height: 24px;
+  --text-font-family: var(--font-family-roboto);
+
+  --tech-name-font-size: 34px;
+  --tech-name-line-height: 28px;
+  --tech-name-font-family: var(--font-family-jura);
+
+  --heading-section-font-size: 24px;
+  --heading-section-line-height: 30px;
+  --heading-section-font-family: var(--font-family-finlandica);
+
+  --page-title-font-size: 24px;
+  --page-title-line-height: 30px;
+  --page-title-font-family: var(--font-family-finlandica);
+
+  --nav-link-font-size: 26px;
+  --nav-link-line-height: 32px;
+  --nav-link-font-family: var(--font-family-finlandica);
+
+  /*Цвет Фона*/
+  --lm-background-color-primary: #fff;
+  --lm-background-color-secondary: #f9f9fb;
+  --lm-background-color-tertiary: #fff;
+
+  --dm-background-color-primary: #1b1b1b;
+  --dm-background-color-secondary: #231b1b;
+  --dm-background-color-tertiary: #4e4e4e;
+
+  /*Границы элементов*/
+  --lm-border-primary-default: 1.5px solid #000;
+  --lm-border-primary-hover: 1.5px solid var(--lm-viva-magenta);
+  --lm-border-secondary-default: 1.5px solid #000;
+  --lm-border-secondary-hover: 1.5px solid var(--lm-viva-magenta);
+
+  --dm-border-primary-default: 1.5px solid #fff;
+  --dm-border-primary-hover: 1.5px solid var(--dm-mountain-meadow);
+  --dm-border-secondary-default: 1.5px solid #696969;
+  --dm-border-secondary-hover: 1.5px solid var(--dm-mountain-meadow);
+
+  /*Кнопки*/
+  --lm-button-background-default: transparent;
+  --lm-button-background-hover: transparent;
+  --lm-button-border-default: var(--lm-border-primary-default);
+  --lm-button-border-hover: var(--lm-border-primary-hover);
+
+  --dm-button-background-default: transparent;
+  --dm-button-background-hover: transparent;
+  --dm-button-border-default: var(--dm-border-secondary-default);
+  --dm-button-border-hover: var(--dm-border-secondary-hover);
+
+  /*Карточки*/
+  --lm-card-background-card-default: transparent;
+  --dm-card-background-card-default: transparent;
+
+  /*Ссылки*/
+  --lm-link-color-default: #000;
+  --lm-link-color-hover: #000;
+  --dm-link-color-default: #fff;
+  --dm-link-color-hover: #fff;
+
+  --lm-nav-link-color-default: #000;
+  --lm-nav-link-color-hover: #000;
+  --dm-nav-link-color-default: #fff;
+  --dm-nav-link-color-hover: #fff;
+
+  /*SVG*/
+  --lm-svg-color-hover: #000;
+  --lm-svg-color-default: var(--lm-viva-magenta);
+
+  --dm-svg-color-default: #fff;
+  --dm-svg-color-hover: var(--dm-mountain-meadow);
+}

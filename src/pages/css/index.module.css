@@ -1,0 +1,22 @@
+.row-section {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.column-section {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.section-title {
+  color: var(--heading-color);
+  font-family: var(--heading-section-font-family);
+  font-size: var(--heading-section-font-size);
+  line-height: var(--heading-section-line-height);
+}

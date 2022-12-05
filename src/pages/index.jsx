@@ -2,34 +2,20 @@ import * as React from 'react'
 import Layout from '../components/layouts/basic/layout'
 import TechCard from '../components/cards/techs/card'
 
-const rowSection = {
-  display: 'flex',
-  flexFlow: 'row wrap',
-  justifyContent: 'space-around',
-  alignItems: 'center',
-  padding: '60px 20px',
-}
-
-const columnSection = {
-  display: 'flex',
-  flexFlow: 'column wrap',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '60px 20px',
-}
+import { rowSection, columnSection, sectionTitle } from './css/index.module.css'
 
 const IndexPage = () => {
   return (
     <Layout pageTitle="Главная">
-      <div style={rowSection}>
-        <TechCard logoSize="32px" />
-      </div>
-      <div style={columnSection}>
-        <h1>Популярные материалы</h1>
-      </div>
-      <div style={columnSection}>
+      <section className={rowSection}>
+        <TechCard />
+      </section>
+      <section className={columnSection}>
+        <h1 className={sectionTitle}>Популярные материалы</h1>
+      </section>
+      <section className={columnSection}>
         <h1>Последние обновления материалов</h1>
-      </div>
+      </section>
     </Layout>
   )
 }
