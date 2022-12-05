@@ -1,75 +1,132 @@
 /*Обнуление (reset)*/
-@import './reset.css';
+@import './css//reset.css';
 
-/* Переменные */
-html {
-  /*Light mode*/
-  --lm-color-text-default: #000
-  --lm-color-link-default: #000
-  --dm-color-link-hover: #000;
-  --dm-color-link-active: #000;
-  --lm-bg-primary: #fff;
-  --lm-bg-secondary: #fff;
-  --lm-bg-tertiary: #fff;
-  --lm-border-primary: #000;
-  --lm-border-secondary: #000;
-  --lm-heading-color: rebeccapurple;
+/*CSS Переменные*/
+@import './css/constants.css';
 
-  /*Dark mode*/
-  --dm-color-text-default: #fff;
-  --dm-color-link-default: #fff;
-  --dm-color-link-hover: #fff;
-  --dm-color-link-active: #fff;
+/*Ипорт шрифтов*/
+@import './css//fonts.css';
 
-  --dm-bg-primary: #1b1b1b;
-  --dm-bg-secondary: #343434;
-  --dm-bg-tertiary: #4e4e4e;
-  --dm-border-primary: #858585; 
-  --dm-border-secondary: #696969;
-  --dm-heading-color: #fff;
-
-  /*SVG*/
-  --dm-color-svg-default: #f6f6f6;
-
-
-}
-/*При использовании CSS-переменных не забывай использовать резервные значения!*/
-
-body.light {
-  --color-text-default: var(--lm-color-text-default, #000)
-
-
-
-
-  --lm-color-text-default: #000
-  --lm-color-link-default: #000
-  --dm-color-link-hover: #000;
-  --dm-color-link-active: #000;
-  --lm-bg-primary: #fff;
-  --lm-bg-secondary: #fff;
-  --lm-bg-tertiary: #fff;
-  --lm-border-primary: #000;
-  --lm-border-secondary: #000;
-  --lm-heading-color: rebeccapurple;
-
+a {
+  color: var(--link-color-default);
 }
 
-body.darlk {
-
+a:hover {
+  color: var(--link-color-hover);
 }
 
 body {
-  background-color: var(--dm-bg-primary);
-  color: var(--dm-color)
+  /*Цвет текста*/
+  --text-color-primary: var(--dm-text-color-primary);
+  --text-color-secondary: var(--dm-text-color-secondary);
+  /*Иные настроки текста*/
+
+  /*Цвет Фона*/
+  --background-color-primary: var(--dm-background-color-primary);
+  --background-color-secondary: var(--dm-background-color-secondary);
+  --background-color-tertiary: var(--dm-background-color-tertiary);
+  /*Настройки рамок элементов */
+  --border-primary-default: var(--dm-border-primary-default);
+  --border-primary-hover: var(--dm-border-primary-hover);
+  --border-secondary-default: var(--dm-border-secondary-default);
+  --border-secondary-hover: var(--dm-border-secondary-hover);
+  /*Кнопки*/
+  --button-background-default: var(--dm-button-background-default);
+  --button-background-hover: var(--dm-button-background-hover);
+  --button-border-default: var(--dm-button-border-default);
+  --button-border-hover: var(--dm-button-border-hover);
+  /*Карточки*/
+  --card-background-card-default: var(--dm-card-background-card-default);
+  /*Ссылки*/
+  --link-color-default: var(--dm-link-color-default);
+  --link-color-hover: var(--dm-link-color-hover);
+  --nav-link-color-default: var(--dm-nav-link-color-default);
+  --nav-link-color-hover: var(--dm-nav-link-color-hover);
+  /*SVG*/
+  --svg-color-default: var(--dm-svg-color-default);
+  --svg-color-hover: var(--dm-svg-color-hover);
+
+  color: var(--text-color-primary);
+  background-color: var(--background-color-primary);
+  font-family: var(--text-font-family);
+  font-size: var(--text-font-size);
+  line-height: var(--text-line-height);
 }
 
-a {
-  color: var(--dm-color)
+body.dark {
+  /*Цвет текста*/
+  --text-color-primary: var(--dm-text-color-primary);
+  --text-color-secondary: var(--dm-text-color-secondary);
+  /*Цвет Фона*/
+  --background-color-primary: var(--dm-background-color-primary);
+  --background-color-secondary: var(--dm-background-color-secondary);
+  --background-color-tertiary: var(--dm-background-color-tertiary);
+  /*Настройки рамок элементов */
+  --border-primary-default: var(--dm-border-primary-default);
+  --border-primary-hover: var(--dm-border-primary-hover);
+  --border-secondary-default: var(--dm-border-secondary-default);
+  --border-secondary-hover: var(--dm-border-secondary-hover);
+  /*Кнопки*/
+  --button-background-default: var(--dm-button-background-default);
+  --button-background-hover: var(--dm-button-background-hover);
+  --button-border-default: var(--dm-button-border-default);
+  --button-border-hover: var(--dm-button-border-hover);
+  /*Карточки*/
+  --card-background-card-default: var(--dm-card-background-card-default);
+  /*Ссылки*/
+  --link-color-default: var(--dm-link-color-default);
+  --link-color-hover: var(--dm-link-color-hover);
+  --nav-link-color-default: var(--dm-nav-link-color-default);
+  --nav-link-color-hover: var(--dm-nav-link-color-hover);
+  /*SVG*/
+  --svg-color-default: var(--dm-svg-color-default);
+  --svg-color-hover: var(--dm-svg-color-hover);
+
+  color: var(--text-color-primary);
+  background-color: var(--background-color-primary);
+  font-family: var(--text-font-family);
+  font-size: var(--text-font-size);
+  line-height: var(--text-line-height);
+}
+
+body.light {
+  /*Цвет текста*/
+  --text-color-primary: var(--lm-text-color-primary);
+  --text-color-secondary: var(--lm-text-color-secondary);
+  /*Цвет Фона*/
+  --background-color-primary: var(--lm-background-color-primary);
+  --background-color-secondary: var(--lm-background-color-secondary);
+  --background-color-tertiary: var(--lm-background-color-tertiary);
+  /*Настройки рамок элементов */
+  --border-primary-default: var(--lm-border-primary-default);
+  --border-primary-hover: var(--lm-border-primary-hover);
+  --border-secondary-default: var(--lm-border-secondary-default);
+  --border-secondary-hover: var(--lm-border-secondary-hover);
+  /*Кнопки*/
+  --button-background-default: var(--lm-button-background-default);
+  --button-background-hover: var(--lm-button-background-hover);
+  --button-border-default: var(--lm-button-border-default);
+  --button-border-hover: var(--lm-button-border-hover);
+  /*Карточки*/
+  --card-background-card-default: var(--lm-card-background-card-default);
+  /*Ссылки*/
+  --link-color-default: var(--lm-link-color-default);
+  --link-color-hover: var(--lm-link-color-hover);
+  --nav-link-color-default: var(--lm-nav-link-color-default);
+  --nav-link-color-hover: var(--lm-nav-link-color-hover);
+  /*SVG*/
+  --svg-color-default: var(--lm-svg-color-default);
+  --svg-color-hover: var(--lm-svg-color-hover);
+
+  color: var(--text-color-primary);
+  background-color: var(--background-color-primary);
+  font-family: var(--text-font-family);
+  font-size: var(--text-font-size);
+  line-height: var(--text-line-height);
 }
 
 .container {
   height: 100vh;
-  font-family: sans-serif;
 }
 
 .main {
@@ -79,7 +136,9 @@ a {
   flex: 0 1 auto;
 }
 
-.heading {
-  color: var(--dm-heading-color);
+.title {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
-   

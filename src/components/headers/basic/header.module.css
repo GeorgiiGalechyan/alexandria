@@ -2,7 +2,7 @@
   padding: 15px 0px;
   color: var(--dm-color-text-default);
   display: flex;
-  border-bottom: 1px solid var(--dm-border-primary);
+  border-bottom: 1.5px solid var(--dm-border-primary);
 }
 
 .container {

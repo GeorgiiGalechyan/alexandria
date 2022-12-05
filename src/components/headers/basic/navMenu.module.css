@@ -2,19 +2,33 @@
   display: flex;
 }
 
-.link-list {
+.nav-link-list {
   display: flex;
-  padding-left: 0;
 }
 
-.link-item {
-  padding-right: 2rem;
+.nav-link-item {
+  padding-left: 10px;
 }
 
-.link {
-  color: var(--dm-color-text-default);
+.nav-link {
+  padding: 10px 10px;
+  font-family: var(--nav-link-font-family);
+  font-size: var(--nav-link-font-size);
+  line-height: var(--nav-link-line-height);
+  font-weight: 400;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  border-radius: 5px;
 }
 
-.link a {
-  color: var(--dm-color-link-default);
+.nav-link:hover {
+  background-color: var(--background-color-tertiary);
+}
+
+.nav-link a {
+  color: var(--nav-link-color-default);
+}
+
+.nav-link a:hover {
+  color: var(--nav-link-color-hover);
 }

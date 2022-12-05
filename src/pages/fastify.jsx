@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Layout from '../components/layouts/basic/layout'
-import TechCard from '../components/cards/techs/card'
 
 const rowSection = {
   display: 'flex',
@@ -18,17 +17,23 @@ const columnSection = {
   padding: '60px 20px',
 }
 
-const IndexPage = () => {
+const FastifyPage = () => {
   return (
-    <Layout pageTitle="Главная">
+    <Layout pageTitle="Fastify">
       <div style={rowSection}>
-        <TechCard logoSize="32px" />
+        <h1>Секция</h1>
+        <p>Какой-то текст</p>
+        <p>Какой-то текст</p>
       </div>
       <div style={columnSection}>
-        <h1>Популярные материалы</h1>
+        <h1>Секция</h1>
+        <p>Какой-то текст</p>
+        <p>Какой-то текст</p>
       </div>
       <div style={columnSection}>
-        <h1>Последние обновления материалов</h1>
+        <h1>Секция</h1>
+        <p>Какой-то текст</p>
+        <p>Какой-то текст</p>
       </div>
     </Layout>
   )
@@ -38,9 +43,9 @@ const IndexPage = () => {
 // https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
 export const Head = () => (
   <>
-    <title>Home Page</title>
+    <title>Fastify Page</title>
     <link id="icon" rel="icon" href="favicon.svg" />
   </>
 )
 
-export default IndexPage
+export default FastifyPage

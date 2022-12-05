@@ -2,7 +2,7 @@ export const technologies = [
   // Node.js
   {
     id: '001',
-    name: 'Node.js',
+    name: 'NodeJS',
     homeLink: {
       url: 'https://nodejs.org/dist/latest-v18.x/docs/api/',
       text: 'nodejs.org',

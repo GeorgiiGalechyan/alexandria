@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'gatsby'
 import TechLogo from '../../logo/techLogo'
-import { card, logoNameContainer, techName, techHomePage, techDescription, techIntLink } from './card.module.css'
+import { card, logoNameContainer, techName, techHomePage, techDescription, button } from './card.module.css'
 
 import { technologies } from '../../../../DB/techs.js'
 
@@ -18,7 +18,7 @@ const TechCard = () => {
             Домашняя страница: <a href={tech.homeLink.url}> {tech.homeLink.text} </a>
           </p>
           <p className={techDescription}> {tech.description}</p>
-          <Link className={techIntLink} role="button" to={tech.intLink}>
+          <Link className={button} role="button" to={tech.intLink}>
             Перейти
           </Link>
         </div>
