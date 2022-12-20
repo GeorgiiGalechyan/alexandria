@@ -8,14 +8,14 @@
 }
 
 .logo {
-  fill: white;
+  fill: #fff;
   background-color: transparent;
+  border-radius: 100%;
   padding: 10px;
   transition: ease-in-out;
 }
 
 .logo:hover {
-  background-color: white;
-  border-radius: 100%;
-  fill: inherit;
+  fill: #000;
+  background-color: #fff;
 }

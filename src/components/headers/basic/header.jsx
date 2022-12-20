@@ -1,8 +1,9 @@
 import React from 'react'
-import Navigation from './navMenu'
+import { headerMenuItems } from '../navigation/menuItems'
+import Navbar from '../navigation/Navbar'
 import SiteLogo from '../../logo/siteLogo'
-import ThemeScheme from './themeScheme'
-import Search from './search'
+import ColorModeControl from '../colorMode/colorModeControl'
+import Search from '../search/search'
 
 import { header, container } from './header.module.css'
 
@@ -11,8 +12,8 @@ const BasicHeader = () => {
     <header className={header}>
       <div className={container}>
         <SiteLogo />
-        <Navigation />
-        <ThemeScheme />
+        <Navbar menuItems={headerMenuItems} />
+        <ColorModeControl />
         <Search />
       </div>
     </header>

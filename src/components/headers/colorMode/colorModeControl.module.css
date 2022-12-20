@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.first-button {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.first-svg {
+  align-self: center;
+}
+
+.middle-button {
+  border-radius: 0px;
+}
+
+.middle-svg {
+  align-self: center;
+}
+
+.last-button {
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.last-svg {
+  align-self: center;
+}

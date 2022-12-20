@@ -15,6 +15,14 @@ a:hover {
   color: var(--link-color-hover);
 }
 
+svg {
+  color: var(--svg-color-default);
+}
+
+svg:hover {
+  color: var(--svg-color-hover);
+}
+
 body {
   /*Цвет текста*/
   --text-color-primary: var(--dm-text-color-primary);

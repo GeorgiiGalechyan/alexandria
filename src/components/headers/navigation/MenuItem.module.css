@@ -1,17 +1,9 @@
-.nav-menu {
-  display: flex;
+.menu-link-item {
+  padding-left: 2rem;
 }
 
-.nav-link-list {
-  display: flex;
-}
-
-.nav-link-item {
-  padding-left: 10px;
-}
-
-.nav-link {
-  padding: 10px 10px;
+.menu-link {
+  padding: 0.5rem;
   font-family: var(--nav-link-font-family);
   font-size: var(--nav-link-font-size);
   line-height: var(--nav-link-line-height);
@@ -21,14 +13,14 @@
   border-radius: 5px;
 }
 
-.nav-link:hover {
-  background-color: var(--background-color-tertiary);
+.menu-link:hover {
+  background-color: var(--bg-color-secondary);
 }
 
-.nav-link a {
+.menu-link a {
   color: var(--nav-link-color-default);
 }
 
-.nav-link a:hover {
+.menu-link a:hover {
   color: var(--nav-link-color-hover);
 }

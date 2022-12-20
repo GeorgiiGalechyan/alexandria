@@ -33,14 +33,6 @@
   font-weight: 400;
 }
 
-.tech-home-page a {
-  color: var(--link-color-default);
-}
-
-.tech-home-page a:hover {
-  color: var(--link-color-hover);
-}
-
 .tech-description {
   padding: 10px 0px 20px 0px;
   text-align: left;
@@ -53,15 +45,13 @@
 
 .button {
   padding: 10px 15px;
-  color: var(--link-color-default);
-  background-color: var(--button-background-default);
+  background-color: var(--button-bg-color-default);
   border: var(--button-border-default);
   border-radius: 5px;
 }
 
 .button:hover {
-  color: var(--link-color-hover);
-  background-color: var(--button-background-hover);
+  background-color: var(--button-bg-color-hover);
   border: var(--button-border-hover);
   border-radius: 5px;
 }
