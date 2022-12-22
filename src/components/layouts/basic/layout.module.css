@@ -30,9 +30,9 @@ body {
   /*Иные настроки текста*/
 
   /*Цвет Фона*/
-  --bg-color-primary: var(--dm-bg-color-primary);
-  --bg-color-secondary: var(--dm-bg-color-secondary);
-  --bg-color-tertiary: var(--dm-bg-color-tertiary);
+  --bg-color-primary: var(--dm-background-color-primary);
+  --bg-color-secondary: var(--dm-background-color-secondary);
+  --bg-color-tertiary: var(--dm-background-color-tertiary);
   /*Настройки рамок элементов */
   --border-primary-default: var(--dm-border-primary-default);
   --border-primary-hover: var(--dm-border-primary-hover);

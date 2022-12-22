@@ -2,6 +2,7 @@ import * as React from 'react'
 import Layout from '../components/layouts/basic/layout'
 import TechCard from '../components/cards/techs/card'
 
+
 import { rowSection, columnSection, sectionTitle } from './css/index.module.css'
 
 const IndexPage = () => {

@@ -19,7 +19,7 @@ export const headerMenuItems = [
         color: '#26bb98',
       },
       {
-        id: '002',
+        id: '003',
         title: 'TypeScript',
         url: '/techs/typescript',
         info: 'Cтатическая типизация для разработки на JS',
