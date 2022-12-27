@@ -20,3 +20,15 @@
   font-size: var(--heading-section-font-size);
   line-height: var(--heading-section-line-height);
 }
+
+.techs {
+  flex-flow: row wrap;
+}
+
+.popular {
+  flex-flow: column wrap;
+}
+
+.latest {
+  flex-flow: column wrap;
+}

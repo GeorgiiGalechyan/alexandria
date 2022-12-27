@@ -1,0 +1,48 @@
+.main {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  grid-area: main;
+}
+
+.wrapper {
+  height: 100%;
+  width: 1080px;
+  display: grid;
+  grid-template-columns: minmax(100px, 25%) 1fr;
+  grid-template-areas: 'leftAside pageContent';
+}
+
+.left-aside {
+  position: fixed;
+  left: 0px;
+  top: var(--header-height);
+  height: 100%;
+  background-color: #fff;
+  display: grid;
+  grid-area: leftAside;
+}
+
+.menu-list {
+  background-color: transparent;
+}
+
+.list-item {
+}
+
+.item-link {
+}
+
+.link-icon {
+}
+
+.link-content {
+}
+
+.link-heading {
+}
+
+.content {
+  display: grid;
+  grid-area: pageContent;
+}

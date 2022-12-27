@@ -1,5 +1,5 @@
 import React from 'react'
-import SVGButton from '../../buttons/svgBtn/svgButton'
+import SVGButton from '../../../buttons/svgBtn/svgButton'
 
 import {
   container,

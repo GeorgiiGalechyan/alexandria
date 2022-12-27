@@ -16,9 +16,7 @@ const Dropdown = ({ items }) => {
       {items.map((item) => (
         <li className={menuItem} key={item.id}>
           <Link className={itemLink} to={item.url}>
-            <div className={linkIcon} style={{ backgroundColor: item.color }}>
-              {}
-            </div>
+            <div className={linkIcon} style={{ backgroundColor: item.color }}></div>
             <div className={linkContent}>
               <h3 className={linkHeading}>{item.title}</h3>
               <p className={linkDescription}>{item.info}</p>

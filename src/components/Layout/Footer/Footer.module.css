@@ -1,12 +1,14 @@
 .footer {
+  height: 100px;
   padding: 20px 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-area: footer;
+  place-items: center;
+
   color: var(--text-color-primary);
   font-family: var(--text-font-family);
   font-size: var(--text-font-size);
   line-height: var(--text-line-height);
   background-color: var(--background-color-primary);
+  background-color: darkkhaki;
 }

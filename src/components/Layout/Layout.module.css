@@ -136,15 +136,33 @@ body.light {
   line-height: var(--text-line-height);
 }
 
+body {
+  min-height: 100vh;
+}
+
 .container {
-  height: 100vh;
+  --header-height: 100px;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
 }
 
 .main {
-  padding: 60px 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 0 1 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  grid-area: main;
+}
+
+.wrapper {
+  width: 1080px;
+}
+
+.with-aside {
+  width: 1080px;
 }
 
 .title {

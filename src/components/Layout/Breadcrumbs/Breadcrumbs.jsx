@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { container, pageLink } from './breadcrumbs.module.css'
+import { container, pageLink } from './Breadcrumbs.module.css'
 
 const Breadcrumbs = ({ url, page }) => {
   return (

@@ -1,6 +1,12 @@
 .header {
+  height: var(--header-height);
+  width: 100%;
   position: sticky;
   top: 0px;
+  left: 0px;
+  display: grid;
+  grid-area: header;
+
   display: flex;
   justify-content: center;
   align-items: center;
