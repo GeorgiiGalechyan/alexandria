@@ -6,12 +6,9 @@
   left: 0px;
   display: grid;
   grid-area: header;
-
-  display: flex;
   justify-content: center;
-  align-items: center;
   background-color: var(--bg-color-primary);
-  border-bottom: 1.5px solid vr(--border-primary-default);
+  border-bottom: var(--border-primary-default);
   z-index: 9999;
 }
 
@@ -19,6 +16,6 @@
   width: 1080px;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 }

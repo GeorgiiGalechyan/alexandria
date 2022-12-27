@@ -1,3 +1,19 @@
+a {
+  color: var(--link-color-default);
+}
+
+a:hover {
+  color: var(--link-color-hover);
+}
+
+svg {
+  fill: var(--svg-color-default);
+}
+
+svg:hover {
+  fill: var(--svg-color-hover);
+}
+
 /*CSS Переменные*/
 html {
   /*Цвета*/
@@ -91,4 +107,99 @@ html {
 
   --dm-svg-color-default: #fff;
   --dm-svg-color-hover: var(--dm-mountain-meadow);
+}
+
+body {
+  /*Цвет текста*/
+  --text-color-primary: var(--dm-text-color-primary);
+  --text-color-secondary: var(--dm-text-color-secondary);
+  /*Иные настроки текста*/
+
+  /*Цвет Фона*/
+  --bg-color-primary: var(--dm-background-color-primary);
+  --bg-color-secondary: var(--dm-background-color-secondary);
+  --bg-color-tertiary: var(--dm-background-color-tertiary);
+  /*Настройки рамок элементов */
+  --border-primary-default: var(--dm-border-primary-default);
+  --border-primary-hover: var(--dm-border-primary-hover);
+  --border-secondary-default: var(--dm-border-secondary-default);
+  --border-secondary-hover: var(--dm-border-secondary-hover);
+  --header-bottom-border: 1px solid var(--dm-mountain-meadow);
+  /*Кнопки*/
+  --button-bg-color-default: var(--dm-button-bg-color-default);
+  --button-bg-color-hover: var(--dm-button-bg-color-hover);
+  --button-border-default: var(--dm-button-border-default);
+  --button-border-hover: var(--dm-button-border-hover);
+  /*Карточки*/
+  --card-bg-color-default: var(--dm-card-bg-color-default);
+  /*Ссылки*/
+  --link-color-default: var(--dm-link-color-default);
+  --link-color-hover: var(--dm-link-color-hover);
+  --nav-link-color-default: var(--dm-nav-link-color-default);
+  --nav-link-color-hover: var(--dm-nav-link-color-hover);
+  /*SVG*/
+  --svg-color-default: var(--dm-svg-color-default);
+  --svg-color-hover: var(--dm-svg-color-hover);
+}
+
+body.dark {
+  /*Цвет текста*/
+  --text-color-primary: var(--dm-text-color-primary);
+  --text-color-secondary: var(--dm-text-color-secondary);
+  /*Цвет Фона*/
+  --bg-color-primary: var(--dm-bg-color-primary);
+  --bg-color-secondary: var(--dm-bg-color-secondary);
+  --bg-color-tertiary: var(--dm-bg-color-tertiary);
+  /*Настройки рамок элементов */
+  --border-primary-default: var(--dm-border-primary-default);
+  --border-primary-hover: var(--dm-border-primary-hover);
+  --border-secondary-default: var(--dm-border-secondary-default);
+  --border-secondary-hover: var(--dm-border-secondary-hover);
+  --header-bottom-border: var();
+  /*Кнопки*/
+  --button-bg-color-default: var(--dm-button-bg-color-default);
+  --button-bg-color-hover: var(--dm-button-bg-color-hover);
+  --button-border-default: var(--dm-button-border-default);
+  --button-border-hover: var(--dm-button-border-hover);
+  /*Карточки*/
+  --card-bg-color-default: var(--dm-card-bg-color-default);
+  /*Ссылки*/
+  --link-color-default: var(--dm-link-color-default);
+  --link-color-hover: var(--dm-link-color-hover);
+  --nav-link-color-default: var(--dm-nav-link-color-default);
+  --nav-link-color-hover: var(--dm-nav-link-color-hover);
+  /*SVG*/
+  --svg-color-default: var(--dm-svg-color-default);
+  --svg-color-hover: var(--dm-svg-color-hover);
+}
+
+body.light {
+  /*Цвет текста*/
+  --text-color-primary: var(--lm-text-color-primary);
+  --text-color-secondary: var(--lm-text-color-secondary);
+  /*Цвет Фона*/
+  --bg-color-primary: var(--lm-bg-color-primary);
+  --bg-color-secondary: var(--lm-bg-color-secondary);
+  --bg-color-tertiary: var(--lm-bg-color-tertiary);
+  /*Настройки рамок элементов */
+  --border-primary-default: var(--lm-border-primary-default);
+  --border-primary-hover: var(--lm-border-primary-hover);
+  --border-secondary-default: var(--lm-border-secondary-default);
+  --border-secondary-hover: var(--lm-border-secondary-hover);
+  --header-bottom-border: 1.5px solid var(--border-primary-default);
+  /*Кнопки*/
+  --button-bg-color-default: var(--lm-button-bg-color-default);
+  --button-bg-color-hover: var(--lm-button-bg-color-hover);
+  --button-border-default: var(--lm-button-border-default);
+  --button-border-hover: var(--lm-button-border-hover);
+  /*Карточки*/
+  --card-bg-color-default: var(--lm-card-bg-color-default);
+  /*Ссылки*/
+  --link-color-default: var(--lm-link-color-default);
+  --link-color-hover: var(--lm-link-color-hover);
+  --nav-link-color-default: var(--lm-nav-link-color-default);
+  --nav-link-color-hover: var(--lm-nav-link-color-hover);
+  /*SVG*/
+  --svg-color-default: var(--lm-svg-color-default);
+  --svg-color-hover: var(--lm-svg-color-hover);
 }

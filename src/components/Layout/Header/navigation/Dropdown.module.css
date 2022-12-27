@@ -1,13 +1,13 @@
 .dropdown-menu {
+  --row-gap: 7px;
   padding: 10px;
   position: absolute;
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  align-items: flex-start;
-  row-gap: 30px;
-  -moz-row-gap: 30px;
-  -webkit-row-gap: 30px;
+  top: var(--header-height);
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: var(--row-gap);
+  -moz-row-gap: var(--row-gap);
+  -webkit-row-gap: var(--row-gap);
   background-color: var(--bg-color-primary);
   border: var(--border-primary-default);
   border-radius: 3px;
@@ -17,6 +17,7 @@
 
 .menu-item {
   width: 100%;
+  padding: 5px 5px 5px 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,17 +30,14 @@
 }
 
 .item-link {
-  padding: 0px 0px 0px 10px;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px 1fr;
 }
 
 .link-icon {
-  /*left: 0;
-  position: relative;*/
-  height: 3rem;
+  /* height: 2.8rem; */
+  height: 100%;
   width: 0.2rem;
   margin-right: 0.75rem;
   display: flex;
@@ -53,11 +51,11 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: flex-start;
-  padding: 10px 5px 5px 5px;
+  padding: 5px;
 }
 
 .link-heading {
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   font-size: 18px;
   line-height: 22px;
   font-weight: 500;

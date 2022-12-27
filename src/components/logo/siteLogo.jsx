@@ -1,11 +1,11 @@
 import React from 'react'
-import { container, logo } from './siteLogo.module.css'
+import { svgContainer, svgLogo } from './siteLogo.module.css'
 
-const SiteLogo = ({ ...props }) => {
+const SiteLogo = () => {
   return (
-    <div className={container}>
+    <div className={svgContainer}>
       <svg
-        className={logo}
+        className={svgLogo}
         role="img"
         viewBox="0 0 32 32"
         version="1.1"

@@ -6,9 +6,9 @@ const Search = () => {
     <div className={searchContainer}>
       <input className={searchInput} type="search" />
       <button className={searchButton}>
-        <svg className={buttonSVG} role="button" xmlns="http://www.w3.org/2000/svg">
+        {/* {<svg className={buttonSVG} role="button" xmlns="http://www.w3.org/2000/svg">
           <path d="" />
-        </svg>
+        </svg>} */}
       </button>
     </div>
   )

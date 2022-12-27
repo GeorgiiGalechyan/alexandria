@@ -28,4 +28,5 @@ export const headerMenuItems = [
     ],
   },
   { id: '002', title: 'О проекте', url: '/about', submenu: false },
+  { id: '003', title: 'Блог', url: '/blog', submenu: false },
 ]
