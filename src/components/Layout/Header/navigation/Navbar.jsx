@@ -2,12 +2,12 @@ import React from 'react'
 import MenuItems from './MenuItem'
 import { navbar, navListItems } from './Navbar.module.css'
 
-const Navbar = ({ menuItems }) => {
+const Navbar = ({ menuData }) => {
   return (
     <nav className={navbar}>
       <ul className={navListItems}>
-        {menuItems.map((menu) => (
-          <MenuItems items={menu} key={menu.id} />
+        {menuData.map((item) => (
+          <MenuItems menuItem={item} key={item.id} id={item.id}/>
         ))}
       </ul>
     </nav>

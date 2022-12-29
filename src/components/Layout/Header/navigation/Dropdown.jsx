@@ -10,10 +10,10 @@ import {
   linkDescription,
 } from './Dropdown.module.css'
 
-const Dropdown = ({ items }) => {
+const Dropdown = ({ subMenuItem }) => {
   return (
     <ul className={dropdownMenu}>
-      {items.map((item) => (
+      {subMenuItem.map((item) => (
         <li className={menuItem} key={item.id}>
           <Link className={itemLink} to={item.url}>
             <div className={linkIcon} style={{ backgroundColor: item.color }}></div>

@@ -1,4 +1,4 @@
-export const technologies = [
+export const techCardsData = [
   // Node.js
   {
     id: '001',

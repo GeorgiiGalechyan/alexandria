@@ -2,13 +2,12 @@ import * as React from 'react'
 import { Link } from 'gatsby'
 import TechLogo from '../../logo/techLogo'
 import { card, logoNameContainer, techName, techHomePage, techDescription, button } from './card.module.css'
-
-import { technologies } from '../../../../DB/techs.js'
+import { techCardsData } from '../../../assets/data/cards/techCardsData.js'
 
 const TechCard = () => {
   return (
     <>
-      {technologies.map((tech) => (
+      {techCardsData.map((tech) => (
         <div key={tech.id} className={card}>
           <div className={logoNameContainer}>
             <TechLogo d={tech.svg.d} fill={tech.svg.fill} aria-labelledby={tech.svg.label} title={tech.svg.title} />

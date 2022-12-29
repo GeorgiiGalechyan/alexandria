@@ -4,19 +4,19 @@ import Dropdown from './Dropdown'
 
 import { menuLinkItem, menuLink } from './MenuItem.module.css'
 
-const MenuItems = ({ items }) => {
+const MenuItems = ({ menuItem, ...props }) => {
   return (
-    <li className={menuLinkItem}>
-      {items.submenu ? (
+    <li className={menuLinkItem} {...props}>
+      {menuItem.submenu ? (
         <>
-          <Link className={menuLink} to={items.url}>
-            {items.title}
+          <Link className={menuLink} to={menuItem.url}>
+            {menuItem.title}
           </Link>
-          <Dropdown items={items.submenu} />
+          <Dropdown subMenuItem={menuItem.submenu} />
         </>
       ) : (
-        <Link className={menuLink} to={items.url}>
-          {items.title}
+        <Link className={menuLink} to={menuItem.url}>
+          {menuItem.title}
         </Link>
       )}
     </li>

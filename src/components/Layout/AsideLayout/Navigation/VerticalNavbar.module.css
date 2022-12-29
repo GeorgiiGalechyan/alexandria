@@ -1,0 +1,11 @@
+.navbar {
+  /* position: fixed;
+  top: calc(var(--header-height) + var(--left-aside-top-padding)); */
+  display: grid;
+  grid-area: 'navbar';
+}
+
+.parent-nav-list {
+  display: flex;
+  flex-flow: column wrap;
+}

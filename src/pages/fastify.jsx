@@ -1,10 +1,11 @@
 import * as React from 'react'
 import Layout from '../components/Layout/Layout'
-import nodeAsideMenu from '../docs/nodejs/asideMenu.js'
 import Seo from '../components/Seo/Seo.js'
 
+import { fastifyAsideMenu } from '../assets/data/menus/fastifyAsideMenu.js'
+
 const FastifyPage = () => {
-  return <Layout pageTitle="Fastify" asideMenu={nodeAsideMenu}></Layout>
+  return <Layout pageTitle="Fastify" asideMenu={fastifyAsideMenu}></Layout>
 }
 
 // Метаданные - Gatsby Head API

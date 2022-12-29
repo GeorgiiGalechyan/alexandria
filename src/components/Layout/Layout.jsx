@@ -1,19 +1,20 @@
 import * as React from 'react'
 import Header from './Header/Header'
-import LeftAside from './LeftAside/LeftAside'
+import AsideLayout from './AsideLayout/AsideLayout'
 import Footer from './Footer/Footer'
 
-import { container, main, wrapper, title } from './Layout.module.css'
+import { gridContainer, main, wrapper, title } from './Layout.module.css'
 
-const Layout = ({ asideMenu, pageTitle, children }) => {
+import headerMenuData from '../../assets/data/menus/headerMainMenu.js'
+
+const Layout = ({ asideMenuData, pageTitle, children }) => {
   return (
-    <div className={container}>
-      <Header />
-      {asideMenu ? (
-        <LeftAside menu={asideMenu}>
-          <h1 className={title}>{pageTitle}</h1>
+    <div className={gridContainer}>
+      <Header menuData={headerMenuData} />
+      {asideMenuData ? (
+        <AsideLayout menuData={asideMenuData} pageTitle={pageTitle}>
           {children}
-        </LeftAside>
+        </AsideLayout>
       ) : (
         <main className={main}>
           <div className={wrapper}></div>

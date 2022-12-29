@@ -1,21 +1,10 @@
-a {
-  color: var(--link-color-default);
-}
-
-a:hover {
-  color: var(--link-color-hover);
-}
-
-svg {
-  fill: var(--svg-color-default);
-}
-
-svg:hover {
-  fill: var(--svg-color-hover);
-}
-
 /*CSS Переменные*/
 html {
+  /*Конструктор (размеры)*/
+  --header-height: 60px;
+  --wrapper-width: 1080px;
+  --footer-height: 60px;
+
   /*Цвета*/
   --lm-viva-magenta: #bb2649;
   --dm-mountain-meadow: #26bb98;
@@ -155,7 +144,7 @@ body.dark {
   --border-primary-hover: var(--dm-border-primary-hover);
   --border-secondary-default: var(--dm-border-secondary-default);
   --border-secondary-hover: var(--dm-border-secondary-hover);
-  --header-bottom-border: var();
+  --header-bottom-border: 1.5px solid var(--border-primary-default);
   /*Кнопки*/
   --button-bg-color-default: var(--dm-button-bg-color-default);
   --button-bg-color-hover: var(--dm-button-bg-color-hover);
@@ -202,4 +191,20 @@ body.light {
   /*SVG*/
   --svg-color-default: var(--lm-svg-color-default);
   --svg-color-hover: var(--lm-svg-color-hover);
+}
+
+a {
+  color: var(--link-color-default);
+}
+
+a:hover {
+  color: var(--link-color-hover);
+}
+
+svg {
+  fill: var(--svg-color-default);
+}
+
+svg:hover {
+  fill: var(--svg-color-hover);
 }

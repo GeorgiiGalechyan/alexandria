@@ -5,15 +5,16 @@
   top: 0px;
   left: 0px;
   display: grid;
+  place-items: center;
   grid-area: header;
-  justify-content: center;
+
   background-color: var(--bg-color-primary);
   border-bottom: var(--border-primary-default);
   z-index: 9999;
 }
 
-.container {
-  width: 1080px;
+.wrapper {
+  width: var(--wrapper-width);
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;

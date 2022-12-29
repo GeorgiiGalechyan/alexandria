@@ -1,25 +1,25 @@
-export const headerMenuItems = [
+const headerMenuData = [
   {
-    id: '001',
+    id: 'techs_menu_item',
     title: 'Технологии',
     url: '/techs',
     submenu: [
       {
-        id: '001',
+        id: 'techs_nodejs',
         title: 'NodeJS',
         url: '/techs/nodejs',
         info: 'Серверная среда выполнения JS',
         color: '#bb2649',
       },
       {
-        id: '002',
+        id: 'techs_fastify',
         title: 'Fastify',
         url: '/techs/fastify',
         info: 'Самый быстрый фреймворк для NodeJS',
         color: '#26bb98',
       },
       {
-        id: '003',
+        id: 'techs_typescript',
         title: 'TypeScript',
         url: '/techs/typescript',
         info: 'Cтатическая типизация для разработки на JS',
@@ -27,6 +27,8 @@ export const headerMenuItems = [
       },
     ],
   },
-  { id: '002', title: 'О проекте', url: '/about', submenu: false },
-  { id: '003', title: 'Блог', url: '/blog', submenu: false },
+  { id: 'about_menu_item', title: 'О проекте', url: '/about', submenu: false },
+  { id: 'blog_menu_item', title: 'Блог', url: '/blog', submenu: false },
 ]
+
+export default headerMenuData
