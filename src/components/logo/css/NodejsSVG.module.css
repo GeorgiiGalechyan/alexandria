@@ -1,0 +1,9 @@
+.svg-container {
+  --container-logo-size: 42px;
+  width: var(--container-logo-size);
+  height: var(--container-logo-size);
+}
+
+svg {
+  fill: orange;
+}

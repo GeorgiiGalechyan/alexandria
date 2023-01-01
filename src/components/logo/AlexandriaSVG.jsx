@@ -1,7 +1,7 @@
 import React from 'react'
-import { svgContainer } from './siteLogo.module.css'
+import { svgContainer } from './css/AlexandriaSVG.module.css'
 
-const SiteLogo = () => {
+const AlexandriaSVG = () => {
   return (
     <div className={svgContainer}>
       <svg role="img" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-labelledby="alexandria">
@@ -12,4 +12,4 @@ const SiteLogo = () => {
   )
 }
 
-export default SiteLogo
+export default AlexandriaSVG

@@ -1,30 +1,30 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import {
-  dropdownMenu,
-  menuItem,
-  itemLink,
-  linkIcon,
-  linkContent,
-  linkHeading,
-  linkDescription,
+  subMenuList,
+  subMenuItem,
+  gatsbyLink,
+  itemIcon,
+  itemContent,
+  itemLinkText,
+  itemLinkDescription,
 } from './Dropdown.module.css'
 
-const Dropdown = ({ subMenuItem }) => {
+const Dropdown = ({ subMenu, ...props }) => {
   return (
-    <ul className={dropdownMenu}>
-      {subMenuItem.map((item) => (
-        <li className={menuItem} key={item.id}>
-          <Link className={itemLink} to={item.url}>
-            <div className={linkIcon} style={{ backgroundColor: item.color }}></div>
-            <div className={linkContent}>
-              <h3 className={linkHeading}>{item.title}</h3>
-              <p className={linkDescription}>{item.info}</p>
+    <menu type="list" className={subMenuList} {...props}>
+      {subMenu.map((item) => (
+        <li className={subMenuItem} key={item.id}>
+          <Link className={gatsbyLink} to={item.url}>
+            <div className={itemIcon} style={{ backgroundColor: item.color }}></div>
+            <div className={itemContent}>
+              <h3 className={itemLinkText}>{item.title}</h3>
+              <p className={itemLinkDescription}>{item.info}</p>
             </div>
           </Link>
         </li>
       ))}
-    </ul>
+    </menu>
   )
 }
 

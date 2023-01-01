@@ -1,4 +1,7 @@
-.dropdown-menu {
+.sub-menu-list {
+  display: none;
+}
+.sub-menu-list {
   --row-gap: 7px;
   padding: 10px;
   position: absolute;
@@ -15,7 +18,7 @@
   z-index: 7;
 }
 
-.menu-item {
+.sub-menu-item {
   width: 100%;
   padding: 5px 5px 5px 10px;
   display: flex;
@@ -25,17 +28,17 @@
   border-radius: 3px;
 }
 
-.menu-item:hover {
+.sub-menu-item:hover {
   background-color: #343434;
 }
 
-.item-link {
+.gatsby-link {
   position: relative;
   display: grid;
   grid-template-columns: 20px 1fr;
 }
 
-.link-icon {
+.item-icon {
   /* height: 2.8rem; */
   height: 100%;
   width: 0.2rem;
@@ -45,7 +48,7 @@
   align-self: center;
 }
 
-.link-content {
+.item-content {
   font-family: var(--font-family-finlandica);
   display: flex;
   flex-flow: column nowrap;
@@ -54,14 +57,14 @@
   padding: 5px;
 }
 
-.link-heading {
+.item-link-text {
   padding-bottom: 5px;
   font-size: 18px;
   line-height: 22px;
   font-weight: 500;
 }
 
-.link-description {
+.item-link-description {
   font-size: 12px;
   line-height: 16px;
 }

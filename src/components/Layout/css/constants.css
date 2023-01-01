@@ -1,9 +1,9 @@
 /*CSS Переменные*/
 html {
   /*Конструктор (размеры)*/
-  --header-height: 60px;
+  --header-height: 70px;
   --wrapper-width: 1080px;
-  --footer-height: 60px;
+  --footer-height: 180px;
 
   /*Цвета*/
   --lm-viva-magenta: #bb2649;

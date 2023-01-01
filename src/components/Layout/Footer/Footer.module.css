@@ -1,5 +1,6 @@
 .footer {
   height: var(--footer-height);
+  width: 100%;
   padding: 20px 0px;
   display: grid;
   grid-area: footer;
@@ -10,4 +11,30 @@
   font-size: var(--text-font-size);
   line-height: var(--text-line-height);
   background-color: var(--background-color-primary);
+}
+
+.wrapper {
+  width: var(--wrapper-width);
+  display: grid;
+  grid-auto-flow: row;
+}
+
+.contacts {
+  font-size: 16px;
+  font-weight: 400;
+  display: grid;
+  grid-auto-flow: row;
+  text-align: left;
+}
+
+.contact-heading {
+}
+
+.contactItem {
+}
+
+.phone {
+}
+
+.e-mail {
 }

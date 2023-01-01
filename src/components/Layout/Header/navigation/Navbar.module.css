@@ -1,13 +1,11 @@
 .navbar {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  align-items: center;
+  display: grid;
+  place-items: center;
 }
 
-.nav-list-items {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
+.main-menu {
+  display: grid;
+  column-gap: 1.5rem;
+  grid-auto-flow: column;
+  place-items: center;
 }

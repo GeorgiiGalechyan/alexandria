@@ -1,22 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'gatsby'
 import Dropdown from './Dropdown'
 
-import { menuLinkItem, menuLink } from './MenuItem.module.css'
+import { mainMenuItem, gatsbyLink } from './MenuItem.module.css'
 
-const MenuItems = ({ menuItem, ...props }) => {
+const MenuItems = ({ menuItemData, ...props }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const open = () => setIsOpen(true)
+  const close = () => setIsOpen(false)
+
   return (
-    <li className={menuLinkItem} {...props}>
-      {menuItem.submenu ? (
+    <li className={mainMenuItem} onMouseOver={open} onFocus={open} onMouseOut={close} onBlur={close} {...props}>
+      {menuItemData.submenu ? (
         <>
-          <Link className={menuLink} to={menuItem.url}>
-            {menuItem.title}
+          <Link className={gatsbyLink} to={menuItemData.url}>
+            {menuItemData.title}
           </Link>
-          <Dropdown subMenuItem={menuItem.submenu} />
+          {isOpen && <Dropdown subMenu={menuItemData.submenu} />}
         </>
       ) : (
-        <Link className={menuLink} to={menuItem.url}>
-          {menuItem.title}
+        <Link className={gatsbyLink} to={menuItemData.url}>
+          {menuItemData.title}
         </Link>
       )}
     </li>

@@ -1,14 +1,14 @@
 import * as React from 'react'
 import Layout from '../components/Layout/Layout'
-import TechCard from '../components/cards/techs/card'
+import TechCard from '../components/Cards/TechCard/TechCard'
 import Seo from '../components/Seo/Seo.js'
 
-import { rowSection, columnSection, sectionTitle, techs, popular, latest } from './css/index.module.css'
+import { techCards, columnSection, sectionTitle, techs, popular, latest } from './css/index.module.css'
 
 const IndexPage = () => {
   return (
     <Layout pageTitle="Главная">
-      <section className={[rowSection, techs]}>
+      <section className={techCards}>
         <TechCard />
       </section>
       <section className={[columnSection, popular]}>

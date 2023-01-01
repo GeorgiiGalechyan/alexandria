@@ -1,4 +1,4 @@
-.container {
+.svg-container {
   --container-logo-size: 60px;
   width: var(--container-logo-size);
   height: var(--container-logo-size);

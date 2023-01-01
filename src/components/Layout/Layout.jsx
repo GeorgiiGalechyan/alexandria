@@ -17,9 +17,10 @@ const Layout = ({ asideMenuData, pageTitle, children }) => {
         </AsideLayout>
       ) : (
         <main className={main}>
-          <div className={wrapper}></div>
-          <h1 className={title}>{pageTitle}</h1>
-          {children}
+          <div className={wrapper}>
+            <h1 className={title}>{pageTitle}</h1>
+            {children}
+          </div>
         </main>
       )}
       <Footer />

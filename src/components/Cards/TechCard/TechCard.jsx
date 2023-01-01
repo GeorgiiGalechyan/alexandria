@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Link } from 'gatsby'
-import TechLogo from '../../logo/techLogo'
-import { card, logoNameContainer, techName, techHomePage, techDescription, button } from './card.module.css'
+import TechLogo from '../../Logo/techLogo'
+import { card, logoNameContainer, techName, techHomePage, techDescription, button } from './TechCard.module.css'
 import { techCardsData } from '../../../assets/data/cards/techCardsData.js'
+import NodejsSVG from '../../Logo/NodejsSVG'
 
 const TechCard = () => {
   return (
@@ -20,6 +21,7 @@ const TechCard = () => {
           <Link className={button} role="button" to={tech.intLink}>
             Перейти
           </Link>
+          {/* < NodejsSVG/> */}
         </div>
       ))}
     </>

@@ -1,16 +1,16 @@
 import React from 'react'
 import Navbar from './navigation/Navbar'
-import SiteLogo from '../../logo/siteLogo'
+import AlexandriaSVG from '../../Logo/AlexandriaSVG'
 import ColorModeControl from './colorMode/colorModeControl'
 import Search from './search/search'
 
 import { header, wrapper } from './Header.module.css'
 
-const BasicHeader = ({ menuData }) => {
+const Header = ({ menuData }) => {
   return (
     <header className={header}>
       <div className={wrapper}>
-        <SiteLogo />
+        <AlexandriaSVG />
         <Navbar menuData={menuData} />
         <ColorModeControl />
         <Search />
@@ -19,4 +19,4 @@ const BasicHeader = ({ menuData }) => {
   )
 }
 
-export default BasicHeader
+export default Header
