@@ -1,4 +1,4 @@
-.card {
+.techCard {
   width: 350px;
   padding: 20px 30px 30px 30px;
   display: flex;
@@ -8,11 +8,11 @@
   border: var(--border-primary-default);
 }
 
-.card:hover {
+.techCard:hover {
   border: var(--border-primary-hover);
 }
 
-.logo-name-container {
+.logo-and-tech-name-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;

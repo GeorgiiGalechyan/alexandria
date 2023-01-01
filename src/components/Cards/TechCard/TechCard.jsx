@@ -1,27 +1,38 @@
 import * as React from 'react'
 import { Link } from 'gatsby'
-import TechLogo from '../../Logo/techLogo'
-import { card, logoNameContainer, techName, techHomePage, techDescription, button } from './TechCard.module.css'
+// import TechLogo from '../../Logo/techLogo'
+import { techSvgsOArr, techSvgsObj } from '../../../assets/data/svgs/svgData.js'
+
+import {
+  techCard,
+  logoAndTechNameContainer,
+  techName,
+  techHomePage,
+  techDescription,
+  button,
+} from './TechCard.module.css'
+
 import { techCardsData } from '../../../assets/data/cards/techCardsData.js'
-import NodejsSVG from '../../Logo/NodejsSVG'
 
 const TechCard = () => {
   return (
     <>
       {techCardsData.map((tech) => (
-        <div key={tech.id} className={card}>
-          <div className={logoNameContainer}>
-            <TechLogo d={tech.svg.d} fill={tech.svg.fill} aria-labelledby={tech.svg.label} title={tech.svg.title} />
-            <h2 className={techName}> {tech.name}</h2>
+        <div key={tech.id} className={techCard}>
+          <div className={logoAndTechNameContainer}>
+            {tech.SVG}
+            {/* {<TechLogo d={tech.svg.d} fill={tech.svg.fill} aria-labelledby={tech.svg.label} title={tech.svg.title} />} */}
+            <h2 className={techName}> {tech.techName}</h2>
           </div>
-          <p className={techHomePage}>
+          <address className={techHomePage}>
             Домашняя страница: <a href={tech.homeLink.url}> {tech.homeLink.text} </a>
-          </p>
+          </address>
           <p className={techDescription}> {tech.description}</p>
           <Link className={button} role="button" to={tech.intLink}>
             Перейти
           </Link>
-          {/* < NodejsSVG/> */}
+          {techSvgsOArr[0]}
+          {techSvgsObj.nodejs}
         </div>
       ))}
     </>

@@ -3,7 +3,7 @@ import Layout from '../components/Layout/Layout'
 import TechCard from '../components/Cards/TechCard/TechCard'
 import Seo from '../components/Seo/Seo.js'
 
-import { techCards, columnSection, sectionTitle, techs, popular, latest } from './css/index.module.css'
+import { techCards, columnSection, sectionTitle, popular, latest } from './css/index.module.css'
 
 const IndexPage = () => {
   return (
@@ -11,15 +11,14 @@ const IndexPage = () => {
       <section className={techCards}>
         <TechCard />
       </section>
-      <section className={[columnSection, popular]}>
+      <section className={popular}>
         <h1 className={sectionTitle}>Популярные материалы</h1>
       </section>
-      <section className={[columnSection, latest]}>
+      <section className={latest}>
         <h1>Последние обновления</h1>
       </section>
     </Layout>
   )
-}
 
 // Метаданные - Gatsby Head API
 // https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
