@@ -1,210 +1,169 @@
 /*CSS Переменные*/
 html {
   /*Конструктор (размеры)*/
-  --header-height: 70px;
+  --header-height: 4em;
   --wrapper-width: 1080px;
-  --footer-height: 180px;
+  --footer-height: 16em;
 
   /*Цвета*/
-  --lm-viva-magenta: #bb2649;
-  --dm-mountain-meadow: #26bb98;
+  --viva-magenta: #bb2649;
+  --mountain-meadow: #26bb98;
 
   /*Семейства Шрифтов*/
-  --font-family-jura: 'Jura', sans-serif;
-  --font-family-roboto: 'Roboto', sans-serif;
-  --font-family-finlandica: 'Finlandica', sans-serif;
+  --jura: 'Jura', sans-serif;
+  --roboto: 'Roboto', sans-serif;
+  --finlandica: 'Finlandica', sans-serif;
 
   /*Цвета Шрифтов*/
-  --lm-text-color-primary: #1b1b1b;
-  --lm-text-color-secondary: #4e4e4e;
-  --dm-text-color-primary: #fff;
-  --dm-text-color-secondary: #fff;
+  --lm-clr-primary: #1b1b1b;
+  --lm-clr-secondary: #4e4e4e;
+  --dm-clr-primary: #fff;
+  --dm-clr-secondary: #fff;
 
-  --lm-heading-color: #000;
-  --dm-heading-color: #fff;
-
-  /*Иные настройки Шрифтов*/
-  --text-font-size: 18px;
-  --text-line-height: 24px;
-  --text-font-family: var(--font-family-roboto);
-
-  --tech-name-font-size: 34px;
-  --tech-name-line-height: 28px;
-  --tech-name-font-family: var(--font-family-jura);
-
-  --heading-section-font-size: 24px;
-  --heading-section-line-height: 30px;
-  --heading-section-font-family: var(--font-family-finlandica);
-
-  --page-title-font-size: 24px;
-  --page-title-line-height: 30px;
-  --page-title-font-family: var(--font-family-finlandica);
-
-  --nav-link-font-size: 26px;
-  --nav-link-line-height: 32px;
-  --nav-link-font-family: var(--font-family-finlandica);
+  --lm-heading-clr: var(--lm-clr-primary);
+  --dm-heading-clr: var(--dm-clr-primary);
 
   /*Цвет Фона*/
-  --lm-background-color-primary: #fff;
-  --lm-background-color-secondary: #f9f9fb;
-  --lm-background-color-tertiary: #fff;
+  --lm-bg-clr-primary: #fff;
+  --lm-bg-clr-secondary: #fff;
+  --lm-bg-clr-tertiary: #fff;
 
-  --dm-background-color-primary: #1b1b1b;
-  --dm-background-color-secondary: #231b1b;
-  --dm-background-color-tertiary: #4e4e4e;
+  --dm-bg-clr-primary: #1b1b1b;
+  --dm-bg-clr-secondary: #231b1b;
+  --dm-bg-clr-tertiary: #4e4e4e;
 
-  /*Границы элементов*/
-  --lm-border-primary-default: 1.5px solid #000;
-  --lm-border-primary-hover: 1.5px solid var(--lm-viva-magenta);
-  --lm-border-secondary-default: 1.5px solid #000;
-  --lm-border-secondary-hover: 1.5px solid var(--lm-viva-magenta);
+  /*Границы элементов (базовые значения)*/
+  --lm-border-primary: 1.5px solid #000;
+  --lm-border-primary-hover: 1.5px solid var(--viva-magenta);
+  --lm-border-secondary: 1.5px solid #000;
+  --lm-border-secondary-hover: 1.5px solid var(--viva-magenta);
 
-  --dm-border-primary-default: 1.5px solid #fff;
-  --dm-border-primary-hover: 1.5px solid var(--dm-mountain-meadow);
-  --dm-border-secondary-default: 1.5px solid #696969;
-  --dm-border-secondary-hover: 1.5px solid var(--dm-mountain-meadow);
+  --dm-border-primary: 1.5px solid #fff;
+  --dm-border-primary-hover: 1.5px solid var(--mountain-meadow);
+  --dm-border-secondary: 1.5px solid #696969;
+  --dm-border-secondary-hover: 1.5px solid var(--mountain-meadow);
 
   /*Кнопки*/
-  --lm-button-background-default: transparent;
-  --lm-button-background-hover: transparent;
-  --lm-button-border-default: var(--lm-border-primary-default);
-  --lm-button-border-hover: var(--lm-border-primary-hover);
+  --lm-btn-bg-clr: var(--lm-bg-clr-primary);
+  --lm-btn-bg-clr-hover: var(--lm-bg-clr-primary);
+  --lm-btn-border: var(--lm-border-primary);
+  --lm-btn-border-hover: var(--lm-border-primary-hover);
 
-  --dm-button-background-default: transparent;
-  --dm-button-background-hover: transparent;
-  --dm-button-border-default: var(--dm-border-secondary-default);
-  --dm-button-border-hover: var(--dm-border-secondary-hover);
+  --dm-btn-bg-clr: #1b1b1b;
+  --dm-btn-bg-clr-hover: #1b1b1b;
+  --dm-btn-border: var(--dm-border-primary);
+  --dm-btn-border-hover: var(--dm-border-primary-hover);
 
   /*Карточки*/
-  --lm-card-background-card-default: transparent;
-  --dm-card-background-card-default: transparent;
+  --lm-card-bg-clr: #fff;
+  --lm-card-bg-clr-hover: #fff;
+  --lm-card-border: var(--lm-border-primary);
+  --lm-card-border-hover: var(--lm-border-primary-hover);
+
+  --dm-card-bg-clr: #1b1b1b;
+  --dm-card-bg-clr-hover: #1b1b1b;
+  --dm-card-border: var(--dm-border-primary);
+  --dm-card-border-hover: var(--dm-border-primary-hover);
 
   /*Ссылки*/
-  --lm-link-color-default: #000;
-  --lm-link-color-hover: #000;
-  --dm-link-color-default: #fff;
-  --dm-link-color-hover: #fff;
+  --lm-link-clr: var(--lm-clr-primary);
+  --lm-link-clr-hover: var(--viva-magenta);
+  --dm-link-clr: var(--dm-clr-primary);
+  --dm-link-clr-hover: var(--mountain-meadow);
 
-  --lm-nav-link-color-default: #000;
-  --lm-nav-link-color-hover: #000;
-  --dm-nav-link-color-default: #fff;
-  --dm-nav-link-color-hover: #fff;
+  --lm-nav-link-clr: #000;
+  --lm-nav-link-clr-hover: #000;
+  --dm-nav-link-clr: #fff;
+  --dm-nav-link-clr-hover: #fff;
 
   /*SVG*/
-  --lm-svg-color-hover: #000;
-  --lm-svg-color-default: var(--lm-viva-magenta);
 
-  --dm-svg-color-default: #fff;
-  --dm-svg-color-hover: var(--dm-mountain-meadow);
+  --lm-svg-clr: var(--lm-clr-primary);
+  --lm-svg-clr-hover: var(--viva-magenta);
+  --dm-svg-clr: var(--dm-clr-primary);
+  --dm-svg-clr-hover: var(--mountain-meadow);
 }
 
-body {
-  /*Цвет текста*/
-  --text-color-primary: var(--dm-text-color-primary);
-  --text-color-secondary: var(--dm-text-color-secondary);
-  /*Иные настроки текста*/
-
-  /*Цвет Фона*/
-  --bg-color-primary: var(--dm-background-color-primary);
-  --bg-color-secondary: var(--dm-background-color-secondary);
-  --bg-color-tertiary: var(--dm-background-color-tertiary);
-  /*Настройки рамок элементов */
-  --border-primary-default: var(--dm-border-primary-default);
-  --border-primary-hover: var(--dm-border-primary-hover);
-  --border-secondary-default: var(--dm-border-secondary-default);
-  --border-secondary-hover: var(--dm-border-secondary-hover);
-  --header-bottom-border: 1px solid var(--dm-mountain-meadow);
-  /*Кнопки*/
-  --button-bg-color-default: var(--dm-button-bg-color-default);
-  --button-bg-color-hover: var(--dm-button-bg-color-hover);
-  --button-border-default: var(--dm-button-border-default);
-  --button-border-hover: var(--dm-button-border-hover);
-  /*Карточки*/
-  --card-bg-color-default: var(--dm-card-bg-color-default);
-  /*Ссылки*/
-  --link-color-default: var(--dm-link-color-default);
-  --link-color-hover: var(--dm-link-color-hover);
-  --nav-link-color-default: var(--dm-nav-link-color-default);
-  --nav-link-color-hover: var(--dm-nav-link-color-hover);
-  /*SVG*/
-  --svg-color-default: var(--dm-svg-color-default);
-  --svg-color-hover: var(--dm-svg-color-hover);
-}
-
+body,
 body.dark {
-  /*Цвет текста*/
-  --text-color-primary: var(--dm-text-color-primary);
-  --text-color-secondary: var(--dm-text-color-secondary);
+  font-size: 16px;
+  /*Цвета текста*/
+  --clr-primary: var(--dm-clr-primary);
+  --clr-secondary: var(--dm-clr-secondary);
+
   /*Цвет Фона*/
-  --bg-color-primary: var(--dm-bg-color-primary);
-  --bg-color-secondary: var(--dm-bg-color-secondary);
-  --bg-color-tertiary: var(--dm-bg-color-tertiary);
+  --bg-clr-primary: var(--dm-bg-clr-primary);
+  --bg-clr-secondary: var(--dm-bg-clr-secondary);
+  --bg-clr-tertiary: var(--dm-bg-clr-tertiary);
+
   /*Настройки рамок элементов */
-  --border-primary-default: var(--dm-border-primary-default);
+  --border-primary: var(--dm-border-primary);
   --border-primary-hover: var(--dm-border-primary-hover);
-  --border-secondary-default: var(--dm-border-secondary-default);
+  --border-secondary: var(--dm-border-secondary);
   --border-secondary-hover: var(--dm-border-secondary-hover);
-  --header-bottom-border: 1.5px solid var(--border-primary-default);
+  --header-border-bottom: 1.5px solid var(--mountain-meadow); /*Header*/
+
   /*Кнопки*/
-  --button-bg-color-default: var(--dm-button-bg-color-default);
-  --button-bg-color-hover: var(--dm-button-bg-color-hover);
-  --button-border-default: var(--dm-button-border-default);
-  --button-border-hover: var(--dm-button-border-hover);
+  --btn-bg-clr: var(--dm-btn-bg-clr);
+  --btn-bg-clr-hover: var(--dm-btn-bg-clr-hover);
+  --btn-border: var(--dm-btn-border);
+  --btn-border-hover: var(--dm-btn-border-hover);
+
   /*Карточки*/
-  --card-bg-color-default: var(--dm-card-bg-color-default);
+  --card-bg-clr: var(--dm-card-bg-clr);
+  --card-bg-clr-hover: var(--dm-card-bg-clr-hover);
+  --card-border: var(--dm-card-border);
+  --card-border-hover: var(--dm-card-border-hover);
+
   /*Ссылки*/
-  --link-color-default: var(--dm-link-color-default);
-  --link-color-hover: var(--dm-link-color-hover);
-  --nav-link-color-default: var(--dm-nav-link-color-default);
-  --nav-link-color-hover: var(--dm-nav-link-color-hover);
+  --link-clr: var(--dm-link-clr);
+  --link-clr-hover: var(--dm-link-clr-hover);
+
+  --nav-link-clr: var(--dm-nav-link-clr);
+  --nav-link-clr-hover: var(--dm-nav-link-clr-hover);
+
   /*SVG*/
-  --svg-color-default: var(--dm-svg-color-default);
-  --svg-color-hover: var(--dm-svg-color-hover);
+  --svg-clr: var(--dm-svg-clr);
+  --svg-clr-hover: var(--dm-svg-clr-hover);
 }
 
 body.light {
   /*Цвет текста*/
-  --text-color-primary: var(--lm-text-color-primary);
-  --text-color-secondary: var(--lm-text-color-secondary);
+  --clr-primary: var(--lm-clr-primary);
+  --clr-secondary: var(--lm-clr-secondary);
+
   /*Цвет Фона*/
-  --bg-color-primary: var(--lm-bg-color-primary);
-  --bg-color-secondary: var(--lm-bg-color-secondary);
-  --bg-color-tertiary: var(--lm-bg-color-tertiary);
+  --bg-clr-primary: var(--lm-bg-clr-primary);
+  --bg-clr-secondary: var(--lm-bg-clr-secondary);
+  --bg-clr-tertiary: var(--lm-bg-clr-tertiary);
+
   /*Настройки рамок элементов */
-  --border-primary-default: var(--lm-border-primary-default);
+  --border-primary: var(--lm-border-primary);
   --border-primary-hover: var(--lm-border-primary-hover);
-  --border-secondary-default: var(--lm-border-secondary-default);
+  --border-secondary: var(--lm-border-secondary);
   --border-secondary-hover: var(--lm-border-secondary-hover);
-  --header-bottom-border: 1.5px solid var(--border-primary-default);
+  --header-border-bottom: 1.5px solid var(--viva-magenta); /*Header*/
+
   /*Кнопки*/
-  --button-bg-color-default: var(--lm-button-bg-color-default);
-  --button-bg-color-hover: var(--lm-button-bg-color-hover);
-  --button-border-default: var(--lm-button-border-default);
-  --button-border-hover: var(--lm-button-border-hover);
+  --btn-bg-clr: var(--lm-btn-bg-clr);
+  --btn-bg-clr-hover: var(--lm-btn-bg-clr-hover);
+  --btn-border: var(--lm-btn-border);
+  --btn-border-hover: var(--lm-btn-border-hover);
+
   /*Карточки*/
-  --card-bg-color-default: var(--lm-card-bg-color-default);
+  --card-bg-clr: var(--lm-card-bg-clr);
+  --card-bg-clr-hover: var(--lm-card-bg-clr-hover);
+  --card-border: var(--lm-card-border);
+  --card-border-hover: var(--lm-card-border-hover);
+
   /*Ссылки*/
-  --link-color-default: var(--lm-link-color-default);
-  --link-color-hover: var(--lm-link-color-hover);
-  --nav-link-color-default: var(--lm-nav-link-color-default);
-  --nav-link-color-hover: var(--lm-nav-link-color-hover);
+  --link-clr: var(--lm-link-clr);
+  --link-clr-hover: var(--lm-link-clr-hover);
+
+  --nav-link-clr: var(--lm-nav-link-clr);
+  --nav-link-clr-hover: var(--lm-nav-link-clr-hover);
+
   /*SVG*/
-  --svg-color-default: var(--lm-svg-color-default);
-  --svg-color-hover: var(--lm-svg-color-hover);
-}
-
-a {
-  color: var(--link-color-default);
-}
-
-a:hover {
-  color: var(--link-color-hover);
-}
-
-svg {
-  fill: var(--svg-color-default);
-}
-
-svg:hover {
-  fill: var(--svg-color-hover);
+  --svg-clr: var(--lm-svg-clr);
+  --svg-clr-hover: var(--lm-svg-clr-hover);
 }

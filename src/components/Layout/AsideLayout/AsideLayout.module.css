@@ -1,52 +1,41 @@
 .main {
   width: 100%;
   display: grid;
-  place-items: center;
   grid-area: main;
+  justify-content: center;
 }
 
 .wrapper {
   width: var(--wrapper-width);
   display: grid;
-  grid-template-columns: minmax(100px, 25%) 1fr;
+  grid-template-columns: minmax(200px, 25%) 1fr;
   grid-template-areas: 'leftAside pageContent';
 }
 
 .left-aside {
-  --left-aside-top-padding: 15px;
-  padding: var(--left-aside-top-padding) 15px 15px 15px;
+  margin-top: var(--header-height);
+  padding: 15px;
 
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: 0.04rem;
-
-  position: sticky;
+  position: fixed;
   top: 0;
-  display: grid;
-  place-items: start start;
-  grid-area: leftAside;
-  grid-template-rows: 1fr;
-  grid-template-areas:
-    'navbar'
-    'test';
+  bottom: 0;
 
-  background-color: brown;
+  background-color: var(--mountain-meadow);
+
+  display: grid;
+  grid-area: leftAside;
+  grid-auto-flow: row;
+
+  font-size: 1em;
+  line-height: 1.5em;
+  letter-spacing: 0.04em;
+
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.test {
-  display: grid;
-  grid-area: 'test';
-
-  color: black;
-  background-color: #fff;
-  z-index: 999;
-}
-
 .content {
   display: grid;
-  place-items: center;
+  justify-content: center;
   grid-area: pageContent;
 }

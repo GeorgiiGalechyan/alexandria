@@ -1,4 +1,4 @@
-const getBasicColorMode = () => {
+function getThemeOnFirstRun() {
   // Смотрим есть ли сохраненная тема в local storage
   const savedColorMode = window.localStorage.getItem('theme')
   const hasSavedColorMode = typeof savedColorMode === 'string'
@@ -24,16 +24,26 @@ const getBasicColorMode = () => {
   return 'light'
 }
 
-// Все варианты темы
-var DEFAULT_THEME = getBasicColorMode() // тема по умолчанию
-var DARK_THEME = 'dark'
-var LIGHT_THEME = 'light'
+function getOsTheme() {
+  // Смотрим, задана ли цветовая схема в медиа запросах (media query)
+  const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
+  const hasMediaQueryPreference = typeof mediaQueryList.matches === 'boolean'
 
-//  задаем тему до загрузки приложения
-const initialTheme = () => {
-  document.body.classList.remove(DARK_THEME, LIGHT_THEME)
-  document.body.classList.add(DEFAULT_THEME)
-  window.localStorage.setItem('theme', DEFAULT_THEME)
+  // Если медиа запросы содержат информацию о предпочтительной цветовой схеме,
+  // то используем эту цветовую схему, иначе Null и идём дальше.
+  if (hasMediaQueryPreference) {
+    return mediaQueryList.matches ? 'dark' : 'light'
+  }
+
+  // Если браузер/ОС не поддерживает цветовые темы,
+  // установим по умолчанию "светлый".
+  return 'light'
 }
 
-initialTheme()
+const themes = {
+  DARK: 'dark',
+  LIGHT: 'light',
+  SYSTEM: getOsTheme(),
+}
+
+export { getThemeOnFirstRun, getOsTheme, themes }

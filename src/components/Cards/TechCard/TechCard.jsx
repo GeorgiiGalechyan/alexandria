@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'gatsby'
 // import TechLogo from '../../Logo/techLogo'
-import { techSvgsOArr, techSvgsObj } from '../../../assets/data/svgs/svgData.js'
+import { techSvgsArr, techSvgsObj } from '../../../assets/data/svgs/svgData.js'
 
 import {
   techCard,
@@ -31,7 +31,7 @@ const TechCard = () => {
           <Link className={button} role="button" to={tech.intLink}>
             Перейти
           </Link>
-          {techSvgsOArr[0]}
+          {techSvgsArr[0]}
           {techSvgsObj.nodejs}
         </div>
       ))}

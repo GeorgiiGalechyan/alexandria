@@ -1,0 +1,31 @@
+.change-theme-buttons {
+  --first-last-border-radius: 5px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.change-theme-buttons > * {
+  border: var(--border-primary);
+}
+
+.change-theme-buttons :nth-child(1) {
+  border-bottom-left-radius: var(--first-last-border-radius);
+  border-top-left-radius: var(--first-last-border-radius);
+}
+
+.change-theme-buttons :nth-child(2) {
+  border-radius: 0px;
+  border-left: 0px;
+  border-right: 0px;
+}
+
+.change-theme-buttons :nth-child(3) {
+  border-bottom-right-radius: var(--first-last-border-radius);
+  border-top-right-radius: var(--first-last-border-radius);
+}
+
+.change-theme-buttons :where(svg) {
+  align-self: center;
+}

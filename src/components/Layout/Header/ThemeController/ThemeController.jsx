@@ -1,23 +1,47 @@
 import React from 'react'
-import SVGButton from '../../../buttons/svgBtn/svgButton'
+import SVGButton from '../../../Buttons/SVGButtons/SVGButton'
+import { themes } from '../../../../utils/getThemeOnFirstRun.js'
 
-import {
-  container,
-  firstButton,
-  firstSvg,
-  middleButton,
-  middleSvg,
-  lastButton,
-  lastSvg,
-} from './colorModeControl.module.css'
+import { changeThemeButtons } from './ThemeController.module.css'
 
-const ColorModeControl = () => {
+const ThemeController = () => {
+  // const parent = document.getElementById('#themeController')
+  // console.log(parent)
+
+  const addActive = (elem) => {
+    // themeBtnsArr.forEach.call((i) => {
+    //   i.classList.remove('active')
+    // })
+    // elem.classList.add('active')
+  }
+
+  const changeTheme = (themeValue) => {
+    document.body.classList.remove(themes.DARK, themes.LIGHT)
+    document.body.classList.add(themeValue)
+    window.localStorage.removeItem('theme')
+    window.localStorage.setItem('theme', themeValue)
+  }
+
+  const useLightTheme = () => {
+    changeTheme(themes.LIGHT)
+    // addActive(lightThemeBtn)
+  }
+
+  const useDarkTheme = () => {
+    changeTheme(themes.DARK)
+    // addActive(darkThemeBtn)
+  }
+
+  const useSystemTheme = () => {
+    changeTheme(themes.SYSTEM)
+    // addActive(osThemeBtn)
+  }
+
   return (
-    <div className={container}>
+    <div id="themeController" className={changeThemeButtons}>
       <SVGButton
-        btnClassName={firstButton}
-        svgClassName={firstSvg}
-        // onClick={getLightTheme}
+        id="light-theme-btn"
+        onClick={useLightTheme}
         title="Light theme button"
         aria-labelledby="color-scheme-light"
         figure={
@@ -25,9 +49,8 @@ const ColorModeControl = () => {
         }
       />
       <SVGButton
-        btnClassName={middleButton}
-        svgClassName={middleSvg}
-        // onClick={getDarkTheme}
+        id="dark-theme-btn"
+        onClick={useDarkTheme}
         title="Dark theme button"
         aria-labelledby="color-scheme-dark"
         figure={
@@ -35,9 +58,8 @@ const ColorModeControl = () => {
         }
       />
       <SVGButton
-        btnClassName={lastButton}
-        svgClassName={lastSvg}
-        // onClick={getSystemTheme}
+        id="os-theme-btn"
+        onClick={useSystemTheme}
         title="System theme button"
         aria-labelledby="color-scheme-system"
         figure={
@@ -48,4 +70,4 @@ const ColorModeControl = () => {
   )
 }
 
-export default ColorModeControl
+export default ThemeController

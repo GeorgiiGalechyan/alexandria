@@ -8,14 +8,15 @@
   place-items: center;
   grid-area: header;
 
-  background-color: var(--bg-color-primary);
-  border-bottom: var(--border-primary-default);
+  background-color: var(--bg-clr-primary);
+  border-bottom: var(--header-border-bottom);
   z-index: 9999;
 }
 
 .wrapper {
   width: var(--wrapper-width);
   display: grid;
+  gap: 1.5em;
   place-items: center;
   grid-auto-flow: column;
 }

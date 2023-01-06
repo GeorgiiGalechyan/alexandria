@@ -3,7 +3,7 @@ import Layout from '../components/Layout/Layout'
 import Seo from '../components/Seo/Seo'
 
 const BlogPage = () => {
-  return <Layout pageTitle="Блог"></Layout>
+  return <Layout pageName="Блог"></Layout>
 }
 
 // Метаданные - Gatsby Head API

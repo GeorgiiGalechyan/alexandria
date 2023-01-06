@@ -4,7 +4,7 @@ import Seo from '../components/Seo/Seo'
 
 const TechsPage = () => {
   return (
-    <Layout pageTitle="Технологии">
+    <Layout pageName="Технологии">
       <h1>Просто текст</h1>
     </Layout>
   )

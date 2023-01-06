@@ -1,26 +1,12 @@
 .main-menu-item {
-  
+  font-family: var(--finlandica);
+  font-size: 1.25em;
+  line-height: 1.1em;
+  padding: 0.35em 0.9em;
+  background-color: var(--bg-clr-primary);
+  transition: all ease-in-out 150ms;
 }
 
-.menu-link {
-  padding: 0.5rem;
-  font-family: var(--nav-link-font-family);
-  font-size: var(--nav-link-font-size);
-  line-height: var(--nav-link-line-height);
-  font-weight: 400;
-  letter-spacing: 0.05rem;
-  text-transform: uppercase;
-  border-radius: 5px;
-}
-
-.menu-link:hover {
-  background-color: var(--bg-color-secondary);
-}
-
-.menu-link a {
-  color: var(--nav-link-color-default);
-}
-
-.menu-link a:hover {
-  color: var(--nav-link-color-hover);
+.main-menu-item:hover {
+  background-color: var(--mountain-meadow);
 }

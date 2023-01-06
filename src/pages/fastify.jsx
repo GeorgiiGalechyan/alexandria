@@ -5,7 +5,7 @@ import Seo from '../components/Seo/Seo.js'
 import { fastifyAsideMenu } from '../assets/data/menus/fastifyAsideMenu.js'
 
 const FastifyPage = () => {
-  return <Layout pageTitle="Fastify" asideMenu={fastifyAsideMenu}></Layout>
+  return <Layout pageName="Fastify" asideMenu={fastifyAsideMenu}></Layout>
 }
 
 // Метаданные - Gatsby Head API

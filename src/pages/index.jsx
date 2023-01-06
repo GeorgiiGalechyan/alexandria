@@ -3,11 +3,11 @@ import Layout from '../components/Layout/Layout'
 import TechCard from '../components/Cards/TechCard/TechCard'
 import Seo from '../components/Seo/Seo.js'
 
-import { techCards, columnSection, sectionTitle, popular, latest } from './css/index.module.css'
+import { techCards, sectionTitle, popular, latest } from './css/index.module.css'
 
 const IndexPage = () => {
   return (
-    <Layout pageTitle="Главная">
+    <Layout pageName="Главная">
       <section className={techCards}>
         <TechCard />
       </section>

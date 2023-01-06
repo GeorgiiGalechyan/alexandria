@@ -7,37 +7,51 @@
 /*Ипорт шрифтов*/
 @import './css//fonts.css';
 
-body {
-  color: var(--text-color-primary);
-  background-color: var(--bg-color-primary);
-  font-family: var(--text-font-family);
-  font-size: var(--text-font-size);
-  line-height: var(--text-line-height);
+::selection {
+  background-color: var(--viva-magenta);
+  color: #fff;
 }
 
+a {
+  color: var(--link-clr);
+}
+
+a:is(:hover, :focus) {
+  color: var(--link-clr-hover);
+}
+
+svg {
+  fill: var(--svg-clr);
+}
+
+svg:is(:hover, :focus) {
+  fill: var(--svg-clr-hover);
+}
+
+a[href='#'] {
+  color: red;
+}
+
+body,
 body.dark {
-  color: var(--text-color-primary);
-  background-color: var(--bg-color-primary);
-  font-family: var(--text-font-family);
-  font-size: var(--text-font-size);
-  line-height: var(--text-line-height);
+  color: var(--clr-primary);
+  background-color: var(--bg-clr-primary);
+  font-family: var(--roboto);
 }
 
 body.light {
-  color: var(--text-color-primary);
-  background-color: var(--bg-color-primary);
-  font-family: var(--text-font-family);
-  font-size: var(--text-font-size);
-  line-height: var(--text-line-height);
+  color: var(--clr-primary);
+  background-color: var(--bg-clr-primary);
 }
 
 .grid-container {
+  height: 100vh;
   display: grid;
-  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     'header'
     'main'
     'footer';
+  grid-template-rows: var(--header-height) 1fr var(--footer-height);
 }
 
 .main {
@@ -51,9 +65,9 @@ body.light {
   width: var(--wrapper-width);
 }
 
-.title {
-  font-size: 22px;
-  line-height: 28px;
+.pageTitle {
+  font-size: 1.5em;
+  line-height: 1.7em;
   font-weight: 500;
   text-transform: uppercase;
 }

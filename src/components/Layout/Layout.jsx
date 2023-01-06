@@ -1,13 +1,14 @@
 import * as React from 'react'
+
 import Header from './Header/Header'
 import AsideLayout from './AsideLayout/AsideLayout'
 import Footer from './Footer/Footer'
 
-import { gridContainer, main, wrapper, title } from './Layout.module.css'
+import { gridContainer, main, wrapper, pageTitle } from './Layout.module.css'
 
 import headerMenuData from '../../assets/data/menus/headerMainMenu.js'
 
-const Layout = ({ asideMenuData, pageTitle, children }) => {
+const Layout = ({ asideMenuData, pageName, children }) => {
   return (
     <div className={gridContainer}>
       <Header menuData={headerMenuData} />
@@ -18,7 +19,7 @@ const Layout = ({ asideMenuData, pageTitle, children }) => {
       ) : (
         <main className={main}>
           <div className={wrapper}>
-            <h1 className={title}>{pageTitle}</h1>
+            <h1 className={pageTitle}>{pageName}</h1>
             {children}
           </div>
         </main>

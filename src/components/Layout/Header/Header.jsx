@@ -1,7 +1,7 @@
 import React from 'react'
-import Navbar from './navigation/Navbar'
+import Navbar from './Navigation/Navbar'
 import AlexandriaSVG from '../../Logo/AlexandriaSVG'
-import ColorModeControl from './colorMode/colorModeControl'
+import ThemeController from './ThemeController/ThemeController'
 import Search from './search/search'
 
 import { header, wrapper } from './Header.module.css'
@@ -12,7 +12,7 @@ const Header = ({ menuData }) => {
       <div className={wrapper}>
         <AlexandriaSVG />
         <Navbar menuData={menuData} />
-        <ColorModeControl />
+        <ThemeController />
         <Search />
       </div>
     </header>

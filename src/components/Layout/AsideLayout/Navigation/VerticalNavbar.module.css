@@ -1,6 +1,6 @@
 .navbar {
-  /* position: fixed;
-  top: calc(var(--header-height) + var(--left-aside-top-padding)); */
+  position: sticky;
+  top: var(--header-height);
   display: grid;
   grid-area: 'navbar';
 }

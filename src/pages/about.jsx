@@ -4,7 +4,7 @@ import Seo from '../components/Seo/Seo'
 
 const AboutPage = () => {
   return (
-    <Layout pageTitle="О проекте">
+    <Layout pageName="О проекте">
       <p>
         Переводим на "адекатный" русский язык документацию, связанную с JS, дополняя её комментариями и дополнительными
         примерами кода.
