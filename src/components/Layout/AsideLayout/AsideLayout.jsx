@@ -1,16 +1,16 @@
 import React from 'react'
 import VerticalNavbar from './Navigation/VerticalNavbar'
 
-import { main, wrapper, leftAside, content } from './AsideLayout.module.css'
+import { main, wrapper, leftAside, pageContent } from './AsideLayout.module.css'
 
-const AsideLayout = ({ menuData, children }) => {
+const AsideLayout = ({ verticalMenuForLeftAside, children }) => {
   return (
     <main className={main}>
       <div className={wrapper}>
         <aside className={leftAside}>
-          <VerticalNavbar menuData={menuData} />
+          <VerticalNavbar menu={verticalMenuForLeftAside} />
         </aside>
-        <section className={content}>{children}</section>
+        <section className={pageContent}>{children}</section>
       </div>
     </main>
   )

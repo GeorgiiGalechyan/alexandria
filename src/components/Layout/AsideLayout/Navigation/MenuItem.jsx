@@ -1,25 +1,25 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import ClickDown from './ClickDown'
-
-import { parentListItem, gatsbyLink } from './MenuItem.module.css'
+import ClickDownSubMenu from './ClickDownSubMenu'
 
 const MenuItem = ({ menuItem, ...props }) => {
   return (
-    <li className={parentListItem} {...props}>
-      {menuItem.dropdown ? (
-        <>
-          <Link className={gatsbyLink} to={menuItem.url}>
+    <>
+      {menuItem.subMenu ? (
+        <button className="accordion-button">
+          <Link className="gatsby-link" to={menuItem.url}>
             {menuItem.text}
           </Link>
-          <ClickDown subMenuItem={menuItem.dropdown} />
-        </>
+          <ClickDown subMenu={menuItem.subMenu} />
+        </button>
       ) : (
-        <Link className={gatsbyLink} to={menuItem.url}>
-          {menuItem.text}
-        </Link>
+        <button>
+          <Link className="gatsby-link" to={menuItem.url}>
+            {menuItem.text}
+          </Link>
+        </button>
       )}
-    </li>
+    </>
   )
 }
 

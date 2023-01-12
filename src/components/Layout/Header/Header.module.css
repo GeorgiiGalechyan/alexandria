@@ -1,9 +1,10 @@
 .header {
   height: var(--header-height);
   width: 100%;
+
   position: sticky;
   top: 0px;
-  left: 0px;
+
   display: grid;
   place-items: center;
   grid-area: header;
@@ -15,8 +16,9 @@
 
 .wrapper {
   width: var(--wrapper-width);
+
   display: grid;
-  gap: 1.5em;
-  place-items: center;
+  column-gap: 1.5em;
   grid-auto-flow: column;
+  place-items: center;
 }

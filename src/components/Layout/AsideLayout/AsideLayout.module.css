@@ -7,28 +7,27 @@
 
 .wrapper {
   width: var(--wrapper-width);
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(200px, 25%) 1fr;
-  grid-template-areas: 'leftAside pageContent';
+  grid-template: 'leftAside pageContent' 1fr / minmax(200px, 25%) 1fr;
 }
 
 .left-aside {
   margin-top: var(--header-height);
-  padding: 15px;
+  padding: 15px 0px 15px 15px;
 
   position: fixed;
   top: 0;
+  left: 0;
   bottom: 0;
 
+  font-size: 1em;
+  line-height: 1.375em;
   background-color: var(--mountain-meadow);
 
   display: grid;
   grid-area: leftAside;
   grid-auto-flow: row;
-
-  font-size: 1em;
-  line-height: 1.5em;
-  letter-spacing: 0.04em;
 
   overflow-y: auto;
   overflow-x: hidden;
@@ -36,6 +35,5 @@
 
 .content {
   display: grid;
-  justify-content: center;
   grid-area: pageContent;
 }

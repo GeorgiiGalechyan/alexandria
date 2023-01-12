@@ -1,11 +1,11 @@
-.navbar {
+.vertical-navbar {
   position: sticky;
   top: var(--header-height);
   display: grid;
   grid-area: 'navbar';
 }
 
-.parent-nav-list {
+.vertical-menu-list {
   display: flex;
   flex-flow: column wrap;
 }

@@ -16,7 +16,7 @@ a {
   color: var(--link-clr);
 }
 
-a:is(:hover, :focus) {
+a:where(:hover, :focus) {
   color: var(--link-clr-hover);
 }
 
@@ -24,12 +24,13 @@ svg {
   fill: var(--svg-clr);
 }
 
-svg:is(:hover, :focus) {
+svg:where(:hover, :focus) {
   fill: var(--svg-clr-hover);
 }
 
 a[href='#'] {
   color: red;
+  background-color: cadetblue;
 }
 
 body,
@@ -47,11 +48,10 @@ body.light {
 .grid-container {
   height: 100vh;
   display: grid;
-  grid-template-areas:
-    'header'
-    'main'
-    'footer';
-  grid-template-rows: var(--header-height) 1fr var(--footer-height);
+  grid-template:
+    'header' var(--header-height)
+    'main' 1fr
+    'footer' var(--footer-height) / 1fr;
 }
 
 .main {
@@ -65,9 +65,10 @@ body.light {
   width: var(--wrapper-width);
 }
 
-.pageTitle {
-  font-size: 1.5em;
-  line-height: 1.7em;
-  font-weight: 500;
-  text-transform: uppercase;
+.gatsby-link {
+  color: var(--link-clr);
+}
+
+.gatsby-link:where(:hover, :focus) {
+  color: var(--link-clr-hover);
 }
