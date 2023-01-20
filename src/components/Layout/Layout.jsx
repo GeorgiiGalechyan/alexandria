@@ -8,11 +8,11 @@ import { gridContainer, main, wrapper, pageTitle } from './Layout.module.css'
 
 import headerMenuData from '../../assets/data/menus/headerMainMenu.js'
 
-const Layout = ({ asideMenuData, pageName, children }) => {
+const Layout = ({ asideMenuData = [], pageName, children }) => {
   return (
     <div className={gridContainer}>
       <Header menuData={headerMenuData} />
-      {asideMenuData ? (
+      {!!asideMenuData.length ? (
         <AsideLayout menuData={asideMenuData} pageTitle={pageTitle}>
           {children}
         </AsideLayout>

@@ -3,19 +3,19 @@ import Layout from '../components/Layout/Layout'
 import TechCard from '../components/Cards/TechCard/TechCard'
 import Seo from '../components/Seo/Seo.js'
 
-import { techCards, sectionTitle, popular, latest } from './css/index.module.css'
+import cardsData from '../assets/data/cards/techCardData.js'
+
+import { techs, cards, sectionTitle, sectionIntro } from './css/index.module.css'
 
 const IndexPage = () => {
   return (
     <Layout pageName="Главная">
-      <section className={techCards}>
-        <TechCard />
-      </section>
-      <section className={popular}>
-        <h1 className={sectionTitle}>Популярные материалы</h1>
-      </section>
-      <section className={latest}>
-        <h1>Последние обновления</h1>
+      <section className={techs}>
+        <h1 className={sectionTitle}> Наши переводы технологий </h1>
+        <p className={sectionIntro}></p>
+        <div className={cards}>
+          <TechCard cards={cardsData} />
+        </div>
       </section>
     </Layout>
   )

@@ -47,21 +47,19 @@ body.light {
 .grid-container {
   height: 100vh;
   display: grid;
-  grid-template-areas:
-    'header'
-    'main'
-    'footer';
-  grid-template-rows: var(--header-height) 1fr var(--footer-height);
+  grid-template:
+    'header' var(--header-height)
+    'main' 1fr
+    'footer' var(--footer-height) / 1fr;
 }
 
 .main {
   width: 100%;
-  display: grid;
-  place-items: center;
   grid-area: main;
 }
 
 .wrapper {
+  margin: 0 auto;
   width: var(--wrapper-width);
 }
 

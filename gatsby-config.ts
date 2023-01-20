@@ -23,6 +23,14 @@ const config: GatsbyConfig = {
       },
       __key: 'pages',
     },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'nodejs',
+        path: './src/assets/markdown/nodejs/',
+      },
+      __key: 'pages',
+    },
   ],
 }
 

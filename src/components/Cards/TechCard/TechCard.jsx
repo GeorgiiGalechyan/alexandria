@@ -1,40 +1,44 @@
-import * as React from 'react'
+import React from 'react'
+import Svg from '../../SvgIcon/Svg'
 import { Link } from 'gatsby'
-// import TechLogo from '../../Logo/techLogo'
-import { techSvgsArr, techSvgsObj } from '../../../assets/data/svgs/svgData.js'
 
 import {
-  techCard,
+  card,
   logoAndTechNameContainer,
-  techName,
+  cardTitle,
   techHomePage,
   techDescription,
-  button,
+  cardButton,
 } from './TechCard.module.css'
 
-import { techCardsData } from '../../../assets/data/cards/techCardsData.js'
-
-const TechCard = () => {
+const TechCard = ({ cards }) => {
   return (
     <>
-      {techCardsData.map((tech) => (
-        <div key={tech.id} className={techCard}>
-          <div className={logoAndTechNameContainer}>
-            {tech.SVG}
-            {/* {<TechLogo d={tech.svg.d} fill={tech.svg.fill} aria-labelledby={tech.svg.label} title={tech.svg.title} />} */}
-            <h2 className={techName}> {tech.techName}</h2>
+      {Boolean(cards.length) &&
+        cards.map((tech) => (
+          <div key={tech.id} className={card}>
+            <div className={logoAndTechNameContainer}>
+              <Svg
+                size={60}
+                title={tech.SVG.title}
+                label={tech.SVG.label}
+                viewBox={tech.SVG.viewBox}
+                d={tech.SVG.d}
+                fill={tech.SVG.fill}
+              />
+              <h3 className={cardTitle}> {tech.SVG.title}</h3>
+            </div>
+            <address className={techHomePage}>
+              Домашняя страница: <a href={tech.homeLink.url}> {tech.homeLink.text} </a>
+            </address>
+            <p className={techDescription}> {tech.description}</p>
+            <button className={cardButton}>
+              <Link className="gatsby-link" to={tech.intLink}>
+                Перейти
+              </Link>
+            </button>
           </div>
-          <address className={techHomePage}>
-            Домашняя страница: <a href={tech.homeLink.url}> {tech.homeLink.text} </a>
-          </address>
-          <p className={techDescription}> {tech.description}</p>
-          <Link className={button} role="button" to={tech.intLink}>
-            Перейти
-          </Link>
-          {techSvgsArr[0]}
-          {techSvgsObj.nodejs}
-        </div>
-      ))}
+        ))}
     </>
   )
 }

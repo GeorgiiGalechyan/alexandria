@@ -8,8 +8,8 @@
 .wrapper {
   width: var(--wrapper-width);
   display: grid;
-  grid-template-columns: minmax(200px, 25%) 1fr;
-  grid-template-areas: 'leftAside pageContent';
+  grid-template: 'leftAside pageContent' / minmax(200px, 25%) 1fr;
+  position: relative;
 }
 
 .left-aside {
@@ -36,6 +36,5 @@
 
 .content {
   display: grid;
-  justify-content: center;
   grid-area: pageContent;
 }
