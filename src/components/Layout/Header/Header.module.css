@@ -4,13 +4,14 @@
   top: 0px;
   background-color: var(--bg-clr-primary);
   border-bottom: var(--header-border-bottom);
-  z-index: 100;
+  z-index: 10;
 
   grid-area: header;
 }
 
 .wrapper {
   margin: 0 auto;
+  height: 100%;
   width: var(--wrapper-width);
 
   display: flex;

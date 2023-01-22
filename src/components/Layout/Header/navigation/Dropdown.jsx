@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import {
-  subMenuList,
-  subMenuItem,
+  submenu,
+  submenuItem,
   gatsbyLink,
-  itemIcon,
+  itemMarker,
   itemContent,
   itemLinkText,
   itemLinkDescription,
@@ -12,17 +12,17 @@ import {
 
 const Dropdown = ({ subMenu, ...props }) => {
   return (
-    <menu type="list" className={subMenuList} {...props}>
+    <menu type="list" className={submenu} {...props}>
       {subMenu.map((item) => (
-        <li className={subMenuItem} key={item.id}>
+        <button className={submenuItem} key={item.id}>
           <Link className={gatsbyLink} to={item.url}>
-            <div className={itemIcon} style={{ backgroundColor: item.color }}></div>
+            <div className={itemMarker} style={{ backgroundColor: item.color }}></div>
             <div className={itemContent}>
               <h3 className={itemLinkText}>{item.title}</h3>
               <p className={itemLinkDescription}>{item.info}</p>
             </div>
           </Link>
-        </li>
+        </button>
       ))}
     </menu>
   )

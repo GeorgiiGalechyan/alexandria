@@ -5,19 +5,23 @@ import Dropdown from './Dropdown'
 import { menuItem } from './MenuItem.module.css'
 
 const MenuItems = ({ item, ...props }) => {
-  const dropdownMenu = item.subMenu
+  const subMenu = item.submenu
 
   const [isOpen, setIsOpen] = useState(false)
 
-  const open = () => setIsOpen(true)
-  const close = () => setIsOpen(false)
-
   return (
-    <button className={menuItem} onMouseOver={open} onFocus={open} onMouseOut={close} onBlur={close} {...props}>
-      {dropdownMenu ? (
+    <button
+      className={menuItem}
+      onMouseOver={() => setIsOpen(true)}
+      onFocus={() => setIsOpen(true)}
+      onMouseOut={() => setIsOpen(false)}
+      onBlur={() => setIsOpen(false)}
+      {...props}
+    >
+      {Boolean(subMenu.length) ? (
         <>
           <Link to={item.url}>{item.title}</Link>
-          {isOpen && <Dropdown subMenu={item.submenu} />}
+          {Boolean(isOpen) && <Dropdown subMenu={subMenu} />}
         </>
       ) : (
         <Link to={item.url}>{item.title}</Link>
