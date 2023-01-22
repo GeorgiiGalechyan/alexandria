@@ -11,10 +11,9 @@
 
 .wrapper {
   margin: 0 auto;
-  height: 100%;
   width: var(--wrapper-width);
 
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Link } from 'gatsby'
 import Dropdown from './Dropdown'
 
-import { mainMenuItem } from './MenuItem.module.css'
+import { menuItem } from './MenuItem.module.css'
 
-const MenuItems = ({ menuItemData, ...props }) => {
-  const dropdownMenu = menuItemData.subMenu
+const MenuItems = ({ item, ...props }) => {
+  const dropdownMenu = item.subMenu
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -13,14 +13,14 @@ const MenuItems = ({ menuItemData, ...props }) => {
   const close = () => setIsOpen(false)
 
   return (
-    <button className={mainMenuItem} onMouseOver={open} onFocus={open} onMouseOut={close} onBlur={close} {...props}>
+    <button className={menuItem} onMouseOver={open} onFocus={open} onMouseOut={close} onBlur={close} {...props}>
       {dropdownMenu ? (
         <>
-          <Link to={menuItemData.url}>{menuItemData.title}</Link>
-          {isOpen && <Dropdown subMenu={menuItemData.submenu} />}
+          <Link to={item.url}>{item.title}</Link>
+          {isOpen && <Dropdown subMenu={item.submenu} />}
         </>
       ) : (
-        <Link to={menuItemData.url}>{menuItemData.title}</Link>
+        <Link to={item.url}>{item.title}</Link>
       )}
     </button>
   )

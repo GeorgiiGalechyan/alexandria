@@ -1,7 +1,4 @@
 .sub-menu-list {
-  display: none;
-}
-.sub-menu-list {
   --row-gap: 7px;
   padding: 10px;
   position: absolute;
