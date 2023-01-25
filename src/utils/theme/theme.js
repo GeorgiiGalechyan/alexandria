@@ -24,16 +24,41 @@ const getBasicColorMode = () => {
   return 'light'
 }
 
-// Все варианты темы
-var DEFAULT_THEME = getBasicColorMode() // тема по умолчанию
-var DARK_THEME = 'dark'
-var LIGHT_THEME = 'light'
+const defaultTheme = getBasicColorMode()
 
-//  задаем тему до загрузки приложения
-const initialTheme = () => {
-  document.body.classList.remove(DARK_THEME, LIGHT_THEME)
-  document.body.classList.add(DEFAULT_THEME)
-  window.localStorage.setItem('theme', DEFAULT_THEME)
+// Все варианты темы
+const THEMES = {
+  DEFAULT: defaultTheme, // тема по умолчанию
+  DARK: 'dark',
+  LIGHT: 'light',
 }
 
-initialTheme()
+//  задаем тему до загрузки приложения
+// const initialTheme = () => {
+//   document.body.classList.remove(THEMES.DARK, THEMES.LIGHT)
+//   document.body.classList.add(THEMES.DEFAULT)
+//   window.localStorage.setItem('theme', DEFAULT_THEME)
+// }
+//
+// initialTheme()
+
+// Проверка что включена темная тема
+export const isDarkTheme = () => {
+  let theme = document.body.className
+  if (theme === THEMES.DARK) {
+    return true
+  } else if (theme === THEMES.LIGHT) {
+    return false
+  }
+  return true
+}
+
+// Проверка что включена светлая тема
+export const isLightTheme = () => {
+  let theme = document.body.className
+  if (theme === THEMES.LIGHT) {
+    return true
+  } else {
+    return false
+  }
+}

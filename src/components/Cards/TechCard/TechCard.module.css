@@ -1,29 +1,33 @@
-.techCard {
-  width: 350px;
-  padding: 20px 30px 30px 30px;
+.card {
+  padding: 25px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: var(--border-primary-default);
+  border: var(--border-primary);
+
+  font-family: var(--roboto);
+  font-size: 1.1em;
+  line-height: 1.3em;
+  font-weight: 400;
 }
 
-.techCard:hover {
+.card:hover {
   border: var(--border-primary-hover);
+}
+
+.card:hover svg {
+  fill: var(--mountain-meadow);
 }
 
 .logo-and-tech-name-container {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
   align-items: center;
 }
 
-.tech-name {
-  padding-left: 10px;
-  font-family: var(--tech-name-font-family);
-  font-size: var(--tech-name-font-size);
-  line-height: var(--tech-name-line-height);
+.card-title {
+  padding-left: 15px;
+  font-family: var(--jura);
+  font-size: 1.8em;
+  line-height: 2em;
   font-weight: 600;
 }
 
@@ -34,24 +38,24 @@
 }
 
 .tech-description {
-  padding: 10px 0px 20px 0px;
-  text-align: left;
-  color: var(--text-color-primary);
-  font-family: var(--text-font-family);
-  font-size: var(--text-font-size);
-  line-height: var(--text-line-height);
-  font-weight: 400;
+  margin: 10px auto;
 }
 
-.button {
-  padding: 10px 15px;
-  background-color: var(--button-bg-color-default);
-  border: var(--button-border-default);
+.card-button {
+  padding: 8px 15px;
+  width: fit-content;
+  align-self: center;
+  border: var(--border-primary);
   border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
 }
 
-.button:hover {
-  background-color: var(--button-bg-color-hover);
-  border: var(--button-border-hover);
-  border-radius: 5px;
+.card-button:hover {
+  border: 1px solid var(--mountain-meadow);
+  background-color: white;
+}
+
+.card-button:hover a {
+  color: var(--link-clr-hover);
 }

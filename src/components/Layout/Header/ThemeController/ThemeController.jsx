@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import SVGButton from '../../../Buttons/SVGButtons/SVGButton'
 import { themes } from '../../../../utils/getThemeOnFirstRun.js'
 
 import { changeThemeButtons } from './ThemeController.module.css'
 
 const ThemeController = () => {
+
+  const [theme, setTheme] = useState('') // смена темы
+  const [active, setActive] = useState(false) // активность кнопки
+
+
+  
   // const parent = document.getElementById('#themeController')
   // console.log(parent)
 
@@ -14,6 +20,13 @@ const ThemeController = () => {
     // })
     // elem.classList.add('active')
   }
+
+  useEffect((themeValue) => {
+    document.body.classList.remove(themes.DARK, themes.LIGHT)
+    document.body.classList.add(themeValue)
+    window.localStorage.removeItem('theme')
+    window.localStorage.setItem('theme', themeValue)
+  })
 
   const changeTheme = (themeValue) => {
     document.body.classList.remove(themes.DARK, themes.LIGHT)

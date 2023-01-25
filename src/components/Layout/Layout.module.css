@@ -56,12 +56,11 @@ body.light {
 
 .main {
   width: 100%;
-  display: grid;
-  place-items: center;
   grid-area: main;
 }
 
 .wrapper {
+  margin: 0 auto;
   width: var(--wrapper-width);
 }
 

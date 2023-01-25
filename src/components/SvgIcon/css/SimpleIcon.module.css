@@ -1,0 +1,12 @@
+.svg-container svg {
+  fill: #fff;
+  background-color: transparent;
+  border-radius: 100%;
+  padding: 10px;
+  transition: ease-in-out;
+}
+
+.svg-container svg:hover {
+  fill: #000;
+  background-color: #fff;
+}
