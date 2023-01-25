@@ -1,12 +1,20 @@
-.main-menu-item {
+.menu-item {
+  position: relative;
   font-family: var(--finlandica);
-  font-size: 1.25em;
-  line-height: 1.1em;
-  padding: 0.35em 0.9em;
-  background-color: var(--bg-clr-primary);
+  font-size: 1.5em;
+  padding: 0.5ch 1ch;
+  background-color: transparent;
   transition: all ease-in-out 150ms;
 }
 
-.main-menu-item:hover {
+.menu-item:hover {
   background-color: var(--mountain-meadow);
+}
+
+.menu-item a {
+  color: var(--nav-link-clr);
+}
+
+.menu-item:hover a {
+  color: var(--nav-link-clr-hover);
 }
