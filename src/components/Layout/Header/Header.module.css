@@ -1,19 +1,9 @@
 .header {
   height: var(--header-height);
-<<<<<<< HEAD
   width: 100%;
 
   position: sticky;
   top: 0px;
-
-  display: grid;
-  place-items: center;
-  grid-area: header;
-
-=======
-  position: sticky;
-  top: 0px;
->>>>>>> 34f3f48373ace557084a7385747790152a8099e6
   background-color: var(--bg-clr-primary);
   border-bottom: var(--header-border-bottom);
   z-index: 10;
@@ -27,6 +17,5 @@
   width: var(--wrapper-width);
 
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2em;
+  grid-template-columns: repeat(auto-fit, auto);
 }
