@@ -51,7 +51,7 @@ body.light {
   grid-template:
     'header' var(--header-height)
     'main' 1fr
-    'footer' var(--footer-height) / 1fr;
+    'footer' auto / 1fr;
 }
 
 .main {

@@ -1,81 +1,70 @@
 .footer {
   width: 100%;
-  height: var(--footer-height);
-  padding: 1em 0px;
-
-  display: grid;
-  grid-area: footer;
-  justify-content: center;
-
   background-color: var(--bg-clr-primary);
-  overflow: hidden;
   z-index: 99999;
+  grid-area: footer;
 }
 
 .wrapper {
   width: var(--wrapper-width);
-  padding: 1ch 1ch;
   display: grid;
-  align-content: center;
-  justify-content: center;
+  grid-template:
+    'main' auto
+    'author' auto / 1fr;
 }
 
+/*  Подсекция с контактами и полезными ссылками  */
+.main {
+  width: 100%;
+  padding: 1ch 0;
+  font-size: 1em;
+  line-height: 1.25em;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+
+  grid-area: main;
+}
+
+.main :where(h3) {
+  font-size: 1.3em;
+  line-height: 1.6em;
+  margin-bottom: 0.4em;
+}
+
+.contacts {
+  display: grid;
+  grid-auto-flow: row;
+}
+
+.usefulLinks {
+  padding-left: 2em;
+  display: grid;
+  grid-auto-flow: row;
+}
+
+.links {
+  display: grid;
+  grid-gap: 0.3em;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.links :where(a) {
+  padding: 0.25em 1em 0.25em 0;
+}
+
+/*  Подсекция с данными автора  */
 .author {
   width: 100%;
-  padding: 1ch 0px;
-  font-size: 1.1em;
-  line-height: 1.3em;
+  padding: 1.5ch 0;
+  background-color: black;
+  font-size: 0.8em;
+
   display: grid;
   place-content: center;
+
+  grid-area: author;
 }
 
 .author a:hover {
   color: var(--mountain-meadow);
-}
-
-.footer-container-list {
-  width: 100%;
-  font-size: 1em;
-  line-height: 1.5em;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-}
-
-.containerItem {
-  display: grid;
-  grid-auto-flow: row;
-}
-
-.contacts {
-  background-color: burlywood;
-  display: grid;
-  grid-auto-flow: row;
-}
-
-.item-heading {
-  padding: 0.5ch 0px;
-  font-size: 1.1em;
-  line-height: 1.5em;
-  font-weight: 400;
-}
-
-.contacts-content {
-  font-size: 1em;
-  line-height: 1.25em;
-  display: grid;
-  grid-auto-flow: row;
-}
-
-.contact-item {
-  font-size: 0.8em;
-}
-
-.site-map {
-  display: grid;
-  grid-auto-flow: column;
-}
-
-.site-map-content {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
 }

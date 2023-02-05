@@ -1,27 +1,28 @@
-.techs {
+.section {
   padding: 30px 20px;
   display: grid;
-  place-content: center center;
-  gap: 2rem;
-  grid-template-columns: repeat(3, minmax(300px, 1fr));
 }
 
-.section-title {
+.hero {
+  place-content: center center;
+  display: grid;
+}
+
+.techs {
+  place-content: center center;
+}
+
+.title {
+  margin-bottom: 0.7em;
   color: var(--clr-primary);
   font-family: var(--jura);
   font-size: 2em;
-  line-height: 2.7em;
+  line-height: 2.3em;
   text-align: center;
-}
-
-.section-intro {
-  color: var(--clr-primary);
-  font-family: var(--roboto);
-  font-size: 1em;
-  line-height: 1.5em;
 }
 
 .cards {
   display: grid;
-  grid-column: repear(3, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  column-gap: 3%;
 }

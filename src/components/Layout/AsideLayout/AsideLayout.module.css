@@ -7,14 +7,10 @@
 
 .wrapper {
   width: var(--wrapper-width);
-  position: relative;
+
   display: grid;
-<<<<<<< HEAD
-  grid-template: 'leftAside pageContent' 1fr / minmax(200px, 25%) 1fr;
-=======
   grid-template: 'leftAside pageContent' / minmax(200px, 25%) 1fr;
   position: relative;
->>>>>>> 34f3f48373ace557084a7385747790152a8099e6
 }
 
 .left-aside {

@@ -5,14 +5,16 @@ import Seo from '../components/Seo/Seo.js'
 
 import cardsData from '../assets/data/cards/techCardData.js'
 
-import { techs, cards, sectionTitle, sectionIntro } from './css/index.module.css'
+import { section, hero, techs, title, cards } from './css/index.module.css'
 
 const IndexPage = () => {
   return (
     <Layout pageName="Главная">
-      <section className={techs}>
-        <h1 className={sectionTitle}> Наши переводы технологий </h1>
-        <p className={sectionIntro}></p>
+      <section className={`${section} ${hero}`}>
+        <h1 className={title}> Hero </h1>
+      </section>
+      <section className={`${section} ${techs}`}>
+        <h1 className={title}> Наши переводы технологий </h1>
         <div className={cards}>
           <TechCard cards={cardsData} />
         </div>

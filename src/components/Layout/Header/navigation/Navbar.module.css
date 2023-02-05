@@ -1,5 +1,4 @@
 .menu {
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(min(10ch, 100%), 1fr)); */
-  grid-auto-flow: column;
+  grid-template-columns: repeat(3, 1fr);
 }

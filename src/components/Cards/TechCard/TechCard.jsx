@@ -19,7 +19,7 @@ const TechCard = ({ cards }) => {
           <div key={tech.id} className={card}>
             <div className={logoAndTechNameContainer}>
               <Svg
-                size={60}
+                size={'100%'}
                 title={tech.SVG.title}
                 label={tech.SVG.label}
                 viewBox={tech.SVG.viewBox}

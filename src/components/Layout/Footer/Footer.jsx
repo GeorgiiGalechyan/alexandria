@@ -1,70 +1,47 @@
 import React from 'react'
-import {
-  footer,
-  wrapper,
-  author,
-  footerContainerList,
-  containerItem,
-  contacts,
-  itemHeading,
-  contactsContent,
-  contactItem,
-  siteMapContent,
-  siteMap,
-} from './Footer.module.css'
+import { footer, wrapper, main, contacts, contactItem, usefulLinks, links, author } from './Footer.module.css'
 
 const Footer = () => {
   return (
     <footer className={footer}>
-      <div className={wrapper}>
-        <section className={footerContainerList}>
-          <section className={[containerItem, contacts]}>
-            <h3 className={itemHeading}>Контакты для связи:</h3>
-            <address className={contactsContent}>
-              <p className={contactItem}>
-                <strong>Телефон:</strong> <a href="tel:+79030238585">+7-903-023-85-85</a>
+      <section style={{ width: '100%', display: 'grid', justifyContent: 'center' }}>
+        <div className={wrapper}>
+          <div className={main}>
+            <address className={contacts}>
+              <h3>Контакты для связи:</h3>
+              <p>
+                Телефон: <a href="tel:+79030238585">+7-903-023-85-85</a>
               </p>
-              <p className={contactItem}>
-                <strong>E-mail:</strong> <a href="mailto:galechyan1991@gmail.com"> galechyan1991@gmail.com</a>
+              <p>
+                E-mail: <a href="mailto:galechyan1991@gmail.com">galechyan1991@gmail.com</a>
+              </p>
+              <p>
+                Telegram: <a href="https://t.me/georgy23/">@georgy23</a>
               </p>
             </address>
-          </section>
-          <section className={[containerItem, siteMap]}>
-            <h3 className={itemHeading}>Полезные ссылки</h3>
-            <div className={siteMapContent}>
-              <menu style={{ display: 'grid', gridAutoFlow: 'row' }}>
-                <button> Ссылка 1 </button>
-                <button> Ссылка 2 </button>
-                <button> Ссылка 3 </button>
-                <button> Ссылка 4 </button>
-                <button> Ссылка 5 </button>
-                <button> Ссылка 6 </button>
-              </menu>
-              <menu style={{ display: 'grid', gridAutoFlow: 'row' }}>
-                <button> Ссылка 1 </button>
-                <button> Ссылка 2 </button>
-                <button> Ссылка 3 </button>
-                <button> Ссылка 4 </button>
-                <button> Ссылка 5 </button>
-                <button> Ссылка 6 </button>
-              </menu>
-              <menu style={{ display: 'grid', gridAutoFlow: 'row' }}>
-                <button> Ссылка 1 </button>
-                <button> Ссылка 2 </button>
-                <button> Ссылка 3 </button>
-                <button> Ссылка 4 </button>
-                <button> Ссылка 5 </button>
-                <button> Ссылка 6 </button>
-              </menu>
+            <div className={usefulLinks}>
+              <h3>Полезные ссылки</h3>
+              <div className={links}>
+                <a href="#"> Ссылка 1 </a>
+                <a href="#"> Ссылка 2 </a>
+                <a href="#"> Ссылка 3 </a>
+                <a href="#"> Ссылка 4 </a>
+                <a href="#"> Ссылка 5 </a>
+                <a href="#"> Ссылка 6 </a>
+              </div>
             </div>
-          </section>
-        </section>
-        <section className={author}>
-          <p>
-            Сайт разработан <a href="https://github.com/GeorgiiGalechyan">Georgii Galechyan</a> в 2022 году.
-          </p>
-        </section>
-      </div>
+          </div>
+        </div>
+      </section>
+      <section style={{ width: '100%', backgroundColor: 'black', display: 'grid', justifyContent: 'center' }}>
+        <div className={wrapper}>
+          <div className={author}>
+            <p>
+              Сайт разработан <a href="https://github.com/GeorgiiGalechyan">Georgii Galechyan</a> в 2022-2023 гг.
+            </p>
+          </div>
+        </div>
+      </section>
     </footer>
   )
 }

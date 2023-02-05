@@ -1,4 +1,7 @@
 .menu-item {
+  width: max-content;
+  height: fit-content;
+
   position: relative;
   font-family: var(--finlandica);
   font-size: 1.5em;

@@ -1,7 +1,4 @@
 .svg-button {
-  --button-size: 40px;
-  width: var(--button-size);
-  height: var(--button-size);
   padding: 0.4rem;
   border: var(--border-primary);
   color: var(--svg-clr);
@@ -12,7 +9,7 @@
   text-align: center;
 }
 
-.svg-button  :where(.svg-button:hover, .svg-button:active) {
+.svg-button :where(.svg-button:hover, .svg-button:active) {
   background-color: var(---btn-bg-clr-hover);
 }
 

@@ -1,11 +1,11 @@
 .submenu {
-    --submenu-row-gap: 7px;
+  --submenu-row-gap: 7px;
   width: max-content;
   padding: 10px;
- 
-  background-color: var(--bg-clr-primary);
+
   border: var(--border-primary);
   border-radius: 3px;
+  background-color: var(--bg-clr-primary);
 
   display: grid;
   row-gap: var(--submenu-row-gap);
@@ -17,11 +17,7 @@
 }
 
 .submenu-item {
-  padding: 5px 10px; /* Остановился здесь. Хочу перевести размер шрифта в em*/
-
-  font-family: var(--finlandica);
-  font-size: 18px;
-
+  padding: 5px 10px;
   border-radius: 3px;
   background-color: transparent;
   transition: all ease-in-out 150ms;
@@ -37,29 +33,28 @@
 }
 
 .item-marker {
-  margin: auto 0;
   height: 2.9em;
   width: 0.25em;
-  margin-right: 0.5em;
-
-  position: relative;
 }
 
 .item-content {
+  --submenu-content-raw-gap: 4px;
   font-family: var(--finlandica);
-  padding: 5px;
+  text-align: left;
+
+  display: grid;
+  align-content: center;
+  row-gap: var(--submenu-content-raw-gap);
+  -moz-row-gap: var(--submenu-content-raw-gap);
+  -webkit-row-gap: var(--submenu-content-raw-gap);
 }
 
-.item-link-text {
-  text-align: left;
-  padding-bottom: 5px;
-  font-size: 0.8em;
-  line-height: 0.9em;
+.item-content > h3 {
+  font-size: 1.15em;
   font-weight: 500;
 }
 
-.item-link-description {
-  text-align: left;
-  font-size: 0.5em;
-  line-height: 0.6em;
+.item-content > p {
+  font-size: 0.6em;
+  font-weight: 400;
 }

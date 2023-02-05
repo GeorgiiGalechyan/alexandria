@@ -1,16 +1,18 @@
 .change-theme-buttons {
-  --first-last-border-radius: 5px;
+  --button-size: 40px;
+  --first-and-last-border-radius: 5px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, var(--button-size));
+  grid-template-rows: var(--button-size);
 }
 
-.change-theme-buttons > * {
+.change-theme-buttons > button {
   border: var(--border-primary);
 }
 
 .change-theme-buttons :nth-child(1) {
-  border-bottom-left-radius: var(--first-last-border-radius);
-  border-top-left-radius: var(--first-last-border-radius);
+  border-bottom-left-radius: var(--first-and-last-border-radius);
+  border-top-left-radius: var(--first-and-last-border-radius);
   border-right: 0px;
 }
 
@@ -19,8 +21,8 @@
 }
 
 .change-theme-buttons :nth-child(3) {
-  border-bottom-right-radius: var(--first-last-border-radius);
-  border-top-right-radius: var(--first-last-border-radius);
+  border-bottom-right-radius: var(--first-and-last-border-radius);
+  border-top-right-radius: var(--first-and-last-border-radius);
   border-left: 0px;
 }
 

@@ -4,7 +4,7 @@ import {} from './css/Svg.module.css'
 
 const Svg = ({ size = '32', title, label, viewBox, d, fill }) => {
   return (
-    <div style={{ height: size, width: size }}>
+    <div style={{ display: 'grid', placeItems: 'center', height: size, width: size }}>
       <svg
         style={{ fill: fill }}
         role="img"

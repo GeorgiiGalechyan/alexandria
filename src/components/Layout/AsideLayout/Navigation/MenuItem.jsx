@@ -10,7 +10,7 @@ const MenuItem = ({ menuItem, ...props }) => {
           <Link className="gatsby-link" to={menuItem.url}>
             {menuItem.text}
           </Link>
-          <ClickDown subMenu={menuItem.subMenu} />
+          <ClickDownSubMenu subMenu={menuItem.subMenu} />
         </button>
       ) : (
         <button>

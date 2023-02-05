@@ -16,6 +16,7 @@
   height: 100%;
   width: var(--wrapper-width);
 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, auto);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

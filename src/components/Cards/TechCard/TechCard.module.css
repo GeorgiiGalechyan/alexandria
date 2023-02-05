@@ -1,61 +1,88 @@
 .card {
   padding: 25px;
-  display: flex;
-  flex-direction: column;
-  border: var(--border-primary);
 
+  display: grid;
+  grid-template:
+    'title' auto
+    'address' auto
+    'description' auto
+    'button' auto / 1fr;
+
+  border: var(--border-primary);
   font-family: var(--roboto);
-  font-size: 1.1em;
-  line-height: 1.3em;
-  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.25em;
+  text-align: left;
 }
 
 .card:hover {
   border: var(--border-primary-hover);
 }
 
+.card:hover > :nth-child(1) > :first-child {
+  padding: 10px;
+  background-color: black;
+}
+
 .card:hover svg {
   fill: var(--mountain-meadow);
 }
 
+/* Стилизаия ссылки (homepage) */
+.card .tech-home-page > a {
+  padding: 0 0.5em;
+}
+
+.card:hover .tech-home-page > a {
+  background-color: var(--mountain-meadow);
+}
+
+/* БИконка + загаловок */
+
 .logo-and-tech-name-container {
-  display: flex;
+  margin-bottom: 1.3em;
+  display: grid;
+  grid-template-columns: 40px 1fr;
   align-items: center;
+
+  grid-area: title;
 }
 
 .card-title {
-  padding-left: 15px;
+  padding-left: 1ch;
   font-family: var(--jura);
   font-size: 1.8em;
-  line-height: 2em;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .tech-home-page {
-  align-self: flex-start;
-  padding-top: 20px;
-  font-weight: 400;
+  margin-bottom: 0.5em;
+  grid-area: address;
 }
 
 .tech-description {
-  margin: 10px auto;
+  margin-bottom: 1.3em;
+  grid-area: description;
 }
 
 .card-button {
   padding: 8px 15px;
-  width: fit-content;
-  align-self: center;
+
   border: var(--border-primary);
   border-radius: 5px;
   background-color: transparent;
   cursor: pointer;
+
+  place-self: center;
+  grid-area: button;
 }
 
 .card-button:hover {
   border: 1px solid var(--mountain-meadow);
-  background-color: white;
+  background-color: var(--mountain-meadow);
 }
 
 .card-button:hover a {
+  border: none;
   color: var(--link-clr-hover);
 }

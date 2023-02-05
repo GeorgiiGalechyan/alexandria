@@ -1,14 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import {
-  submenu,
-  submenuItem,
-  gatsbyLink,
-  itemMarker,
-  itemContent,
-  itemLinkText,
-  itemLinkDescription,
-} from './Dropdown.module.css'
+import { submenu, submenuItem, gatsbyLink, itemMarker, itemContent } from './Dropdown.module.css'
 
 const Dropdown = ({ subMenu, ...props }) => {
   return (
@@ -18,8 +10,8 @@ const Dropdown = ({ subMenu, ...props }) => {
           <Link className={gatsbyLink} to={item.url}>
             <div className={itemMarker} style={{ backgroundColor: item.color }}></div>
             <div className={itemContent}>
-              <h3 className={itemLinkText}>{item.title}</h3>
-              <p className={itemLinkDescription}>{item.info}</p>
+              <h3>{item.title}</h3>
+              <p>{item.info}</p>
             </div>
           </Link>
         </button>
