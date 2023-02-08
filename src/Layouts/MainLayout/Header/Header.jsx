@@ -1,15 +1,17 @@
 import React from 'react'
-import Navbar from './Navigation/Navbar'
-import Svg from '../../SvgIcon/Svg'
+import { SVGs } from '../../../assets/data/svgs/svgData.js'
+import Navbar from './Navbar/Navbar'
 import ThemeController from './ThemeController/ThemeController'
 import SearchPanel from './SearchPanel/SearchPanel'
+import Svg from '../../../components/SvgIcon/Svg'
+
+import { headerMenuData } from './menuData.js'
 
 import { header, wrapper } from './Header.module.css'
 
-import { SVGs } from '../../../assets/data/svgs/svgData.js'
 const logo = SVGs.alexandria
 
-const Header = ({ menuData }) => {
+const Header = () => {
   return (
     <header className={header}>
       <div className={wrapper}>
@@ -21,7 +23,7 @@ const Header = ({ menuData }) => {
           d={logo.d}
           fill={logo.fillDark}
         />
-        <Navbar menuData={menuData} />
+        <Navbar menu={headerMenuData} />
         <ThemeController />
         <SearchPanel />
       </div>

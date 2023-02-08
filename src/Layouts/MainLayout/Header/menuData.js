@@ -1,4 +1,4 @@
-const headerMenuData = [
+export let headerMenuData = [
   {
     id: 'techs_menu_item',
     title: 'Технологии',
@@ -30,5 +30,3 @@ const headerMenuData = [
   { id: 'about_menu_item', title: 'О проекте', url: '/about', submenu: false },
   { id: 'blog_menu_item', title: 'Блог', url: '/blog', submenu: false },
 ]
-
-export default headerMenuData

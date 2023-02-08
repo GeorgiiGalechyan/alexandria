@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import SVGButton from '../../../Buttons/SVGButtons/SVGButton'
+import SVGButton from '../../../../components/Buttons/SVGButtons/SVGButton'
 import { themes } from '../../../../utils/getThemeOnFirstRun.js'
 
 import { changeThemeButtons } from './ThemeController.module.css'

@@ -1,11 +1,11 @@
 export const fastifyAsideMenu = [
   {
     id: 'fastify_guide',
-    text: 'Гайд',
+    text: 'Руководства (гайды)',
     url: '/tech/fastify/guide',
     color: '',
     dropdown: [
-      { id: '001', text: '', url: '', color: '' },
+      { id: '001', text: 'Guide 1', url: '', color: '' },
       { id: '002', text: '', url: '', color: '' },
       { id: '003', text: '', url: '', color: '' },
       { id: '004', text: '', url: '', color: '' },

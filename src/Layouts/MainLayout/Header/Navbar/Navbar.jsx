@@ -1,13 +1,12 @@
 import React from 'react'
 import MenuItems from './MenuItem'
+import { mainMenu } from './Navbar.module.css'
 
-import { menu } from './Navbar.module.css'
-
-const Navbar = ({ menuData }) => {
+const Navbar = ({ menu = [] }) => {
   return (
-    <menu className={menu}>
-      {!!menuData.length ? (
-        menuData.map((item) => <MenuItems item={item} key={item.id} id={item.id} />)
+    <menu className={mainMenu}>
+      {menu.length ? (
+        menu.map((item) => <MenuItems key={item.id} item={item} />)
       ) : (
         <p>
           В React-компонент <code>Navbar</code> не передан аттрибут <code>menuData</code>, либо <code>menuData</code>

@@ -1,39 +1,51 @@
 import React from 'react'
-import { footer, wrapper, main, contacts, contactItem, usefulLinks, links, author } from './Footer.module.css'
+import NewTabLink from '../../../components/Links/NewTabLink'
+import { externalLinks } from './data'
+import {
+  footer,
+  firstColor,
+  secondColor,
+  wrapper,
+  main,
+  contacts,
+  item,
+  phone,
+  email,
+  telegram,
+  usefulLinks,
+  links,
+  author,
+} from './Footer.module.css'
 
 const Footer = () => {
   return (
     <footer className={footer}>
-      <section style={{ width: '100%', display: 'grid', justifyContent: 'center' }}>
+      <section className={firstColor}>
         <div className={wrapper}>
           <div className={main}>
             <address className={contacts}>
               <h3>Контакты для связи:</h3>
-              <p>
+              <p className={[item, phone]}>
                 Телефон: <a href="tel:+79030238585">+7-903-023-85-85</a>
               </p>
-              <p>
+              <p className={[item, email]}>
                 E-mail: <a href="mailto:galechyan1991@gmail.com">galechyan1991@gmail.com</a>
               </p>
-              <p>
+              <p className={[item, telegram]}>
                 Telegram: <a href="https://t.me/georgy23/">@georgy23</a>
               </p>
             </address>
             <div className={usefulLinks}>
               <h3>Полезные ссылки</h3>
               <div className={links}>
-                <a href="#"> Ссылка 1 </a>
-                <a href="#"> Ссылка 2 </a>
-                <a href="#"> Ссылка 3 </a>
-                <a href="#"> Ссылка 4 </a>
-                <a href="#"> Ссылка 5 </a>
-                <a href="#"> Ссылка 6 </a>
+                {!!externalLinks.length &&
+                  externalLinks.map((link) => <NewTabLink key={link.id} href={link.url} text={link.text} />)}
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section style={{ width: '100%', backgroundColor: 'black', display: 'grid', justifyContent: 'center' }}>
+      <section className={secondColor}>
         <div className={wrapper}>
           <div className={author}>
             <p>

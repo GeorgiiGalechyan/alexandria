@@ -1,21 +1,19 @@
 import * as React from 'react'
 
 import Header from './Header/Header'
-import AsideLayout from './AsideLayout/AsideLayout'
+import TechDocsLayout from '../TechDocsLayout/Layout'
 import Footer from './Footer/Footer'
 
 import { gridContainer, main, wrapper } from './Layout.module.css'
 
-import headerMenuData from '../../assets/data/menus/headerMainMenu.js'
-
-const Layout = ({ asideMenuData = [], pageName, children }) => {
+const MainLayout = ({ asideMenu = [], pageName, children }) => {
   return (
     <div className={gridContainer}>
-      <Header menuData={headerMenuData} />
-      {!!asideMenuData.length ? (
-        <AsideLayout menuData={asideMenuData} pageName={pageName}>
+      <Header />
+      {asideMenu.length ? (
+        <TechDocsLayout asideMenu={asideMenu} pageName={pageName}>
           {children}
-        </AsideLayout>
+        </TechDocsLayout>
       ) : (
         <main className={main}>
           <div className={wrapper}>{children}</div>
@@ -26,4 +24,4 @@ const Layout = ({ asideMenuData = [], pageName, children }) => {
   )
 }
 
-export default Layout
+export default MainLayout

@@ -1,12 +1,12 @@
 import * as React from 'react'
-import Layout from '../components/Layout/Layout'
+import MainLayout from '../Layouts/MainLayout/Layout'
 import Seo from '../components/Seo/Seo.js'
 
 import { nodeAsideMenu } from '../assets/data/menus/nodeAsideMenu.js'
 
 const NodeJSPage = () => {
   return (
-    <Layout pageName="NodeJS" asideMenuData={nodeAsideMenu}>
+    <MainLayout MainLayout pageName="NodeJS" asideMenuData={nodeAsideMenu}>
       <h2>NodeJS</h2>
       <h2>NodeJS</h2>
       <h2>NodeJS</h2>
@@ -70,7 +70,7 @@ const NodeJSPage = () => {
       <h2>NodeJS</h2>
       <h2>NodeJS</h2>
       <h2>NodeJS</h2>
-    </Layout>
+    </MainLayout>
   )
 }
 

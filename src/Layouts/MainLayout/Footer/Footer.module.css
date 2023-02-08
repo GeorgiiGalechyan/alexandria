@@ -1,28 +1,34 @@
 .footer {
   width: 100%;
-  background-color: var(--bg-clr-primary);
-  z-index: 99999;
+  z-index: 100;
   grid-area: footer;
 }
 
-.wrapper {
-  width: var(--wrapper-width);
+.first-color {
+  width: 100%;
   display: grid;
-  grid-template:
-    'main' auto
-    'author' auto / 1fr;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.second-color {
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  background-color: black;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: var(--wrapper-width);
 }
 
 /*  Подсекция с контактами и полезными ссылками  */
 .main {
-  width: 100%;
   padding: 1ch 0;
-  font-size: 1em;
-  line-height: 1.25em;
+
   display: grid;
   grid-template-columns: 1fr 3fr;
-
-  grid-area: main;
 }
 
 .main :where(h3) {
@@ -34,6 +40,21 @@
 .contacts {
   display: grid;
   grid-auto-flow: row;
+}
+
+.item {
+  font-size: 1em;
+  line-height: 1.25em;
+}
+
+.phone {
+  font-size: 1em;
+}
+.email {
+  font-size: 1em;
+}
+.telegram {
+  font-size: 1em;
 }
 
 .usefulLinks {
@@ -61,8 +82,6 @@
 
   display: grid;
   place-content: center;
-
-  grid-area: author;
 }
 
 .author a:hover {

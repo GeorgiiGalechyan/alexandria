@@ -1,10 +1,10 @@
 import * as React from 'react'
-import Layout from '../components/Layout/Layout'
+import MainLayout from '../Layouts/MainLayout/Layout'
 import Seo from '../components/Seo/Seo'
 
 const AboutPage = () => {
   return (
-    <Layout pageName="О проекте">
+    <MainLayout pageName="О проекте">
       <p>
         Переводим на "адекатный" русский язык документацию, связанную с JS, дополняя её комментариями и дополнительными
         примерами кода.
@@ -15,7 +15,7 @@ const AboutPage = () => {
           Александрийской библиотеки.
         </a>
       </p>
-    </Layout>
+    </MainLayout>
   )
 }
 

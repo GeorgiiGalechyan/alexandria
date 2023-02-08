@@ -1,15 +1,13 @@
 import * as React from 'react'
-import Layout from '../components/Layout/Layout'
+import MainLayout from '../Layouts/MainLayout/Layout'
 import TechCard from '../components/Cards/TechCard/TechCard'
 import Seo from '../components/Seo/Seo.js'
-
 import cardsData from '../assets/data/cards/techCardData.js'
-
 import { section, hero, techs, title, cards } from './css/index.module.css'
 
 const IndexPage = () => {
   return (
-    <Layout pageName="Главная">
+    <MainLayout pageName="Главная">
       <section className={`${section} ${hero}`}>
         <h1 className={title}> Hero </h1>
       </section>
@@ -19,7 +17,7 @@ const IndexPage = () => {
           <TechCard cards={cardsData} />
         </div>
       </section>
-    </Layout>
+    </MainLayout>
   )
 }
 // Метаданные - Gatsby Head API

@@ -108,6 +108,6 @@
     "./plugins/**/*",
     "src/assets/data/menus/fastifyAsideMenu.js",
     "src/assets/data/menus/nodeAsideMenu.js",
-    "src/assets/data/menus/headerMainMenu.js"
+    "src/Layouts/MainLayout/Header/menuData.js"
   ]
 }

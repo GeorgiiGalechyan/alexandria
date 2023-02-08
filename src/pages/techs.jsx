@@ -1,12 +1,12 @@
 import React from 'react'
-import Layout from '../components/Layout/Layout'
+import MainLayout from '../Layouts/MainLayout/Layout'
 import Seo from '../components/Seo/Seo'
 
 const TechsPage = () => {
   return (
-    <Layout pageName="Технологии">
+    <MainLayout pageName="Технологии">
       <h1>Просто текст</h1>
-    </Layout>
+    </MainLayout>
   )
 }
 
