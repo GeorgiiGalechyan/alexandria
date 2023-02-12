@@ -18,7 +18,7 @@ const MenuItems = ({ item, ...props }) => {
       onBlur={() => setIsOpen(false)}
       {...props}
     >
-      {subMenu.length ? (
+      {Boolean(subMenu) ? (
         <>
           <Link to={item.url}>{item.title}</Link>
           {!!isOpen && <Dropdown subMenu={subMenu} />}

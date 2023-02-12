@@ -2,7 +2,7 @@ import React from 'react'
 import MenuItems from './MenuItem'
 import { mainMenu } from './Navbar.module.css'
 
-const Navbar = ({ menu = [] }) => {
+const Navbar = ({ menu }) => {
   return (
     <menu className={mainMenu}>
       {menu.length ? (

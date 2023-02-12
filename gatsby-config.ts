@@ -26,10 +26,9 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'posts',
-        path: './src/assets/markdown/nodejs/',
+        name: 'blog',
+        path: `${__dirname}/blog`,
       },
-      __key: 'nodejs',
     },
   ],
 }
