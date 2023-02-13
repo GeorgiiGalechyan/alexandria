@@ -6,14 +6,16 @@ import Seo from '../components/Seo/Seo.js'
 import {} from './css/blog.module.css'
 
 const BlogPage = ({ data }) => {
+  const posts = data.allMdx.nodes
   return (
     <MainLayout pageName="Главная">
       <section>
-        <ul>
-          {data.allFile.nodes.map((node) => (
-            <li key={node.name}>{node.name}</li>
-          ))}
-        </ul>
+        {posts.map((post) => (
+          <article key={post.id} style={{ border: '1px solid var(--viva-magenta)', margin: '1.5em', padding: '1em' }}>
+            <h2>{post.frontmatter.title}</h2>
+            <p>Опубликовано: {post.frontmatter.date}</p>
+          </article>
+        ))}
       </section>
     </MainLayout>
   )
@@ -24,9 +26,14 @@ export const Head = () => <Seo title="Блог" />
 
 export const query = graphql`
   query {
-    allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
+    allMdx(sort: { frontmatter: { date: DESC } }) {
       nodes {
-        name
+        frontmatter {
+          date(formatString: "MMMM D, YYYY")
+          title
+        }
+        id
+        excerpt
       }
     }
   }
