@@ -1,5 +1,5 @@
 import React from 'react'
-import { svgButton } from './svgButton.module.css'
+import { svgButton } from './SVGButton.module.css'
 
 const SVGButton = ({ onClick, title, figure, ...props }) => {
   return (
