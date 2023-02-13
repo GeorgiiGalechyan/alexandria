@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { graphql } from 'gatsby'
-import MainLayout from '../Layouts/MainLayout/Layout'
-import Seo from '../components/Seo/Seo.js'
+import MainLayout from '../../Layouts/MainLayout/Layout'
+import Seo from '../../components/Seo/Seo.js'
 
-import {} from './css/blog.module.css'
+import {} from './index.module.css'
 
 const BlogPage = ({ data }) => {
   const posts = data.allMdx.nodes

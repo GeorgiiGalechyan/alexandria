@@ -1,11 +1,13 @@
 import React from 'react'
-import MainLayout from '../Layouts/MainLayout/Layout'
-import Seo from '../components/Seo/Seo'
+import MainLayout from '../../Layouts/MainLayout/Layout'
+import Seo from '../../components/Seo/Seo'
+
+import {} from './index.module.css'
 
 const TechsPage = () => {
   return (
     <MainLayout pageName="Технологии">
-      <h1>Просто текст</h1>
+      <h1>Технологии</h1>
     </MainLayout>
   )
 }
