@@ -14,6 +14,7 @@ const BlogPage = ({ data }) => {
           <article key={post.id} style={{ border: '1px solid var(--viva-magenta)', margin: '1.5em', padding: '1em' }}>
             <h2>{post.frontmatter.title}</h2>
             <p>Опубликовано: {post.frontmatter.date}</p>
+            <div>{post.excerpt}</div>
           </article>
         ))}
       </section>
