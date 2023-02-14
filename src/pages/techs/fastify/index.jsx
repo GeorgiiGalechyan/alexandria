@@ -1,11 +1,12 @@
 import * as React from 'react'
-import MainLayout from '../Layouts/MainLayout/Layout'
 import { Link } from 'gatsby'
-import Seo from '../components/Seo/Seo.js'
+import MainLayout from '../../../Layouts/MainLayout/Layout'
+import Seo from '../../../components/Seo/Seo.js'
 
-import { fastifyAsideMenu } from '../assets/data/menus/fastifyAsideMenu.js'
+import {} from './index.module.css'
+import { fastifyAsideMenu } from '../../../assets/data/menus/fastifyAsideMenu.js'
 
-const FastifyPage = () => {
+const FastifyIndexPage = () => {
   return (
     <MainLayout pageName="Fastify" asideMenu={fastifyAsideMenu}>
       <p style={{ marginBottom: '1em' }}>Документация Fastify состоит из двух разделов:</p>
@@ -24,9 +25,11 @@ const FastifyPage = () => {
         Раздел <strong>Руководства (гайды)</strong> написан более простым языком и предназначен для ознакомления
         новичков с основными концепциями Fastify.
       </p>
-      <p>Таким образом,полным новичкам в Fastify сначала нужно прочитать раздел Руководства (гайды). Разработчикам, имеющим опыт работы с Fastify, следует обратиться непосредственно к справочной документации, чтобы найти более подробную информацию по интересующему их вопросу.
+      <p>
+        Таким образом,полным новичкам в Fastify сначала нужно прочитать раздел Руководства (гайды). Разработчикам,
+        имеющим опыт работы с Fastify, следует обратиться непосредственно к справочной документации, чтобы найти более
+        подробную информацию по интересующему их вопросу.
       </p>
-      
     </MainLayout>
   )
 }
@@ -35,4 +38,4 @@ const FastifyPage = () => {
 // https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
 export const Head = () => <Seo title="Fastify Документация" />
 
-export default FastifyPage
+export default FastifyIndexPage

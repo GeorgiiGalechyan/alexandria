@@ -3,7 +3,8 @@ import MainLayout from '../Layouts/MainLayout/Layout'
 import TechCard from '../components/Cards/TechCard/TechCard'
 import Seo from '../components/Seo/Seo.js'
 import cardsData from '../assets/data/cards/techCardData.js'
-import { section, hero, techs, title, cards } from './css/index.module.css'
+
+import { section, hero, techs, title, cards } from './index.module.css'
 
 const IndexPage = () => {
   return (

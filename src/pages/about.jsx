@@ -1,6 +1,6 @@
 import * as React from 'react'
 import MainLayout from '../Layouts/MainLayout/Layout'
-import Seo from '../components/Seo/Seo'
+import Seo from '../components/Seo/Seo.js'
 
 const AboutPage = () => {
   return (
