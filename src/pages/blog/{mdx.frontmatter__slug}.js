@@ -1,12 +1,28 @@
 import * as React from 'react'
-import { Link, graphql } from 'gatsby'
+import { graphql } from 'gatsby'
+import { getImage, GatsbyImage } from 'gatsby-plugin-image'
 import MainLayout from '../../Layouts/MainLayout/Layout'
 import Seo from '../../components/Seo/Seo.js'
 
 const BlogPost = ({ data, children }) => {
+  const frontmatter = data.mdx.frontmatter
+  const heroImage = getImage(frontmatter.hero_image)
   return (
-    <MainLayout pageTitle={data.mdx.frontmatter.title}>
-      <p>{data.mdx.frontmatter.date}</p>
+    <MainLayout pageTitle={frontmatter.title}>
+      <section style={{ padding: '3em 0' }}>
+        <h1>{frontmatter.title}</h1>
+        <p>
+          <strong>Автор:</strong> {frontmatter.author}
+        </p>
+        <p>
+          <strong>Опубликовано:</strong> {frontmatter.date}
+        </p>
+        <GatsbyImage style={{ margin: '1em 0' }} image={heroImage} alt={frontmatter.alt} />
+        <p>
+          Photo Credit: <a href={frontmatter.hero_image_credit_link}>{frontmatter.hero_image_credit_text}</a>
+        </p>
+      </section>
+
       {children}
     </MainLayout>
   )
@@ -17,7 +33,16 @@ export const query = graphql`
     mdx(id: { eq: $id }) {
       frontmatter {
         title
-        date(formatString: "MMMM D, YYYY")
+        author
+        date(formatString: "MMMM DD, YYYY", locale: "ru")
+        hero_image_alt
+        hero_image_credit_link
+        hero_image_credit_text
+        hero_image {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
       }
     }
   }
