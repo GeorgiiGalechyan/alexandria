@@ -7,51 +7,25 @@
 /*Ипорт шрифтов*/
 @import './css//fonts.css';
 
-::selection {
-  background-color: var(--viva-magenta);
-  color: #fff;
-}
-
-a {
-  color: var(--link-clr);
-}
-
-a:where(:hover, :focus) {
-  color: var(--link-clr-hover);
-}
-
-svg {
-  fill: var(--svg-clr);
-}
-
-svg:where(:hover, :focus) {
-  fill: var(--svg-clr-hover);
-}
-
-a[href='#'] {
-  color: red;
-  background-color: cadetblue;
-}
-
-body,
-body.dark {
-  color: var(--clr-primary);
-  background-color: var(--bg-clr-primary);
-  font-family: var(--roboto);
-}
-
-body.light {
-  color: var(--clr-primary);
-  background-color: var(--bg-clr-primary);
-}
-
-.grid-container {
+.main-layout {
   height: 100vh;
   display: grid;
   grid-template:
     'header' var(--header-height)
     'main' 1fr
     'footer' auto / 1fr;
+}
+
+.main-layout,
+.main-layout.dark {
+  color: var(--clr-primary);
+  background-color: var(--bg-clr-primary);
+  font-family: var(--roboto);
+}
+
+.main-layout.light {
+  color: var(--clr-primary);
+  background-color: var(--bg-clr-primary);
 }
 
 .main {
@@ -70,4 +44,30 @@ body.light {
 
 .gatsby-link:where(:hover, :focus) {
   color: var(--link-clr-hover);
+}
+
+a {
+  color: var(--link-clr);
+}
+
+a:where(:hover, :focus) {
+  color: var(--link-clr-hover);
+}
+
+a[href='#'] {
+  color: red;
+  background-color: cadetblue;
+}
+
+svg {
+  fill: var(--svg-clr);
+}
+
+svg:where(:hover, :focus) {
+  fill: var(--svg-clr-hover);
+}
+
+::selection {
+  background-color: var(--viva-magenta);
+  color: #fff;
 }

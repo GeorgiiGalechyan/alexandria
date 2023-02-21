@@ -1,3 +1,7 @@
+.search-panel {
+  display: flex;
+}
+
 .search-input {
   height: 32px;
   padding: 4px 15px;
@@ -12,12 +16,4 @@
 .search-input::placeholder {
   color: #fff;
   padding: 4px 15px;
-}
-
-/* ПОКА ВЫКЛЮЧИМ!!!!*/
-.search-button {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 0;
 }

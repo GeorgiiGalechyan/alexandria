@@ -1,64 +1,80 @@
-const getBasicColorMode = () => {
-  // Смотрим есть ли сохраненная тема в local storage
-  const savedColorMode = window.localStorage.getItem('theme')
-  const hasSavedColorMode = typeof savedColorMode === 'string'
-
-  // Если пользователь явно выбрал light или dark цветовую схему,
-  // то используем выбранную тему. Иначе Null и идём дальше.
-  if (hasSavedColorMode) {
-    return savedColorMode
-  }
-
-  // Смотрим, задана ли цветовая схема в медиа запросах (media query)
-  const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
-  const hasMediaQueryPreference = typeof mediaQueryList.matches === 'boolean'
-
-  // Если медиа запросы содержат информацию о предпочтительной цветовой схеме,
-  // то используем эту цветовую схему, иначе Null и идём дальше.
-  if (hasMediaQueryPreference) {
-    return mediaQueryList.matches ? 'dark' : 'light'
-  }
-
-  // Если браузер/ОС не поддерживает цветовые темы,
-  // установим по умолчанию "светлый".
-  return 'light'
-}
-
-const defaultTheme = getBasicColorMode()
-
-// Все варианты темы
 const THEMES = {
-  DEFAULT: defaultTheme, // тема по умолчанию
   DARK: 'dark',
   LIGHT: 'light',
 }
 
-//  задаем тему до загрузки приложения
-// const initialTheme = () => {
-//   document.body.classList.remove(THEMES.DARK, THEMES.LIGHT)
-//   document.body.classList.add(THEMES.DEFAULT)
-//   window.localStorage.setItem('theme', DEFAULT_THEME)
-// }
-//
-// initialTheme()
+function getInitiaThemeValue() {
+  const savedColorMode = window.localStorage.getItem('theme')
+
+  switch (savedColorMode) {
+    case THEMES.DARK:
+      return THEMES.DARK
+    case THEMES.LIGHT:
+      return THEMES.LIGHT
+    default:
+      const mql = window.matchMedia('(prefers-color-scheme: dark)')
+      const hasMqlPreference = typeof mql.matches === 'boolean'
+      if (hasMqlPreference) {
+        return mql.matches ? THEMES.DARK : THEMES.LIGHT
+      }
+      return THEMES.LIGHT
+  }
+}
+
+const initialTheme = getInitiaThemeValue()
+THEMES.INITIAL = initialTheme
+
+function getLocalStorageThemeValue() {
+  const themeValue = window.localStorage.getItem('theme')
+  const hasSavedThemeValue = typeof themeValue === 'string'
+  if (hasSavedThemeValue) {
+    return themeValue
+  }
+
+  return THEMES.LIGHT
+}
+
+const localStorageTheme = getLocalStorageThemeValue()
+THEMES.STORAGE = localStorageTheme
+
+function getOsTheme() {
+  const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
+  const hasMediaQueryPreference = typeof mediaQueryList.matches === 'boolean'
+  if (hasMediaQueryPreference) {
+    return mediaQueryList.matches ? THEMES.DARK : THEMES.LIGHT
+  }
+
+  return undefined
+}
+
+const osTheme = getOsTheme()
+THEMES.OS = osTheme
 
 // Проверка что включена темная тема
-export const isDarkTheme = () => {
-  let theme = document.body.className
-  if (theme === THEMES.DARK) {
-    return true
-  } else if (theme === THEMES.LIGHT) {
-    return false
-  }
-  return true
-}
+// export const isDarkTheme = () => {
+//   switch (THEMES.DARK) {
+//     case THEMES.DARK:
+//       return true
+//     case THEMES
+//   }
+//
+//   let theme = document.body.className
+//   if (theme === THEMES.DARK) {
+//     return true
+//   } else if (theme === THEMES.LIGHT) {
+//     return false
+//   }
+//   return true
+// }
+//
+// // Проверка что включена светлая тема
+// export const isLightTheme = () => {
+//   let theme = document.body.className
+//   if (theme === THEMES.LIGHT) {
+//     return true
+//   } else {
+//     return false
+//   }
+// }
 
-// Проверка что включена светлая тема
-export const isLightTheme = () => {
-  let theme = document.body.className
-  if (theme === THEMES.LIGHT) {
-    return true
-  } else {
-    return false
-  }
-}
+export { THEMES, getInitiaThemeValue, getLocalStorageThemeValue, getOsTheme }

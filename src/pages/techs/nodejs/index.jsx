@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link } from 'gatsby'
+// import { Link } from 'gatsby'
 import MainLayout from '../../../Layouts/MainLayout/Layout'
 import Seo from '../../../components/Seo/Seo.js'
 

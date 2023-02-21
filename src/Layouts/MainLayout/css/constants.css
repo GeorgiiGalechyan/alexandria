@@ -84,8 +84,8 @@ html {
   --dm-svg-clr-hover: var(--mountain-meadow);
 }
 
-body,
-body.dark {
+.main-layout,
+.main-layout.dark {
   font-size: 16px;
   /*Цвета текста*/
   --clr-primary: var(--dm-clr-primary);
@@ -127,7 +127,7 @@ body.dark {
   --svg-clr-hover: var(--dm-svg-clr-hover);
 }
 
-body.light {
+.main-layout.light {
   /*Цвет текста*/
   --clr-primary: var(--lm-clr-primary);
   --clr-secondary: var(--lm-clr-secondary);

@@ -1,14 +1,19 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
+import cn from 'classnames'
 
 import Header from './Header/Header'
 import TechDocsLayout from '../TechDocsLayout/Layout'
 import Footer from './Footer/Footer'
 
-import { gridContainer, main, wrapper } from './Layout.module.css'
+import useTheme from '../../hooks/useTheme'
+
+import { mainLayout, main, wrapper } from './Layout.module.css'
 
 const MainLayout = ({ asideMenu = [], pageName, children }) => {
+  const { theme } = useTheme()
+
   return (
-    <div className={gridContainer}>
+    <div className={cn(mainLayout, theme)}>
       <Header />
       {asideMenu.length ? (
         <TechDocsLayout asideMenu={asideMenu} pageName={pageName}>
